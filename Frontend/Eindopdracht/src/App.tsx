@@ -1,4 +1,9 @@
 import {BrowserRouter, Outlet, Route, Routes} from 'react-router';
+import Login from './components/pages/login/Login';
+import Admin from './components/pages/admin/Admin';
+import User from './components/pages/user/User';
+import Transactions from './components/common/Transactions';
+import Item from './components/common/Item';
 
 function App() {
 
@@ -6,9 +11,19 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/user?/:" element={<div>Home</div>} />
-          <Route path="/about" element={<div>About</div>} />
-          <Route path="/contact" element={<div>Contact</div>} />
+          <Route element={<>
+            <div>Navbar</div>
+            <Outlet/>
+            </>}>
+            <Route path="/login?" element={<Login/>}/>
+            <Route path="/user" element={<User/>}>
+              <Route path="/item/:itemID" element={<Item/>}/>
+              <Route path="/transactions/:itemID?" element={<Transactions/>}/>
+            </Route>
+            <Route path="/admin" element={<Admin/>}>
+              <Route path="/transactions/:userID/:itemID?" element={<Transactions/>}/>
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
