@@ -4,6 +4,7 @@ import Admin from './components/pages/admin/Admin';
 import User from './components/pages/user/User';
 import Transactions from './components/common/Transactions';
 import Item from './components/common/Item';
+import Navbar from './components/common/Navbar';
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<>
-            <div>Navbar</div>
+            <Navbar/>
             <Outlet/>
             </>}>
             <Route path="/login?" element={<Login/>}/>
