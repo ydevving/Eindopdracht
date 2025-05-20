@@ -1,4 +1,4 @@
 package com.itvitae.Eindopdracht.DTO;
 
-public record LoginResponseDTO() {
+public record LoginResponseDTO(String token) {
 }
