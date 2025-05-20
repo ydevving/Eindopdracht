@@ -12,6 +12,7 @@ import com.itvitae.Eindopdracht.Enum.transmissionTypes;
 @AllArgsConstructor
 @Builder
 public class Car {
+
     @Id
     @Column
     private String licenseplate;

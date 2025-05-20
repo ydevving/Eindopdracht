@@ -11,6 +11,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Builder
 public class Transaction {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
     private long id;

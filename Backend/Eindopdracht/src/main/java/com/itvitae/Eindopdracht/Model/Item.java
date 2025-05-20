@@ -12,6 +12,7 @@ import com.itvitae.Eindopdracht.Enum.status;
 @AllArgsConstructor
 @Builder
 public class Item {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
     private long id;
@@ -36,6 +37,7 @@ public class Item {
     @Column(nullable = true)
     private short storageSpace;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private status status;
 
