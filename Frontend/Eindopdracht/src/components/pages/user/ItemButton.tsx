@@ -4,6 +4,7 @@ export default function ItemButton() {
     const price = 50
     const seats = 10000
     const storage = 25000
+    const type = "Supreme Machine"
 
     const transmissionBool = true
     if (transmissionBool) {
@@ -33,7 +34,8 @@ export default function ItemButton() {
             <Button style={{minWidth:"33vw", maxWidth:"33vw"}}>
                 <Image src="/src/assets/placeholderCar.jpg" rounded style={{height:"30vh"}}/>
                 <p><b style={{fontSize:"3vw", overflow:"wrap"}}>{name}</b></p>
-                <p style={{ display:"block", color:"green", fontSize:"3vw", textAlign:"center"}}>${price},-/day</p>
+                <p style={{ display:"block", color:"#90EE90", fontSize:"3vw", textAlign:"center"}}>${price},-/day</p>
+                <p><Image src="/src/assets/type.svg"/>{type}</p>
                 <p><Image src="/src/assets/seats.svg"/>{seats}</p>
                 <p><Image src="/src/assets/transmission.svg"/>{transmission}</p>
                 <p><Image src="/src/assets/storage.svg"/>{storage} m3</p>
