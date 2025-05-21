@@ -128,7 +128,7 @@ public class Seeder implements CommandLineRunner {
     }
 
     private List<Item> addItems() throws IOException, BadCSVFormatException {
-
+        return new ArrayList<>();
     }
 
     @Override
