@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
     // USER role needs to be able to acces it, without USER access denied
     @GetMapping("/home")
+    @Auth(admin = false)
     public ResponseEntity<String> handleWelcomeUser() {
         System.out.println("/Home");
         return new ResponseEntity<>("Hello World!", HttpStatus.CREATED);

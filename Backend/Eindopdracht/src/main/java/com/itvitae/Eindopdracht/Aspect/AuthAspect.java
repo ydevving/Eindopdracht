@@ -1,6 +1,9 @@
 package com.itvitae.Eindopdracht.Aspect;
 
+import com.itvitae.Eindopdracht.Model.User;
+import com.itvitae.Eindopdracht.Repository.UserRepository;
 import com.itvitae.Eindopdracht.Service.AuthenticationService;
+import com.itvitae.Eindopdracht.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,24 +18,41 @@ import com.itvitae.Eindopdracht.Service.AuthenticationService;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Optional;
+
 @Aspect
 @Component
 public class AuthAspect {
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationService authService;
+
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private UserService userService;
 
     @Around("@annotation(auth)")
     public Object checkAuthorization(ProceedingJoinPoint joinPoint, Auth auth) throws Throwable {
         HttpServletRequest request = this.getCurrentHttpRequest();
+
         if (request == null)
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No HTTP request found");
 
-        String authHeader = request.getHeader("Authorization");
+        String token = request.getHeader("Authorization");
 
-        boolean isAuthorized = this.authenticationService.authenticateUser(authHeader);
+        Optional<User> user = this.authService.retrieveUserFromToken(token);
+
+        if (user.isEmpty())
+            return ResponseEntity.badRequest().body("Authorization header not valid");
+
+        if (auth.admin() && !(this.authService.isAdmin(user.get())))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+
+        boolean isAuthorized = this.authService.authenticateUser(user.get());
 
         if (!isAuthorized)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED);
 
         return joinPoint.proceed();
     }
