@@ -1,6 +1,6 @@
 package com.itvitae.Eindopdracht.Enum;
 
-public enum status {
+public enum Status {
     OPERABLE,
     BROKEN
 }

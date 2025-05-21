@@ -1,9 +1,9 @@
 package com.itvitae.Eindopdracht.Model;
 
-import com.itvitae.Eindopdracht.Enum.itemType;
+import com.itvitae.Eindopdracht.Enum.ItemType;
 import jakarta.persistence.*;
 import lombok.*;
-import com.itvitae.Eindopdracht.Enum.status;
+import com.itvitae.Eindopdracht.Enum.Status;
 
 @Entity
 @Table
@@ -29,7 +29,7 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private itemType type;
+    private ItemType type;
 
     @Column(nullable = false)
     private String description;
@@ -39,6 +39,6 @@ public class Item {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private status status;
+    private Status status;
 
 }

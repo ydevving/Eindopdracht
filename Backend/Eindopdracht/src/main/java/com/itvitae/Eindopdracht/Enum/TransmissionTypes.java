@@ -1,6 +1,6 @@
 package com.itvitae.Eindopdracht.Enum;
 
-public enum transmissionTypes {
+public enum TransmissionTypes {
     MANUAL,
     AUTOMATIC
 }

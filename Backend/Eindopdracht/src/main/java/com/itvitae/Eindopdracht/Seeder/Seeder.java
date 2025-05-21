@@ -1,6 +1,6 @@
 package com.itvitae.Eindopdracht.Seeder;
 
-import com.itvitae.Eindopdracht.Enum.itemType;
+import com.itvitae.Eindopdracht.Enum.ItemType;
 import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Model.Transaction;
@@ -10,7 +10,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -87,7 +86,7 @@ public class Seeder implements CommandLineRunner {
                                 .name(values.get(0))
                                 .price(Double.parseDouble(values.get(1)))
                                 .car(null)
-                                .type(itemType.SUV)
+                                .type(ItemType.SUV)
                                 .description(values.get(4))
                                 .storageSpace(null)
                                 .build();
@@ -122,6 +121,7 @@ public class Seeder implements CommandLineRunner {
     }
 
     private List<User> addUsers() throws IOException, BadCSVFormatException {
+        System.out.println(System.getProperty("user.dir"));
         return userRepo.saveAll(
                 this.readModelCSV("users.csv", ModelType.USER)
         );

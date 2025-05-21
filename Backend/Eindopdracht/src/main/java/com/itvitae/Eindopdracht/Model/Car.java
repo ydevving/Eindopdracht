@@ -2,8 +2,8 @@ package com.itvitae.Eindopdracht.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import com.itvitae.Eindopdracht.Enum.fuelType;
-import com.itvitae.Eindopdracht.Enum.transmissionTypes;
+import com.itvitae.Eindopdracht.Enum.FuelType;
+import com.itvitae.Eindopdracht.Enum.TransmissionTypes;
 
 @Entity
 @Table
@@ -21,7 +21,7 @@ public class Car {
     private String brand;
 
     @Column(nullable = false)
-    private transmissionTypes transmission;
+    private TransmissionTypes transmission;
 
     @Column(nullable = false)
     private Short Seats;
@@ -37,7 +37,7 @@ public class Car {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private fuelType fuelType;
+    private FuelType fuelType;
 
     @OneToOne(mappedBy = "car")
     private Item item;
