@@ -74,7 +74,7 @@ public class Seeder implements CommandLineRunner {
     private List<User> addUsers() throws IOException, BadCSVFormatException {
         System.out.println(System.getProperty("user.dir"));
         return userRepo.saveAll(
-                this.readCSV("info.csv")
+                this.readCSV("users.csv")
         );
     }
 

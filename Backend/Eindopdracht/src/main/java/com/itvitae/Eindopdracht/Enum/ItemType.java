@@ -1,6 +1,6 @@
 package com.itvitae.Eindopdracht.Enum;
 
-public enum itemType {
+public enum ItemType {
     SEDAN,
     SUV,
     STATIONWAGON,

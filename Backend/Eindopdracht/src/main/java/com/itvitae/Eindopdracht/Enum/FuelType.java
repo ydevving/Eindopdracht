@@ -1,6 +1,6 @@
 package com.itvitae.Eindopdracht.Enum;
 
-public enum fuelType {
+public enum FuelType {
     PETROL,
     DIESEL,
     HYBRID_PETROL,
