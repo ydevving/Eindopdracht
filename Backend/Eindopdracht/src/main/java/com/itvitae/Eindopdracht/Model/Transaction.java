@@ -14,7 +14,7 @@ public class Transaction {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private Date rentedAt;

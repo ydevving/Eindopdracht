@@ -15,13 +15,13 @@ public class Item {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
 
     @Column (nullable = false)
-    private double price;
+    private Double price;
 
     @OneToOne
     @JoinColumn(nullable = true)
@@ -35,7 +35,7 @@ public class Item {
     private String description;
 
     @Column(nullable = true)
-    private short storageSpace;
+    private Short storageSpace;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

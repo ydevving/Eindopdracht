@@ -24,16 +24,16 @@ public class Car {
     private transmissionTypes transmission;
 
     @Column(nullable = false)
-    private byte Seats;
+    private Short Seats;
 
     @Column(nullable = false)
-    private short towWeight;
+    private Short towWeight;
 
     @Column(nullable = false)
-    private int kilometerCounter;
+    private Integer kilometerCounter;
 
     @Column(nullable = false)
-    private short modelYear;
+    private Short modelYear;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

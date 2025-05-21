@@ -1,18 +1,21 @@
 package com.itvitae.Eindopdracht.Seeder;
 
+import com.itvitae.Eindopdracht.Enum.itemType;
+import com.itvitae.Eindopdracht.Model.Car;
+import com.itvitae.Eindopdracht.Model.Item;
+import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Model.User;
 import com.itvitae.Eindopdracht.Repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Component
 public class Seeder implements CommandLineRunner {
@@ -23,48 +26,95 @@ public class Seeder implements CommandLineRunner {
         }
     }
 
+    enum ModelType {
+        USER,
+        ITEM,
+        CAR,
+        TRANSACTION
+    };
+
+    Map<ModelType, Integer> modelValues;
+
     @Autowired
     UserRepository userRepo;
 
-    private List<User> readCSV(String filePath) throws IOException, BadCSVFormatException {
+    public Seeder() {
+        modelValues = new HashMap<>(ModelType.values().length);
+
+        // Denotes how many fields the Model has
+        modelValues.put(ModelType.USER, 5);
+        modelValues.put(ModelType.ITEM, 7);
+        modelValues.put(ModelType.CAR, 9);
+        modelValues.put(ModelType.TRANSACTION, 4);
+    }
+
+    private <T> List<T> readModelCSV(String filePath, ModelType modelType) throws IOException, BadCSVFormatException {
 
         String path = String.format("%s/src/main/java/com/itvitae/Eindopdracht/Seeder/%s", System.getProperty("user.dir"), filePath);
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            List<User> listOfUsers = new ArrayList<>();
+            List<T> resultList = new ArrayList<>();
 
-            // Skip first comment line
+            // Skip first info comment line
             br.readLine();
 
             String line;
             int lineCount = 1;
 
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 lineCount++;
 
                 List<String> values = List.of(line.split(","));
 
-                if (values.size() != 5)
-                    throw new BadCSVFormatException("Amount of values on this line is not correct, put 5 values in", lineCount);
+                int totalValues = modelValues.get(modelType);
+                if (values.size() != totalValues)
+                    throw new BadCSVFormatException(String.format("Amount of values on this line is not correct, put %s values in", totalValues), lineCount);
 
-                User user = User.builder()
-                        .username(values.get(0))
-                        .password(values.get(1))
-                        .email(values.get(2))
-                        .city(values.get(3))
-                        .address(values.get(4))
-                        .build();
-
-                listOfUsers.add(user);
-
-                for (String value : values) {
-                    System.out.print(value + " ");
+                switch (modelType) {
+                    case USER: {
+                        User user = User.builder()
+                                .username(values.get(0))
+                                .password(values.get(1))
+                                .email(values.get(2))
+                                .city(values.get(3))
+                                .address(values.get(4))
+                                .build();
+                        resultList.add((T) user);
+                        break;
+                    }
+                    case ITEM: {
+                        Item item = Item.builder()
+                                .name(values.get(0))
+                                .price(Double.parseDouble(values.get(1)))
+                                .car(null)
+                                .type(itemType.SUV)
+                                .description(values.get(4))
+                                .storageSpace(null)
+                                .build();
+                        resultList.add((T) item);
+                        break;
+                    }
+                    case CAR: {
+                        Car car = Car.builder()
+                                .licenseplate(values.get(0))
+                                .build();
+                        resultList.add((T) car);
+                        break;
+                    }
+                    case TRANSACTION: {
+                        Transaction transaction = Transaction.builder()
+                                .build();
+                        resultList.add((T) transaction);
+                        break;
+                    }
                 }
+
+                values.stream().peek(System.out::println);
 
                 System.out.println();
             }
 
-            return listOfUsers;
+            return resultList;
         } catch (IOException | BadCSVFormatException e) {
             System.err.println(e.getMessage());
             return new ArrayList<>();
@@ -72,18 +122,21 @@ public class Seeder implements CommandLineRunner {
     }
 
     private List<User> addUsers() throws IOException, BadCSVFormatException {
-        System.out.println(System.getProperty("user.dir"));
         return userRepo.saveAll(
-                this.readCSV("info.csv")
+                this.readModelCSV("users.csv", ModelType.USER)
         );
+    }
+
+    private List<Item> addItems() throws IOException, BadCSVFormatException {
+
     }
 
     @Override
     @Transactional
     public void run(String... args) throws IOException, BadCSVFormatException {
 
-        userRepo.deleteAll();
+        this.userRepo.deleteAll();
 
-        addUsers();
+        this.addUsers();
     }
 }
