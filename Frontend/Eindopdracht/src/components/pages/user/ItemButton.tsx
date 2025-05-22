@@ -1,13 +1,13 @@
 import { Button, Image } from 'react-bootstrap'
-export default function ItemButton() {
-    const name = "Toyota 1000-THR Earthmover"
-    const price = 50
-    const seats = 10000
-    const storage = 25000
-    const type = "Supreme Machine"
-
-    const transmissionBool = true
-    if (transmissionBool) {
+export default function ItemButton({item}:
+        {item:{
+        image:String, name:String, 
+        price:number, seats:number, 
+        storage:number, type:String, 
+        transmissionBool:boolean
+        }}
+    ) {
+    if (item.transmissionBool) {
         var transmission = "automatic"
     } else {
         var transmission = "manual"
@@ -19,7 +19,7 @@ export default function ItemButton() {
                 * {
                     max-width: 100%;
                     min-width: 100%;
-                    font-size: 2vw;
+                    font-size: 1vw;
                 }
                 p {
                     margin: 0;
@@ -27,18 +27,19 @@ export default function ItemButton() {
                     display: flex;
                 }
                 img {
-                    height: 5vh;
-                    min-width: 5vw;
+                    height: 2vw;
+                    min-width: 2vw;
+                    margin-right: 10px;
                 }
             `}</style>
-            <Button style={{minWidth:"33vw", maxWidth:"33vw"}}>
-                <Image src="/src/assets/placeholderCar.jpg" rounded style={{height:"30vh"}}/>
-                <p><b style={{fontSize:"3vw", overflow:"wrap"}}>{name}</b></p>
-                <p style={{ display:"block", color:"#90EE90", fontSize:"3vw", textAlign:"center"}}>${price},-/day</p>
-                <p><Image src="/src/assets/type.svg"/>{type}</p>
-                <p><Image src="/src/assets/seats.svg"/>{seats}</p>
+            <Button style={{minWidth:"30vw", maxWidth:"30vw", backgroundColor:"#242424"}}>
+                <Image src={`/src/assets/${item.image}`} rounded style={{height:"auto", width:"20vw"}}/>
+                <p><b style={{fontSize:"2vw", overflow:"wrap"}}>{item.name}</b></p>
+                <p style={{ display:"block", color:"#90EE90", fontSize:"2vw", textAlign:"center"}}>${item.price},-/day</p>
+                <p><Image src="/src/assets/type.svg"/>{item.type}</p>
+                <p><Image src="/src/assets/seats.svg"/>{item.seats}</p>
                 <p><Image src="/src/assets/transmission.svg"/>{transmission}</p>
-                <p><Image src="/src/assets/storage.svg"/>{storage} m3</p>
+                <p><Image src="/src/assets/storage.svg"/>{item.storage} m3</p>
             </Button>
         </>
     )

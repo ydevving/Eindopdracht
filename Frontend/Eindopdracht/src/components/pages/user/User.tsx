@@ -1,9 +1,11 @@
-import ItemButton from "./itemButton"
+import ItemList from "./ItemList"
+import { Outlet } from "react-router"
 
 export default function User() {
     return (
         <div>
-            <ItemButton/>
+            <ItemList/>
+            <Outlet/>
         </div>
     )
 }
