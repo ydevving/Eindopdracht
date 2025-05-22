@@ -13,14 +13,10 @@ import java.util.List;
 @Service
 public class TransactionService {
 
-    public TransactionService(List<Transaction> transactions) {
-        this.transactions = transactions;
+    public TransactionService() {
     }
 
-    List<Transaction> transactions;
-
-
-    public List<TransactionDTO> generateTransactionDTOList() {
+    public List<TransactionDTO> generateTransactionDTOList(List<Transaction> transactions) {
         List<TransactionDTO> transactionDTOList = new ArrayList<>();
         for (int i = 0; i < transactions.size(); i++) {
             UserDTO userDTO = new UserDTO(transactions.get(i).getRentingUser().getUsername(),
@@ -41,7 +37,7 @@ public class TransactionService {
     }
 
 
-    public List<TransactionMinimalDTO> generateTransactionMinimalDTOList() {
+    public List<TransactionMinimalDTO> generateTransactionMinimalDTOList(List<Transaction> transactions) {
         List<TransactionMinimalDTO> transactionMinimalDTOList = new ArrayList<>();
         for (int i = 0; i < transactions.size(); i++) {
             UserMinimalDTO userDTO = new UserMinimalDTO(transactions.get(i).getRentingUser().getUsername()
