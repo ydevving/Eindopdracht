@@ -3,7 +3,6 @@
 import com.itvitae.Eindopdracht.Enum.FuelType;
 import com.itvitae.Eindopdracht.Enum.ItemType;
 import com.itvitae.Eindopdracht.Enum.Status;
-import com.itvitae.Eindopdracht.Enum.TransmissionTypes;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
