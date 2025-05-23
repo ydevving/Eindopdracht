@@ -40,7 +40,7 @@ public class Car implements Entities {
     @Column(nullable = false)
     private FuelType fuelType;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "car", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Item item;
 
 }

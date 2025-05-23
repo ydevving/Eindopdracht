@@ -230,9 +230,11 @@ public class Seeder implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws IOException, BadCSVFormatException {
 
+        // Delete most dependent to least dependent entities
+        this.transactionRepo.deleteAll();
+        this.carRepo.deleteAll();
+        this.itemRepo.deleteAll();
         this.userRepo.deleteAll();
-//        this.carRepo.deleteAll();
-//        this.itemRepo.deleteAll();
 
         readAndSaveModelCSV("users.csv", ModelType.USER);
         readAndSaveModelCSV("cars.csv", ModelType.CAR);
