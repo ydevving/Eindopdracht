@@ -1,10 +1,10 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import com.itvitae.Eindopdracht.Enum.FuelType;
-import com.itvitae.Eindopdracht.Enum.TransmissionTypes;
 
 @Entity
 @Table
@@ -41,6 +41,7 @@ public class Car implements Entities {
     private FuelType fuelType;
 
     @OneToOne(mappedBy = "car", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonBackReference
     private Item item;
 
 }

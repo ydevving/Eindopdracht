@@ -1,5 +1,6 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,9 +26,11 @@ public class Transaction implements Entities {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonManagedReference
     private User rentingUser;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonManagedReference
     private Item item;
 }
