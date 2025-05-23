@@ -1,5 +1,6 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import com.itvitae.Eindopdracht.Enum.FuelType;
@@ -11,7 +12,7 @@ import com.itvitae.Eindopdracht.Enum.TransmissionTypes;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Car {
+public class Car implements Entities {
 
     @Id
     @Column
@@ -24,7 +25,7 @@ public class Car {
     private TransmissionTypes transmission;
 
     @Column(nullable = false)
-    private Short Seats;
+    private Short seats;
 
     @Column(nullable = false)
     private Short towWeight;
