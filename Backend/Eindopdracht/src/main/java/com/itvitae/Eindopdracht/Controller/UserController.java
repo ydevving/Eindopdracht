@@ -11,10 +11,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.itvitae.Eindopdracht.DTO.LoginResponseDTO;
 import com.itvitae.Eindopdracht.DTO.LoginForm;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Optional;
 
@@ -54,6 +56,9 @@ public class UserController {
 
         if (user.isEmpty())
             return ResponseEntity.notFound().build();
+
+        if (!user.get().getPassword().equals(password))
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         String token = this.authService.add(user.get());
 
