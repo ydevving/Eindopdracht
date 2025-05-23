@@ -5,6 +5,7 @@ import User from './components/pages/user/User';
 import Transactions from './components/common/Transactions';
 import Item from './components/common/Item';
 import Navbar from './components/common/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
 
