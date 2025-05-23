@@ -1,5 +1,6 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itvitae.Eindopdracht.Enum.ItemType;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
@@ -28,6 +29,7 @@ public class Item implements Entities {
 
     @OneToOne
     @JoinColumn(nullable = true)
+    @JsonManagedReference
     private Car car;
 
     @Enumerated(EnumType.STRING)
