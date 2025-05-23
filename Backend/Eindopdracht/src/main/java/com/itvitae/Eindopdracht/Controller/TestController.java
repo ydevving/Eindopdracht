@@ -31,7 +31,7 @@ public class TestController {
 
     // USER role needs to be able to acces it, without USER access denied
     @GetMapping("/home")
-    @Auth(admin = false)
+    @Auth
     public ResponseEntity<String> handleWelcomeUser() {
         System.out.println("/Home");
         return new ResponseEntity<>("Hello World!", HttpStatus.CREATED);
@@ -51,13 +51,6 @@ public class TestController {
         return "Pong!";
     }
 
-    // Admin can find all transactions for a specific item including more information about the rentinguser
-    // Searching based on Username
-    @GetMapping("/admin/transactions/user/{username}")
-    List<TransactionDTO> getAllByUsername(@PathVariable String username) {
-        List<Transaction> transactions = transactionRepository.findAllByRentingUserUsername(username);
-        return this.transactionService.generateTransactionDTOList(transactions);
-    }
 
     // Admin can find all transactions for a specific item including more information about the rentinguser
     // Searching based on itemId
@@ -67,13 +60,6 @@ public class TestController {
         return this.transactionService.generateTransactionDTOList(transactions);
     }
 
-    // Users get less information about other users (UserMinimalDTO) when searching for transactions
-    // searching based on itemId
-    @GetMapping("/user/transactions/user/{username}")
-    List<TransactionMinimalDTO> getAllByUsernameMinimal(@PathVariable String username) {
-        List<Transaction> transactions = transactionRepository.findAllByRentingUserUsername(username);
-        return this.transactionService.generateTransactionMinimalDTOList(transactions);
-    }
 
     // Users get less information about other users (UserMinimalDTO) when searching for transactions
     // searching based on itemId

@@ -1,5 +1,6 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,6 @@ public class User implements Entities {
     private String city;
 
     @OneToMany(mappedBy = "rentingUser")
+    @JsonBackReference
     private List<Transaction> transactions;
 }
