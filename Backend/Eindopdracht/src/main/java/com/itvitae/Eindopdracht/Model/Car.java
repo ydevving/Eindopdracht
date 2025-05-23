@@ -22,7 +22,7 @@ public class Car implements Entities {
     private String brand;
 
     @Column(nullable = false)
-    private TransmissionTypes transmission;
+    private Boolean isAutomatic;
 
     @Column(nullable = false)
     private Short seats;
