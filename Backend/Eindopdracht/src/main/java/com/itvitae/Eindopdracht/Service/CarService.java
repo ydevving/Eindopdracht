@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.itvitae.Eindopdracht.Repository.CarRepository;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Random;
 
@@ -15,9 +16,8 @@ public class CarService {
     @Autowired
     CarRepository carRepo;
 
-    public final String[] LICENSE_FORMATS = {"99-XX-XX", "99-XXX-9", "9-XXX-99",
-                                         "XX-999-X", "XX-999-X", "XXX-99-X"};
-
+    public static final String[] LICENSE_FORMATS = {"99-XX-XX", "99-XXX-9", "9-XXX-99",
+                                                    "XX-999-X", "XX-999-X", "XXX-99-X"};
     private static final String LETTERS = "ABCDEFGHJKLMNOPRSTUVWXYZ"; // Q and I usually excluded
     private static final Random RANDOM = new Random();
 
@@ -40,6 +40,26 @@ public class CarService {
         }
 
         return plate.toString();
+    }
+
+    public boolean isValidFormat(String format) {
+        for (String f : LICENSE_FORMATS) {
+            StringBuilder in_format = new StringBuilder();
+
+            for (Character c : format.toCharArray()) {
+                if (Character.isDigit(c))
+                    in_format.append('9');
+                else if (LETTERS.contains(c.toString()))
+                    in_format.append('X');
+                else if (c.equals('-'))
+                    in_format.append('-');
+            }
+
+            if (f.contentEquals(in_format))
+                return true;
+        }
+
+        return false;
     }
 
     private char randomLetter() {

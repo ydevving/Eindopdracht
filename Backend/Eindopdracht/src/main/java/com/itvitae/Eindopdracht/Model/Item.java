@@ -47,4 +47,7 @@ public class Item implements Entities {
     @OneToMany(mappedBy = "item")
     private Set<Transaction> transactions;
 
+    @Column(nullable = true)
+    private String imgURL;
+
 }
