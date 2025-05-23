@@ -1,11 +1,11 @@
-[USERNAME, PASSWORD, EMAIL, CITY, ADDRESS]
-admin,admin,admin@logisticus.nl,Haarlem,Baan 35
-marcelo_van+den+biggelaar,biggetje,m.big@gmail.com,Twello,De Hoeven 52
-patricius_tijssen,patje,patriessstijs@proton.me,Twisk,Bennemeersweg 173
-bartje_boekestijn,bartinus,b.boekestijn@hotmail.com,Woudenberg,Prangelaar 97
-sterre_van+oort,oort10,sterre_oort@riseup.net,Herwijnen,Graaf Reinaldweg 52
-roben_van+der+lans,roberto,r.vanderlans@gmail.com,Nunhem,Marienschootstraat 100
-royce_schut,ertje,roooycehier@outlook.com,Winschoten,Nassaustraat 113
-carl_wassenaar,carlinootje,wussunaartje@gmail.com,Culemborg,Ooievaarlaan 33
-enver_smorenburg,dikkepatat,ilikepatat@riseup.net,Zoetermeer,Koningstraat 163
-joos_breen,leefjeleven,j.breen@breencompany.nl,Huizen,Oostkade 14
+[USERNAME | PASSWORD | EMAIL | CITY | ADDRESS] NOTE: IF YOU WANT TO LEAVE A FIELD EMPTY PLEASE INPUT 'NULL'
+admin|admin|admin@logisticus.nl|Haarlem|Baan 35
+marcelo_van+den+biggelaar|biggetje|m.big@gmail.com|Twello|De Hoeven 52
+patricius_tijssen|patje|patriessstijs@proton.me|Twisk|Bennemeersweg 173
+bartje_boekestijn|bartinus|b.boekestijn@hotmail.com|Woudenberg|Prangelaar 97
+sterre_van+oort|oort10|sterre_oort@riseup.net|Herwijnen|Graaf Reinaldweg 52
+roben_van+der+lans|roberto|r.vanderlans@gmail.com|Nunhem|Marienschootstraat 100
+royce_schut|ertje|roooycehier@outlook.com|Winschoten|Nassaustraat 113
+carl_wassenaar|carlinootje|wussunaartje@gmail.com|Culemborg|Ooievaarlaan 33
+enver_smorenburg|dikkepatat|ilikepatat@riseup.net|Zoetermeer|Koningstraat 163
+joos_breen|leefjeleven|j.breen@breencompany.nl|Huizen|Oostkade 14

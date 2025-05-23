@@ -1,1 +1,10 @@
-[NAME, PRICE, CAR_ID, TYPE, DESCRIPTION, STORAGE_SPACE, STATUS]
+[NAME | PRICE | CAR_ID | TYPE | DESCRIPTION | STORAGE_SPACE | ITEM_UNIQUE_REF] NOTE: IF YOU WANT TO LEAVE A FIELD EMPTY PLEASE INPUT 'NULL'
+Mini-TV|110|NULL|TV|Een Mini-TV handig voor de kids voor op reis!|NULL|NULL
+5G Modem|240|NULL|MODEM|Wil jij internet-verbinding hebben in de auto kies dan voor deze snelle 5G modem!|NULL|NULL
+TomTom GO Classic 2nd gen|119|NULL|GPS|De TomTom GO Classic 2e Generatie is de perfecte keuze voor wie op zoek is naar een betaalbare en betrouwbare GPS-navigatie. Met hoogwaardige TomTom-kaarten en maandelijkse kaartupdates voor Europa (inclusief 27 landen) en het vertrouwde TomTom Traffic, biedt dit systeem alles wat je nodig hebt voor een zorgeloze rit. Het 6-inch touchscreen biedt een hoge resolutie en een betere beeldkwaliteit, zodat je nooit meer een afslag of waarschuwing mist. Of je nu een korte rit of een lange reis maakt, de TomTom GO Classic 2nd GEN is je ideale navigatiepartner.|NULL|NULL
+CRUZ black Bici-rack frameholder bike rack - Roof mounting bike carrier|42|NULL|BICYCLE_ROOF_RACK|The CRUZ 'Bici-rack' is a basic but very solid and stable locking bike carrier - it's made of much stronger material than similar bike carriers in this price range. It fits roof bars up to 45mm wide, steel bars and aluminium bars, and downtubes to 90mm deep by 80mm wide.|1|NULL
+Thule 995001 OutWay Hanging 3-bike hanging trunk bike rack aluminium|405|NULL|BICYCLE_TRUNK_RACK|Thule OutWay Hanging is designed to give you a quick and easy way to transport up to three bikes to wherever you want to ride. It fits on the boot of your car – great if you don't have a towbar or if you want to use the car roof for a cargo box. Twin hook attachment and sturdy steel cables with rubber protection (on all contact areas to the car) make sure that the hanging boot bike rack is fastened tightly to your car. This rack can hold up to a maximum weight of 45KG|3|NULL
+
+M4 Competition Cabrio|320|94-RO-BG|CABRIO|Dikke vette cabrio heerlijk voor het vakantieleven, vakantieman.|80|0
+Q5|84|64-NRL-7|SUV|Stevig SUV'tje|240|NULL
+Sienna Spongebob|12340021|GB-799-N|HATCHBACK|The original Spongebob car available for rent at a hefty price|31023|NULLsp

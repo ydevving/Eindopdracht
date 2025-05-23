@@ -1,10 +1,13 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "_user")
@@ -12,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class User implements Entities {
 
     @Id
     @Column(nullable = false)
@@ -29,4 +32,7 @@ public class User {
 
     @Column (nullable = false)
     private String city;
+
+    @OneToMany(mappedBy = "rentingUser")
+    private List<Transaction> transactions;
 }

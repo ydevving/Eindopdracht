@@ -1,9 +1,12 @@
 package com.itvitae.Eindopdracht.Model;
 
 import com.itvitae.Eindopdracht.Enum.ItemType;
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import com.itvitae.Eindopdracht.Enum.Status;
+
+import java.util.Set;
 
 @Entity
 @Table
@@ -11,7 +14,7 @@ import com.itvitae.Eindopdracht.Enum.Status;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Item {
+public class Item implements Entities {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
@@ -31,7 +34,7 @@ public class Item {
     @Column(nullable = false)
     private ItemType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String description;
 
     @Column(nullable = true)
@@ -40,5 +43,8 @@ public class Item {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
+
+    @OneToMany(mappedBy = "item")
+    private Set<Transaction> transactions;
 
 }

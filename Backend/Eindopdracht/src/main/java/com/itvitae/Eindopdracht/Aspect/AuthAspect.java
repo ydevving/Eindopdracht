@@ -44,7 +44,7 @@ public class AuthAspect {
         Optional<User> user = this.authService.retrieveUserFromToken(token);
 
         if (user.isEmpty())
-            return ResponseEntity.badRequest().body("Authorization header not valid");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED);
 
         if (auth.admin() && !(this.authService.isAdmin(user.get())))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED);

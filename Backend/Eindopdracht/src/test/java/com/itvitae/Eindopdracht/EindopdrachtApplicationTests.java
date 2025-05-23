@@ -8,6 +8,7 @@ class EindopdrachtApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Hi Test!");
 	}
 
 }

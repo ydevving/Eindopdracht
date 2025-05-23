@@ -1,8 +1,12 @@
 package com.itvitae.Eindopdracht.Controller;
 
+import com.itvitae.Eindopdracht.Annotation.Auth;
 import com.itvitae.Eindopdracht.DTO.RegisterForm;
+import com.itvitae.Eindopdracht.DTO.UserInfoDTO;
+import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Model.User;
 import com.itvitae.Eindopdracht.Service.AuthenticationService;
+import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -16,8 +20,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.itvitae.Eindopdracht.DTO.LoginResponseDTO;
 import com.itvitae.Eindopdracht.DTO.LoginForm;
-import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -30,6 +34,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ItemService itemService;
 
     @Autowired
     AuthenticationService authService;
@@ -85,5 +92,18 @@ public class UserController {
         String token = this.authService.add(createdUser);
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
+    }
+
+    @GetMapping("/info")
+    @Auth(admin = true)
+    public ResponseEntity<UserInfoDTO> getInformation(@PathVariable String username) {
+        Optional<User> _user = this.userService.exists(username);
+
+        if (_user.isEmpty())
+            return ResponseEntity.badRequest().build();
+
+        User user = _user.get();
+
+        return ResponseEntity.ok().body(new UserInfoDTO(user.getEmail(), user.getCity(), user.getAddress()));
     }
 }

@@ -4,9 +4,7 @@ import com.itvitae.Eindopdracht.Model.User;
 import com.itvitae.Eindopdracht.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
-import javax.swing.text.html.Option;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Stream;

@@ -1,5 +1,6 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
@@ -10,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transaction {
+public class Transaction implements Entities {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
