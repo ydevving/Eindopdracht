@@ -23,6 +23,8 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 class BuildService {
@@ -50,8 +52,11 @@ class BuildService {
         }
     }
 
-    public void printHi() {
-        System.out.println("Hi!!!");
+    public static boolean isValidEmail(String email) {
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+
+        return matcher.find();
     }
 
     @Autowired
@@ -88,6 +93,9 @@ class BuildService {
 
         if (email.equals("NULL"))
             throw new Seeder.BadCSVFormatException("EMAIL (3rd column) cannot be null!");
+
+        if (!isValidEmail(email))
+            throw new Seeder.BadCSVFormatException("EMAIL (3rd column) is not a valid email!");
 
         User user = User.builder()
                 .username(username)
@@ -208,17 +216,24 @@ class BuildService {
             throw new Seeder.BadCSVFormatException("TYPE (4th column) must be a valid 'ItemType' enum constant");
         }
 
-        String imgURL = values.get(4);
+        String imgURL = (values.get(4).equals("NULL")) ? null : values.get(4);
 
-        if (!imgURL.equals("NULL") && !isValidURL(imgURL))
+        if (!isValidURL(imgURL))
             throw new Seeder.BadCSVFormatException("IMAGE_URL (5th column) is an invalid URL, note: must be in HTTP(S) format");
 
         String description = values.get(5);
 
         if (description.equals("NULL"))
-            throw new Seeder.BadCSVFormatException("DESCRIPTION (5th column) cannot be null!");
+            throw new Seeder.BadCSVFormatException("DESCRIPTION (6th column) cannot be null!");
 
-        Short storageSpace = (value.equals("NULL")) ? null : Short.valueOf(values.get(6));
+        Short storageSpace = null;
+
+        try {
+            if (!values.get(6).equals("NULL"))
+                storageSpace = Short.valueOf(values.get(6));
+        } catch (NumberFormatException e) {
+            throw new Seeder.BadCSVFormatException("STORAGE_SPACE (7th column) must be a valid 'short' type number");
+        }
 
         Item item = Item.builder()
                 .name(name)
@@ -247,23 +262,26 @@ class BuildService {
 
     @SuppressWarnings("unchecked")
     public <T extends Entities> T buildTransaction(List<String> values) throws Seeder.BadCSVFormatException, IOException {
+        if (values.get(2).equals("NULL"))
+            throw new Seeder.BadCSVFormatException("USER (1st column) cannot be null!");
+
         Optional<User> user = this.userService.exists(values.get(2));
 
         if (user.isEmpty())
-            throw new Seeder.BadCSVFormatException("Renting User ID (3th column) does not exist in Database!");
+            throw new Seeder.BadCSVFormatException("USER (1st column) does not exist in Database!");
 
         Integer item_ref;
 
         try {
             item_ref = Integer.valueOf(values.get(3));
         } catch (NumberFormatException e) {
-            throw new Seeder.BadCSVFormatException("Item ID (4th column) must be a valid number");
+            throw new Seeder.BadCSVFormatException("ITEM_UNIQUE_REF (4th column) must be a valid number");
         }
 
         Item item = REF_ID.get(item_ref);
 
         if (item == null)
-            throw new Seeder.BadCSVFormatException("Item ID (4th column) is not present in the REF_ID array");
+            throw new Seeder.BadCSVFormatException("ITEM_UNIQUE_REF (4th column) is not present in the REF_ID array");
 
         Transaction transaction = Transaction.builder()
                 .rentedAt(Date.valueOf(values.get(0)))

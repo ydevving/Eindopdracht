@@ -1,8 +1,5 @@
  package com.itvitae.Eindopdracht.Seeder;
 
-import com.itvitae.Eindopdracht.Enum.FuelType;
-import com.itvitae.Eindopdracht.Enum.ItemType;
-import com.itvitae.Eindopdracht.Enum.Status;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
@@ -12,24 +9,17 @@ import com.itvitae.Eindopdracht.Repository.CarRepository;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Repository.TransactionRepository;
 import com.itvitae.Eindopdracht.Repository.UserRepository;
-import com.itvitae.Eindopdracht.Service.CarService;
-import com.itvitae.Eindopdracht.Service.ItemService;
-import com.itvitae.Eindopdracht.Service.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Date;
 import java.util.*;
-import java.net.URL;
-import java.util.function.Function;
 
 @Component
 public class Seeder implements CommandLineRunner, Entities {
@@ -79,8 +69,6 @@ public class Seeder implements CommandLineRunner, Entities {
     void init() {
         modelValues = new HashMap<>(ModelType.values().length);
 
-        buildService.printHi();
-
         // Denotes how many fields the Model has
         modelValues.put(ModelType.USER, new ModelInfo<User>(5, buildService::buildUser));
         modelValues.put(ModelType.ITEM, new ModelInfo<Item>(8, buildService::buildItem));
@@ -98,14 +86,13 @@ public class Seeder implements CommandLineRunner, Entities {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 
             List<T> resultList = new ArrayList<>();
+            String line;
+            int lineCount = 1;
+
+            BadCSVFormatException.lineNumber = lineCount;
 
             // Skip first info comment line
             br.readLine();
-
-            String line;
-
-            int lineCount = 1;
-            BadCSVFormatException.lineNumber = lineCount;
 
             while ((line = br.readLine()) != null) {
                 lineCount++;
