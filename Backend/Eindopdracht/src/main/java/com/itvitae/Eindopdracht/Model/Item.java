@@ -50,6 +50,6 @@ public class Item implements Entities {
     private Set<Transaction> transactions;
 
     @Column(nullable = true)
-    private String imgURL;
+    private String imgUrl;
 
 }
