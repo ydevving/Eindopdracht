@@ -335,6 +335,9 @@ public class Seeder implements CommandLineRunner {
 
                         resultList.add((T)transaction);
 
+                        // Clear linking relationship list so it can be prepared for future iterations
+                        REF_ID.clear();
+
                         break;
                     }
                 }
@@ -358,12 +361,10 @@ public class Seeder implements CommandLineRunner {
         this.itemRepo.deleteAll();
         this.userRepo.deleteAll();
 
+        // Saving items must come before saving the transactions, because a transaction depends on an item already existing
         readAndSaveModelCSV("users.csv", ModelType.USER);
         readAndSaveModelCSV("cars.csv", ModelType.CAR);
         readAndSaveModelCSV("items.csv", ModelType.ITEM);
         readAndSaveModelCSV("transactions.csv", ModelType.TRANSACTION);
-
-        // Clear linking relationship list so it can be prepared for future iterations
-        REF_ID.clear();
     }
 }
