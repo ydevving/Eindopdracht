@@ -32,13 +32,10 @@ import java.util.Optional;
 @Tag(name = "User Management", description = "APIs for managing users")
 public class UserController {
 
-    @Autowired
     UserService userService;
 
-    @Autowired
     ItemService itemService;
 
-    @Autowired
     AuthenticationService authService;
 
     @Operation(summary = "Create a new user", description = "Add a new user to the system")

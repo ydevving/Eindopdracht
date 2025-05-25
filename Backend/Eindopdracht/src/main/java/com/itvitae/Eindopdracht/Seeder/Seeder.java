@@ -1,4 +1,4 @@
- package com.itvitae.Eindopdracht.Seeder;
+package com.itvitae.Eindopdracht.Seeder;
 
 import com.itvitae.Eindopdracht.Generic.Entities;
 import com.itvitae.Eindopdracht.Model.Car;
@@ -89,13 +89,12 @@ public class Seeder implements CommandLineRunner, Entities {
             String line;
             int lineCount = 1;
 
-            BadCSVFormatException.lineNumber = lineCount;
-
             // Skip first info comment line
             br.readLine();
 
             while ((line = br.readLine()) != null) {
                 lineCount++;
+                BadCSVFormatException.lineNumber = lineCount;
 
                 if (line.isBlank())
                     continue;
@@ -130,9 +129,10 @@ public class Seeder implements CommandLineRunner, Entities {
         this.userRepo.deleteAll();
 
         // Saving items must come before saving the transactions, because a transaction depends on an item already existing
-        readAndSaveModelCSV("users.csv", ModelType.USER);
-        readAndSaveModelCSV("cars.csv", ModelType.CAR);
-        readAndSaveModelCSV("items.csv", ModelType.ITEM);
-        readAndSaveModelCSV("transactions.csv", ModelType.TRANSACTION);
+        this.readAndSaveModelCSV("users.csv", ModelType.USER);
+        this.readAndSaveModelCSV("cars.csv", ModelType.CAR);
+        this.readAndSaveModelCSV("items.csv", ModelType.ITEM);
+        this.readAndSaveModelCSV("transactions.csv", ModelType.TRANSACTION);
+        this.buildService.clearReferenceIDs();
     }
 }

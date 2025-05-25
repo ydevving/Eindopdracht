@@ -216,9 +216,10 @@ class BuildService {
             throw new Seeder.BadCSVFormatException("TYPE (4th column) must be a valid 'ItemType' enum constant");
         }
 
-        String imgURL = (values.get(4).equals("NULL")) ? null : values.get(4);
+        boolean isImgNull = values.get(4).equals("NULL");
+        String imgURL = values.get(4);
 
-        if (!isValidURL(imgURL))
+        if (!isValidURL(imgURL) && !isImgNull)
             throw new Seeder.BadCSVFormatException("IMAGE_URL (5th column) is an invalid URL, note: must be in HTTP(S) format");
 
         String description = values.get(5);
@@ -292,9 +293,12 @@ class BuildService {
 
         transaction = transactionRepo.save(transaction);
 
-        REF_ID.clear(); // Clear linking relationship list so it can be prepared for future iterations
-
         return (T)transaction;
+    }
+
+
+    public void clearReferenceIDs() {
+        REF_ID.clear(); // Clear linking relationship list so it can be prepared for future iterations
     }
 
 }
