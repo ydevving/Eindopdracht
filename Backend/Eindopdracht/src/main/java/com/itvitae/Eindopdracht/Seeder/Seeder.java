@@ -1,5 +1,7 @@
 package com.itvitae.Eindopdracht.Seeder;
 
+import com.itvitae.Eindopdracht.Enum.ItemType;
+import com.itvitae.Eindopdracht.Enum.Status;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -129,10 +133,10 @@ public class Seeder implements CommandLineRunner, Entities {
         this.userRepo.deleteAll();
 
         // Saving items must come before saving the transactions, because a transaction depends on an item already existing
-        this.readAndSaveModelCSV("users.csv", ModelType.USER);
-        this.readAndSaveModelCSV("cars.csv", ModelType.CAR);
-        this.readAndSaveModelCSV("items.csv", ModelType.ITEM);
-        this.readAndSaveModelCSV("transactions.csv", ModelType.TRANSACTION);
+        this.userRepo.saveAll(this.readAndSaveModelCSV("users.csv", ModelType.USER));
+        this.carRepo.saveAll(this.readAndSaveModelCSV("cars.csv", ModelType.CAR));
+        this.itemRepo.saveAll(this.readAndSaveModelCSV("items.csv", ModelType.ITEM));
+        this.transactionRepo.saveAll(this.readAndSaveModelCSV("transactions.csv", ModelType.TRANSACTION));
         this.buildService.clearReferenceIDs();
     }
 }

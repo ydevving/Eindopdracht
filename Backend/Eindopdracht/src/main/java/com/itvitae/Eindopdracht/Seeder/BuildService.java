@@ -105,7 +105,7 @@ class BuildService {
                 .address(values.get(4))
                 .build();
 
-        return (T)userRepo.save(user);
+        return (T)user;
     }
 
     @SuppressWarnings("unchecked")
@@ -181,7 +181,7 @@ class BuildService {
                 .fuelType(fuelType)
                 .build();
 
-        return (T)carRepo.save(car);
+        return (T)car;
     }
 
     @SuppressWarnings("unchecked")
@@ -258,7 +258,7 @@ class BuildService {
         if (item_ref != null)
             REF_ID.put(item_ref, item);
 
-        return (T)itemRepo.save(item);
+        return (T)item;
     }
 
     @SuppressWarnings("unchecked")
@@ -291,7 +291,7 @@ class BuildService {
                 .item(item)
                 .build();
 
-        transaction = transactionRepo.save(transaction);
+//        transaction = transactionRepo.save(transaction);
 
         return (T)transaction;
     }
