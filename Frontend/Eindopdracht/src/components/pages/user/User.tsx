@@ -15,7 +15,7 @@ export default function User() {
               
 
     return (
-        <div>
+        <div >
            <div>
             <ItemList/>
            </div>
@@ -23,10 +23,9 @@ export default function User() {
             <ProductFilter filterList={filterList} setFilterList={setFilterList}/>
             <Button variant="info" onClick ={()=> {console.log(filterList)}}>test button</Button>
             </div>
-            <div>Filtered by:</div>
             
-            <div >
-                {filterList.map((e)=> <div style={{display: 'flex', maxWidth: "15 vw", minWidth: "10 vw"}}>{e.filter}:{e.value}</div>)} 
+            <div  style={{display: 'flex'}}>
+            Filtered_by:{filterList.map((e)=> <div style={{position:'relative', right:"4.5vw", maxWidth: '8.5vw', minWidth: '8.5vw'}} >{e.filter}:{e.value}</div>)} 
             </div>
 
         </div>

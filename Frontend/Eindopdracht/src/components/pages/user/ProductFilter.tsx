@@ -122,17 +122,17 @@ function ProductFilter({filterList, setFilterList}:{                //function t
                     <Form>
                         <DropdownButton variant="info" size="sm" id="dropdown-price" title="price filter">
                                 <Dropdown.Item onClick={()=> assignFilter('price', 0)}>€0 - €50</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('price', 1)}>10.000 - 20.000</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('price', 2)}>20.000 - 30.000</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('price', 1)}>€50 - €100</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('price', 2)}>€100 - €150</Dropdown.Item>
                                 <Dropdown.Item onClick={()=> assignFilter('price', 3)}>150+</Dropdown.Item>
                         </DropdownButton>
                     </Form>
                     <Form>
                         <DropdownButton variant="info" size="sm" id="dropdown-storage" title="storage filter">
-                                <Dropdown.Item onClick={()=> assignFilter('storage', '€0 - €50')}>€0 - €50</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('storage', '2000L - 5000L')}>2000L - 5000L</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('storage','5000L - 7500L')}>5000L - 7500L</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('storage', '7500L+')}>7500L+</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage', '0L - 250L')}>0 - 500L</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage', '200L - 500L')}>500L - 1000L</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage','500L - 750L')}>1000L - 1500L</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage', '750L+')}>1500L+</Dropdown.Item>
                         </DropdownButton>
                     </Form>
                     <Form>
