@@ -44,7 +44,7 @@ public class AuthAspect {
         Optional<User> user = this.authService.retrieveUserFromToken(token);
 
         if (user.isEmpty())
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         if (auth.admin() && !(this.authService.isAdmin(user.get())))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED);

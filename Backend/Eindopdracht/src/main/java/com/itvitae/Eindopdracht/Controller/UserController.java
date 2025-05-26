@@ -33,10 +33,18 @@ import java.util.Optional;
 public class UserController {
 
     UserService userService;
-
     ItemService itemService;
-
     AuthenticationService authService;
+
+    public UserController(
+            UserService userService,
+            ItemService itemService,
+            AuthenticationService authService
+    ) {
+        this.userService = userService;
+        this.itemService = itemService;
+        this.authService = authService;
+    }
 
     @Operation(summary = "Create a new user", description = "Add a new user to the system")
     @ApiResponses(value = {
@@ -93,7 +101,7 @@ public class UserController {
 
     @GetMapping("/info")
     @Auth(admin = true)
-    public ResponseEntity<UserInfoDTO> getInformation(@PathVariable String username) {
+    public ResponseEntity<UserInfoDTO> getInformation(@RequestParam String username) {
         Optional<User> _user = this.userService.exists(username);
 
         if (_user.isEmpty())
