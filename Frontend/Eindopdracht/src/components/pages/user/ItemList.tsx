@@ -52,7 +52,7 @@ export default function ItemList(){
         <div style={{display:"flex"}}>
             {/* .btn style also applies to ItemButton */}
             <style>{`
-                .btn {
+                .btn-primary {
                     height: 60vh;
                     max-width: 5vw;
                     min-width: 5vw;
