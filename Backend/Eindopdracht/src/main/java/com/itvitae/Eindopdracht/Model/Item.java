@@ -1,5 +1,6 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.itvitae.Eindopdracht.Enum.ItemType;
 import com.itvitae.Eindopdracht.Generic.Entities;
@@ -47,6 +48,7 @@ public class Item implements Entities {
     private Status status;
 
     @OneToMany(mappedBy = "item")
+    @JsonBackReference
     private Set<Transaction> transactions;
 
     @Column(nullable = true)
