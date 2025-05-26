@@ -27,10 +27,24 @@ public class ItemController {
    }
 
    @GetMapping("/{itemId}")
-   ResponseEntity<Item> getItem(@PathVariable long itemId) {
-        Optional<Item> itemOptional = itemRepository.findById(itemId);
-        return (itemOptional.isEmpty()) ?
-                ResponseEntity.notFound().build()
-                : ResponseEntity.ok().body(itemOptional.get());
+   @Auth
+   ResponseEntity<ItemDTO> getItem(@PathVariable long itemId) {
+        Optional<Item> _item = itemRepository.findById(itemId);
+
+        if (_item.isEmpty())
+            ResponseEntity.notFound().build();
+
+        Item item = _item.get();
+
+        return ResponseEntity.ok(new ItemDTO(
+                item.getId(),
+                item.getImgUrl(),
+                item.getName(),
+                item.getPrice(),
+                item.getDescription(),
+                item.getStorageSpace(),
+                item.getType(),
+                item.getStatus(),
+                item.getCar()));
     }
 }
