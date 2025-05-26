@@ -47,12 +47,12 @@ public class AuthAspect {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         if (auth.admin() && !(this.authService.isAdmin(user.get())))
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         boolean isAuthorized = this.authService.authenticateUser(user.get());
 
         if (!isAuthorized)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         return joinPoint.proceed();
     }
