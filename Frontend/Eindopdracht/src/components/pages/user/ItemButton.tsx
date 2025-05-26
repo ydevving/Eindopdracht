@@ -1,13 +1,13 @@
 import { Button, Image } from 'react-bootstrap'
 export default function ItemButton({item}:
         {item:{
-        image:String, name:String, 
-        price:number, seats:number, 
-        storage:number, type:String, 
-        transmissionBool:boolean
+        image:string, name:string, 
+        price:number, seats?:number, 
+        storage:number, type:string, 
+        isAutomatic?:boolean
         }}
     ) {
-    if (item.transmissionBool) {
+    if (item.isAutomatic) {
         var transmission = "automatic"
     } else {
         var transmission = "manual"
@@ -22,7 +22,7 @@ export default function ItemButton({item}:
                     font-size: 1vw;
                 }
                 p {
-                    margin: 0;
+                    margin: 4px;
                     text-align: left;
                     display: flex;
                 }
@@ -33,13 +33,13 @@ export default function ItemButton({item}:
                 }
             `}</style>
             <Button style={{minWidth:"30vw", maxWidth:"30vw", backgroundColor:"#242424"}}>
-                <Image src={`/src/assets/${item.image}`} rounded style={{height:"auto", width:"20vw"}}/>
+                <Image src={item.image} rounded style={{height:"auto", width:"20vw"}}/>
                 <p><b style={{fontSize:"2vw", overflow:"wrap"}}>{item.name}</b></p>
                 <p style={{ display:"block", color:"#90EE90", fontSize:"2vw", textAlign:"center"}}>${item.price},-/day</p>
-                <p><Image src="/src/assets/type.svg"/>{item.type}</p>
-                <p><Image src="/src/assets/seats.svg"/>{item.seats}</p>
-                <p><Image src="/src/assets/transmission.svg"/>{transmission}</p>
-                <p><Image src="/src/assets/storage.svg"/>{item.storage} m3</p>
+                <p>{item.seats != undefined ? <Image src="/src/assets/type.svg"/> : <Image src="/src/assets/type2.svg"/>}{item.type}</p>
+                {item.seats != undefined ? <p><Image src="/src/assets/seats.svg"/>{item.seats}</p> : <></>}
+                {item.isAutomatic != undefined ? <p><Image src="/src/assets/transmission.svg"/>{transmission}</p> : <></>}
+                <p><Image src="/src/assets/storage.svg"/>{item.storage} {item.type.includes("BikeHolder") ? "bicycle(s)" : "L"}</p>
             </Button>
         </>
     )
