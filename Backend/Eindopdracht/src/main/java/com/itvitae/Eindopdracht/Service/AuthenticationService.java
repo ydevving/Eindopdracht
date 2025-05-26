@@ -1,50 +1,84 @@
 package com.itvitae.Eindopdracht.Service;
 
+import com.itvitae.Eindopdracht.Model.User;
+import com.itvitae.Eindopdracht.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.sql.SQLException;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class AuthenticationService {
-    static List<String> userList = new ArrayList<>();
-    static List<String> adminList = new ArrayList<>();
+    static HashMap<User, String> userList = new HashMap<>();
+    static HashMap<User, String> adminList = new HashMap<>();
 
+    static private boolean initialized = false;
 
-    AuthenticationService() {
+    @Autowired
+    UserRepository userRepo;
+
+    AuthenticationService() throws SQLException {
         // Access control list
-        adminList.add("admin");
+
+        if (initialized || userRepo == null)
+            return;
+
+        Optional<User> admin = userRepo.findByUsername("admin");
+
+        if (!(admin.isPresent()))
+            throw new SQLException("User 'admin' has not been found in the Database!");
+
+        this.adminList.put(admin.get(), generateToken());
+
+        initialized = true;
     }
 
-    public boolean authenticateUser(String token) {
-        if (userList.contains(token))
-            return true;
-
-        return false;
+    private String generateToken() {
+        return UUID.randomUUID().toString();
     }
 
-    public boolean authenticateAdmin(String token) {
-        if (adminList.contains(token))
-            return true;
-
-        return false;
+    public boolean authenticateUser(User user) {
+        return (this.userList.get(user) != null);
     }
 
-    public String addUser() {
-        String token = UUID.randomUUID().toString();
+    public boolean authenticateAdmin(User user) {
+        return (this.adminList.get(user) != null);
+    }
 
-        userList.add(token);
+    public String add(User user) {
+        if (user.getUsername().equals("admin"))
+            return this.addAdmin(user);
+
+        return this.addUser(user);
+    }
+
+    public String addUser(User user) {
+        String token = this.generateToken();
+
+        this.userList.put(user, token);
 
         return token;
     }
 
-    public String addAdmin() {
-        String token = UUID.randomUUID().toString();
+    public String addAdmin(User user) {
+        String token = generateToken();
 
-        userList.add(token);
-        adminList.add(token);
+        this.userList.put(user, token);
+        this.adminList.put(user, token);
 
         return token;
+    }
+
+    public Boolean isAdmin(User user) {
+        return user.getUsername().equals("admin");
+    }
+
+    public Optional<User> retrieveUserFromToken(String token) {
+        return Stream.concat(adminList.entrySet().stream(), userList.entrySet().stream())
+                .filter(entry -> entry.getValue().equals(token))
+                .map(Map.Entry::getKey)
+                .findFirst();
     }
 }

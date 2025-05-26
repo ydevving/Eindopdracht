@@ -1,9 +1,14 @@
 package com.itvitae.Eindopdracht.Model;
 
-import com.itvitae.Eindopdracht.Enum.itemType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.itvitae.Eindopdracht.Enum.ItemType;
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
-import com.itvitae.Eindopdracht.Enum.status;
+import com.itvitae.Eindopdracht.Enum.Status;
+
+import java.util.Set;
 
 @Entity
 @Table
@@ -11,32 +16,42 @@ import com.itvitae.Eindopdracht.Enum.status;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Item {
+public class Item implements Entities {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
 
     @Column (nullable = false)
-    private double price;
+    private Double price;
 
     @OneToOne
     @JoinColumn(nullable = true)
+    @JsonManagedReference
     private Car car;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private itemType type;
+    private ItemType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1000)
     private String description;
 
     @Column(nullable = true)
-    private short storageSpace;
+    private Short storageSpace;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private status status;
+    private Status status;
+
+    @OneToMany(mappedBy = "item")
+    @JsonBackReference
+    private Set<Transaction> transactions;
+
+    @Column(nullable = true)
+    private String imgUrl;
 
 }

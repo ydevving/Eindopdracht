@@ -1,9 +1,10 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
-import com.itvitae.Eindopdracht.Enum.fuelType;
-import com.itvitae.Eindopdracht.Enum.transmissionTypes;
+import com.itvitae.Eindopdracht.Enum.FuelType;
 
 @Entity
 @Table
@@ -11,7 +12,8 @@ import com.itvitae.Eindopdracht.Enum.transmissionTypes;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Car {
+public class Car implements Entities {
+
     @Id
     @Column
     private String licenseplate;
@@ -20,25 +22,26 @@ public class Car {
     private String brand;
 
     @Column(nullable = false)
-    private transmissionTypes transmission;
+    private Boolean isAutomatic;
 
     @Column(nullable = false)
-    private byte Seats;
+    private Short seats;
 
     @Column(nullable = false)
-    private short towWeight;
+    private Short towWeight;
 
     @Column(nullable = false)
-    private int kilometerCounter;
+    private Integer kilometerCounter;
 
     @Column(nullable = false)
-    private short modelYear;
+    private Short modelYear;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private fuelType fuelType;
+    private FuelType fuelType;
 
-    @OneToOne(mappedBy = "car")
+    @OneToOne(mappedBy = "car", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonBackReference
     private Item item;
 
 }

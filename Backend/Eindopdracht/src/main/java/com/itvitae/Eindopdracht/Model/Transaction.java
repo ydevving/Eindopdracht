@@ -1,5 +1,7 @@
 package com.itvitae.Eindopdracht.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
@@ -10,10 +12,11 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transaction {
+public class Transaction implements Entities {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private Date rentedAt;
@@ -23,9 +26,11 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonManagedReference
     private User rentingUser;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonManagedReference
     private Item item;
 }
