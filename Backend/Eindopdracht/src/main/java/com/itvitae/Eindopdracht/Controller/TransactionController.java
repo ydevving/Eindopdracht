@@ -35,7 +35,7 @@ public class TransactionController {
 
     // Admin can find all transactions for a specific item including more information about the rentinguser
     // Searching based on Username
-    @Auth(admin = true)
+    @Auth(requiresAdmin = true)
     @GetMapping("/admin/{username}")
     List<TransactionDTO> getAllByUsername(@PathVariable String username) {
         List<Transaction> transactions = transactionRepository.findAllByRentingUserUsername(username);

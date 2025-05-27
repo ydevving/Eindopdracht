@@ -8,13 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.itvitae.Eindopdracht.Annotation.Auth;
-import com.itvitae.Eindopdracht.Service.AuthenticationService;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,14 +21,20 @@ import java.util.Optional;
 @Aspect
 @Component
 public class AuthAspect {
-    @Autowired
-    private AuthenticationService authService;
 
-    @Autowired
     private UserRepository userRepo;
-
-    @Autowired
+    private AuthenticationService authService;
     private UserService userService;
+
+    public AuthAspect(
+            UserRepository userRepo,
+            AuthenticationService authService,
+            UserService userService
+    ) {
+        this.userRepo = userRepo;
+        this.authService = authService;
+        this.userService = userService;
+    }
 
     @Around("@annotation(auth)")
     public Object checkAuthorization(ProceedingJoinPoint joinPoint, Auth auth) throws Throwable {
@@ -46,7 +50,7 @@ public class AuthAspect {
         if (user.isEmpty())
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
-        if (auth.admin() && !(this.authService.isAdmin(user.get())))
+        if (auth.requiresAdmin() && !(this.authService.isAdmin(user.get())))
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 
         boolean isAuthorized = this.authService.authenticateUser(user.get());

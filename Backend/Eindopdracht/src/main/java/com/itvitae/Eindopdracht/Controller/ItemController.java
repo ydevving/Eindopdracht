@@ -45,6 +45,7 @@ public class ItemController {
                 item.getStorageSpace(),
                 item.getType(),
                 item.getStatus(),
-                item.getCar()));
+                item.getCar()
+        ));
     }
 }

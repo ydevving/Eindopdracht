@@ -100,7 +100,7 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    @Auth(admin = true)
+    @Auth(requiresAdmin = true)
     public ResponseEntity<UserInfoDTO> getInformation(@RequestParam String username) {
         Optional<User> _user = this.userService.exists(username);
 
