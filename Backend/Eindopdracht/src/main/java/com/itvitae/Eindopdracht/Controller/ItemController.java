@@ -48,4 +48,24 @@ public class ItemController {
                 item.getCar()
         ));
     }
+
+    @PatchMapping("/{itemId}")
+    @Auth
+    ResponseEntity<ItemDTO> modifyStatus(@PathVariable long itemId){
+
+        if(itemRepository.existsById(itemId)) {
+
+            ItemDTO updatedDTO = itemService.setStatus(itemId);
+
+            return ResponseEntity.ok(updatedDTO);
+
+        }else{
+
+            return ResponseEntity.notFound().build();
+        }
+
+        //Parts needed: itemDTO, ItemService(function to set status and map to DTO)
+
+    }
+
 }
