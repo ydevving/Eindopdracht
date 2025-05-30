@@ -18,91 +18,125 @@ function ProductFilter({filterList, setFilterList}:{                //function t
     filterList:Array<filterValue>, setFilterList:React.Dispatch<React.SetStateAction<Array<filterValue>>>       //typed values of filterList and setFilterList which take an object array of FilterValue
 }){
     
-    //const [check, setcheck] = useState();
+    const [check, setcheck] = useState([false,false,false,false,false]);
     const [show, setShow ] = useState(false);   //State boolean for showing the modal
     const handleClose = () => setShow(false);       //Handle function for closing the modal
     const handleShow = () => setShow(true);         //Handle function for showing the modal
 
 
     function assignFilter(filter: string, value: string|number|boolean){        //function for assigning a filter after click in modal recieves a filter and value
-        let newfilterList = filterList;
+        
+        let newfilterList = [...filterList];
 
-        let fvalue = {              //typed object of filter and value
+        let fvalue = {              //typed object of filter and value (nieuw value)
             filter : filter,
             value : value
         }
         
-        function filterIndex(value:filterValue){        //function that searches through the selected values 
-           if(value.filter === 'type'){                 //if the filter is type
-                return (value === fvalue)               //return
-           }
-             return (value.filter === fvalue.filter)        //else return
+        let clickedCheck = [...check] //a variable Array of check
 
+        if(value === 'SUV'){                // if value is SUV
+           clickedCheck[0] = !clickedCheck[0]       //flip the boolean value of Array item 0
+           setcheck(clickedCheck)               //set the new variable array to the check useState
+        }
+        if(value === 'Sport'){
+            clickedCheck[1] = !clickedCheck[1]
+           setcheck(clickedCheck)
+        }
+        
+        if(value === 'Compact'){
+            clickedCheck[2] = !clickedCheck[2]
+           setcheck(clickedCheck)
+        }
+        
+        if(value === 'Company car'){
+            clickedCheck[3] = !clickedCheck[3]
+           setcheck(clickedCheck)
+        }
+        
+        if(value === 'Family car'){
+            clickedCheck[4] = !clickedCheck[4]
+           setcheck(clickedCheck)
+        }
+
+
+        let filterFound;
+        let valueFound;
+
+        function filterIndex(value:filterValue){        //function that searches through the selected values 
+                            
+            filterFound = (value.filter === fvalue.filter && value.filter != 'type')
+            valueFound = (value.value === fvalue.value)
+            return (filterFound || valueFound)
+                    
         }
 
         let filterSplice = newfilterList.findIndex(filterIndex)     //variable for index of the filter
 
-        if(filterSplice > -1){                                         //splices the filter en ensures that the same option cant be selected twice.
-            newfilterList.splice(filterSplice, filterSplice +1)
+        console.log(filter, value, filterFound, valueFound);
+        if(filterSplice > -1 && (filterFound || valueFound)){
+                                                             //splices the filter en ensures that the same option cant be selected twice.
+            newfilterList.splice(filterSplice, 1)
         }
-        
-        newfilterList.push(fvalue)                  //pushes the filterList to the array of filter values
-       
-        console.log(newfilterList)
-        setFilterList(newfilterList)                //sets the filterList with the values of newfilterList
 
-        console.log(filterList)
+        if(!(!filterFound && valueFound)){
+             newfilterList.push(fvalue)  
+        }
+                         //pushes the filterList to the array of filter values
+        
+        
+        setFilterList(newfilterList)                //sets the filterList with the values of newfilterList
     }
 
-    // function checker(value: string|number|boolean){
-    //     let i :number;
-
-    //     for(i=0; i< filterList.length; i++){
-    //         if(value === filterList[i].value){
-    //             return setcheck(true);
-    //         }else{
-    //             return setcheck(false);
-    //         }
-    //     };
-    // }
-
     return(
-        <div className="container-sm">
+        <div style={{display:"flex"}}>
+            <style>{`
+                .btn{
+                    max-width: 9vw;
+                    min-width: 2vw;
+                }
+                .form-check-input{
+                    max-height: 2vh;
+                    min-height: 2vh;
+                    max-width: 2vh;
+                    min-width: 2vh;
+                }    
+            `}</style>
             <div className="container-sm">
-            <Button variant="primary" onClick={handleShow}>Filter products</Button>
+            <Button variant="info" onClick={handleShow}>Filter products</Button>
             </div> 
 
-            <Modal show={show} onHide={handleClose} animation={true} size="sm">
+            <Modal show={show} onHide={handleClose} animation={true} size="sm" style={{maxHeight: "60vh", minHeight: "60vh", maxWidth: "20vw", minWidth: "20vw"}}>
                 <Modal.Header closeButton>
                     <Modal.Title>Choose Filter</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
                     <Form>
-                        <Form.Check inline label="SUV" onChange={() => assignFilter('type', 'SUV')/*setType('SUV')*/ }/>
-                        <Form.Check inline label="Sport" onClick={()=>assignFilter('type', 'Sport')}/>
-                        <Form.Check inline label="Compact" onClick={() => assignFilter('type', 'Compact')}/>
-                        <Form.Check inline label="Company car" onClick={()=> assignFilter('type', 'Company car')}/>
-                        <Form.Check inline label="Family car" onClick={()=> assignFilter('type', 'Family car')}/>      
+                        <Form.Check inline checked={check[0]} label="SUV" onClick={() => assignFilter('type', 'SUV')}     />
+                        <Form.Check inline checked={check[1]} label="Sport" onClick={()=>assignFilter('type', 'Sport')}/>
+                        <Form.Check inline checked={check[2]} label="Compact" onClick={() => assignFilter('type', 'Compact')}/>
+                        <Form.Check inline checked={check[3]} label="Company car" onClick={()=> assignFilter('type', 'Company car')}/>
+                        <Form.Check inline checked={check[4]} label="Family car" onClick={()=> assignFilter('type', 'Family car')}/>      
                     </Form>
                     <Form>
-                        <DropdownButton variant="primary" size="sm" id="dropdown-price" title="price filter">
+                        <DropdownButton variant="info" size="sm" id="dropdown-price" title="price filter">
                                 <Dropdown.Item onClick={()=> assignFilter('price', 0)}>€0 - €50</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('price', 1)}>10.000 - 20.000</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('price', 2)}>20.000 - 30.000</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('price', 1)}>€50 - €100</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('price', 2)}>€100 - €150</Dropdown.Item>
                                 <Dropdown.Item onClick={()=> assignFilter('price', 3)}>150+</Dropdown.Item>
                         </DropdownButton>
                     </Form>
                     <Form>
-                        <DropdownButton variant="succes" size="sm" id="dropdown-storage" title="storage filter">
-                                <Dropdown.Item onClick={()=> assignFilter('storage', '€0 - €50')}>€0 - €50</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('storage', '2000L - 5000L')}>2000L - 5000L</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('storage','5000L - 7500L')}>5000L - 7500L</Dropdown.Item>
-                                <Dropdown.Item onClick={()=> assignFilter('storage', '7500L+')}>7500L+</Dropdown.Item>
+                        <DropdownButton variant="info" size="sm" id="dropdown-storage" title="storage filter">
+                                <Dropdown.Item onClick={()=> assignFilter('storage', '0L - 250L')}>0 - 500L</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage', '200L - 500L')}>500L - 1000L</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage','500L - 750L')}>1000L - 1500L</Dropdown.Item>
+                                <Dropdown.Item onClick={()=> assignFilter('storage', '750L+')}>1500L+</Dropdown.Item>
                         </DropdownButton>
                     </Form>
                     <Form>
-                        <DropdownButton variant="Info" size="sm" id="dropdown-fuel" title="fuel filter">
+                        <DropdownButton variant="info" size="sm" id="dropdown-fuel" title="fuel filter">
                                 <Dropdown.Item onClick={()=> assignFilter('fuel', 'petrol')}>petrol</Dropdown.Item>
                                 <Dropdown.Item onClick={()=> assignFilter('fuel','gas')}>gas</Dropdown.Item>
                                 <Dropdown.Item onClick={()=> assignFilter('fuel','electric')}>electric</Dropdown.Item>
@@ -110,13 +144,13 @@ function ProductFilter({filterList, setFilterList}:{                //function t
                         </DropdownButton>
                     </Form>
                     <Form>
-                        <DropdownButton variant="warning" size="sm" id="dropdown-transmission" title="transmission filter">
+                        <DropdownButton variant="info" size="sm" id="dropdown-transmission" title="transmission filter">
                                 <Dropdown.Item onClick={()=> assignFilter('transmission', false)}>Manual</Dropdown.Item>
                                 <Dropdown.Item onClick={()=> assignFilter('transmission', true)}>Automatic</Dropdown.Item>
                         </DropdownButton>
                     </Form>
                     <Form>
-                        <DropdownButton variant="secondary" size="sm" id="dropdown-seats" title="seats filter">
+                        <DropdownButton variant="info" size="sm" id="dropdown-seats" title="seats filter">
                                 <Dropdown.Item onClick={()=>  assignFilter('seats', 2)}>2</Dropdown.Item>
                                 <Dropdown.Item onClick={()=>  assignFilter('seats', 4)}>4</Dropdown.Item>
                                 <Dropdown.Item onClick={()=>  assignFilter('seats', 5)}>5</Dropdown.Item>
