@@ -49,13 +49,32 @@ public class ItemController {
         ));
     }
 
-    @PatchMapping("/{itemId}")
+    @PatchMapping("/user/{itemId}")
     @Auth
-    ResponseEntity<ItemDTO> modifyStatus(@PathVariable long itemId){
+    ResponseEntity<ItemDTO> modifyStatusUser(@PathVariable long itemId){
 
         if(itemRepository.existsById(itemId)) {
 
-            ItemDTO updatedDTO = itemService.setStatus(itemId);
+            ItemDTO updatedDTO = itemService.setStatusUser(itemId);
+
+            return ResponseEntity.ok(updatedDTO);
+
+        }else{
+
+            return ResponseEntity.notFound().build();
+        }
+
+        //Parts needed: itemDTO, ItemService(function to set status and map to DTO)
+
+    }
+
+    @PatchMapping("/admin/{itemId}")
+    @Auth(requiresAdmin = true)
+    ResponseEntity<ItemDTO> modifyStatusAdmin(@PathVariable long itemId){
+
+        if(itemRepository.existsById(itemId)) {
+
+            ItemDTO updatedDTO = itemService.setStatusAdmin(itemId);
 
             return ResponseEntity.ok(updatedDTO);
 
