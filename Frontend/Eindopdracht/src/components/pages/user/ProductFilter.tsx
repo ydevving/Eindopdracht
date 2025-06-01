@@ -91,9 +91,11 @@ function ProductFilter({filterList, setFilterList}:{                //function t
     return(
         <div style={{display:"flex"}}>
             <style>{`
-                .btn{
+                .btn-info{
                     max-width: 9vw;
                     min-width: 2vw;
+                    max-height: 2vw;
+                    min-height: 2vw;
                 }
                 .form-check-input{
                     max-height: 2vh;
@@ -160,8 +162,7 @@ function ProductFilter({filterList, setFilterList}:{                //function t
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    <Button variant="danger" onClick={handleClose}>Apply filters</Button>      
+                    <Button variant="danger" onClick={handleClose}>Close</Button>      
                 </Modal.Footer>
             </Modal>
 

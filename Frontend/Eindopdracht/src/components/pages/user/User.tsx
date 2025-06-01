@@ -1,4 +1,5 @@
 import ItemButton from "./ItemButton";
+import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
 import {useState} from 'react';
@@ -18,13 +19,16 @@ export default function User() {
 
     return (
         <div>
+
+            <div>
+                <ItemList/>
+            </div>
             <div>
             <ProductFilter filterList={filterList} setFilterList={setFilterList}/>
             </div>
             
-            <div>
-                Filtered by {filterList.map((e)=> <div>{e.filter}:{e.value}</div>)}
-                <Button onClick ={()=> {console.log(filterList)}}></Button> 
+            <div style={{display: 'flex'}}>
+                Filtered by {filterList.map((e)=> <div style={{position:'relative', right:"4.5vw", maxWidth: '8.5vw', minWidth: '8.5vw'}}>{e.filter}:{e.value}</div>)}
             </div>
 
         </div>
