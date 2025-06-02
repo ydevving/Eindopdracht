@@ -20,7 +20,7 @@ export default function NavbarComponent() {
             <Button onClick={()=>navigate("/user/transactions/")} className="m-2" style={{
                 background: "rgb(91, 106, 134)",
                 borderColor: "rgb(91, 106, 134"}}>my rentals</Button>
-            <Button onClick={()=>navigate("/login")} className="bg-danger border-danger m-2">log out</Button>
+            <Button onClick={()=>navigate("/login")} className="bg-danger border-danger m-2">Log out</Button>
             </Nav>
         </Container>
         </Navbar> 
