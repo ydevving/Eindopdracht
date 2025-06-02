@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { FaCarSide, FaCogs, FaUsers, FaSuitcase } from 'react-icons/fa';
 import type { Item } from '../../../entities/types';
+import OrderOverviewModal from './OrderOverviewModal';
 
 export default function CarInfoModal({ show, onHide, item }: {show: boolean, onHide: () => void, item: Item}) {
 
@@ -9,6 +10,11 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
 
   if (!item.car)
     return (<><h4>Couldn't find a car object in item object</h4></>);
+
+  const [seeOrder, setSeeOrder]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
+
+  if (seeOrder)
+    return (<OrderOverviewModal item={item} seeOrder={seeOrder} setSeeOrder={setSeeOrder} />);
 
   return (
     <Modal show={show} onHide={onHide} size='lg' centered>
@@ -48,7 +54,7 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
                 ))
               }
             </ul>
-            <Button variant='warning' className='mt-3 w-100'>Huren</Button>
+            <Button onClick={() => setSeeOrder(true)} variant='warning' className='mt-3 w-100'>Huren</Button>
           </Col>
         </Row>
 

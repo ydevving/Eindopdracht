@@ -22,7 +22,7 @@ export default function ItemDetails({item}:
         height:"100vh", width:"100vw", 
         background:"rgba(0, 0, 0, 0.5)"
     }}>
-        <style>{`
+        {/* <style>{`
             * {
                 max-width: 100%;
                 min-width: 100%;
@@ -38,7 +38,7 @@ export default function ItemDetails({item}:
                 min-width: 2vw;
                 margin-right: 10px;
             }
-        `}</style>
+        `}</style> */}
         <div>
             <Container>
                 <Row>
