@@ -2,7 +2,7 @@ import { useState } from "react"
 import ItemButton from "./ItemButton"
 import { Button } from "react-bootstrap"
 
-export default function ItemList(){
+export default function     ItemList(){
     const [page, setPage] = useState(0)
     
     function scrollPage(scroll:number){

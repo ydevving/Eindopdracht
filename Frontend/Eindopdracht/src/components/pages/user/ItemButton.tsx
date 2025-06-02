@@ -13,24 +13,29 @@ export default function ItemButton({item}:
         var transmission = "manual"
     }
      
+    // TO-DO: Specify specific elements with classname or ID
+
+    // {
+    //             * {
+    //                 max-width: 100%;
+    //                 min-width: 100%;
+    //                 font-size: 1vw;
+    //             }
+    //             p {
+    //                 margin: 4px;
+    //                 text-align: left;
+    //                 display: flex;
+    //             }
+    //             img {
+    //                 height: 2vw;
+    //                 min-width: 2vw;
+    //                 margin-right: 10px;
+    //             }
+
     return (
         <>
             <style>{`
-                * {
-                    max-width: 100%;
-                    min-width: 100%;
-                    font-size: 1vw;
-                }
-                p {
-                    margin: 4px;
-                    text-align: left;
-                    display: flex;
-                }
-                img {
-                    height: 2vw;
-                    min-width: 2vw;
-                    margin-right: 10px;
-                }
+                // Give the right elements the styling and do not generalize
             `}</style>
             <Button style={{minWidth:"30vw", maxWidth:"30vw", backgroundColor:"#242424"}}>
                 <Image src={item.image} rounded style={{height:"auto", width:"20vw"}}/>
