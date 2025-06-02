@@ -1,12 +1,21 @@
+import { Container, Row, Col, Button } from 'react-bootstrap'
+
 export default function Navbar() {
     return (
-        <div style={{
-            background: "linear-gradient(0deg,rgba(24, 24, 24, 0) 10%, rgba(255, 255, 255, 1) 80%)",
-            height:"20vh",
-            color:"black",
-            fontSize:"3vh"
+        <Container style={{
+            background: "#1E2A38",
+            height: "15vh",
+            color: "black",
+            fontSize: "3vh"
         }}>
-            navbar
-        </div>
+            <Row>
+                <Col>
+                    <Button variant="danger">My Rentals</Button>
+                </Col>
+                <Col>
+                    <Button>Log Out</Button>
+                </Col>
+            </Row>
+        </Container>
     )
 }

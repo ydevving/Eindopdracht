@@ -1,4 +1,5 @@
 import ItemButton from "./ItemButton";
+import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
@@ -53,6 +54,10 @@ export default function User() {
 
     return (
         <div>
+
+            <div>
+                <ItemList/>
+            </div>
             <div>
                 <ProductFilter filterList={filterList} setFilterList={setFilterList} />
             </div>

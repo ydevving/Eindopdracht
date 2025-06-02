@@ -7,6 +7,7 @@ import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -35,16 +36,47 @@ public class ItemService {
                 v.getCar())).toList();
     }
 
-    public ItemDTO setStatus(Long id){
+    public ItemDTO setStatusAdmin(Long id){
 
         Item item = itemRepo.findById(id).orElseThrow();
 
-        if (item.getStatus() == Status.OPERABLE)
-            item.setStatus(Status.BROKEN);
+//        if(item.getStatus() == Status.OPERABLE){
+//            item.setStatus(Status.BROKEN);
+//        }else{
+//            item.setStatus(Status.OPERABLE);
+//        }
+
+        item.setStatus(
+                (item.getStatus().equals(Status.OPERABLE)) ? Status.BROKEN : Status.OPERABLE
+        );
 
         Item updatedItem = itemRepo.save(item);
 
         return mapToItem(updatedItem);
+    }
+
+    public ItemDTO setStatusUser(Long id){
+        Item item = itemRepo.findById(id).orElseThrow();
+
+        if(item.getStatus() == Status.OPERABLE){
+            item.setStatus(Status.BROKEN);
+
+            Item updatedItem = itemRepo.save(item);
+
+            return mapToItem(updatedItem);
+
+        }
+
+            return new ItemDTO(
+                    item.getId(),
+                    item.getImgUrl(),
+                    item.getName(),
+                    item.getPrice(),
+                    item.getDescription(),
+                    item.getStorageSpace(),
+                    item.getType(),
+                    item.getStatus(),
+                    item.getCar());
     }
 
     private ItemDTO mapToItem(Item item){

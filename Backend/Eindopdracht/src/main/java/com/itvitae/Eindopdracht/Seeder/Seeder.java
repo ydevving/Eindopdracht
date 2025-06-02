@@ -1,7 +1,5 @@
 package com.itvitae.Eindopdracht.Seeder;
 
-import com.itvitae.Eindopdracht.Enum.ItemType;
-import com.itvitae.Eindopdracht.Enum.Status;
 import com.itvitae.Eindopdracht.Generic.Entities;
 import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
@@ -14,15 +12,12 @@ import com.itvitae.Eindopdracht.Repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
 
 @Component
@@ -54,20 +49,25 @@ public class Seeder implements CommandLineRunner, Entities {
 
     private Map<ModelType, ModelInfo> modelValues;
 
-    @Autowired
     UserRepository userRepo;
-
-    @Autowired
     ItemRepository itemRepo;
-
-    @Autowired
     CarRepository carRepo;
-
-    @Autowired
     TransactionRepository transactionRepo;
-
-    @Autowired
     BuildService buildService;
+
+    public Seeder(
+        UserRepository userRepo,
+        ItemRepository itemRepo,
+        CarRepository carRepo,
+        TransactionRepository transactionRepo,
+        BuildService buildService
+    ) {
+        this.userRepo = userRepo;
+        this.itemRepo = itemRepo;
+        this.carRepo = carRepo;
+        this.transactionRepo = transactionRepo;
+        this.buildService = buildService;
+    }
 
     @PostConstruct
     void init() {

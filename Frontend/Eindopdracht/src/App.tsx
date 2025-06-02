@@ -13,12 +13,15 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route element={<>
-            <Navbar/>
-            <Outlet/>
-            </>}>
+          <Route element={
+            <>
+              <Navbar/>
+              <Outlet/>
+            </>
+            }>
             <Route path="/login?" element={<Login/>}/>
-            <Route path="/user" element={<User/>}>
+            <Route path="user/transactions" element={<Transactions />}></Route>
+            <Route path="user" element={<User/>}>
               <Route path="./item/:itemID" 
                 element={<ItemDetails 
                     item={{
@@ -32,7 +35,6 @@ function App() {
                   }}/>
                 }
               />
-              <Route path="./transactions/:itemID?" element={<Transactions/>}/>
             </Route>
             <Route path="/admin" element={<Admin/>}>
               <Route path="./transactions/:userID/:itemID?" element={<Transactions/>}/>
