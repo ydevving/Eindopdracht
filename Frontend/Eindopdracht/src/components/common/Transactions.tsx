@@ -1,28 +1,21 @@
-import NavbarComponent from "./Navbar"
-import { Outlet } from 'react-router'
 
-export default function Transactions() {
-    return (
-        <>
-           <h1>test test</h1>
-        </>
-    )
-=======
-
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { Outlet } from 'react-router';
 
-export default function Transactions() {
-return (
-    <>
-        <div style={{color: "red"}}>
-            <Button variant='primary'></Button>
-        </div>
-        <h2>
-            WASSUP
-        </h2>
-        <Outlet />
-    </>
-)
->>>>>>> 0bf1ad9c8bd275b6da7837d1c90e6074a4b37e9a
+export default function Transactions({show, onHide}: {show: boolean, onHide: () => void}) {
+    return (
+        <>
+            <Modal show={show} onHide={onHide}>
+                <Modal.Header>
+                    <Modal.Title>mijn gehuurde producten</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <h1>test TEST</h1>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={onHide}>Close</Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
 }
