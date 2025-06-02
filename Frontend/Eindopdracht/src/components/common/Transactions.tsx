@@ -1,7 +1,10 @@
+import NavbarComponent from "./Navbar"
+import { Outlet } from 'react-router'
+
 export default function Transactions() {
-return (
-    <div>
-        transactions
-    </div>
-)
+    return (
+        <>
+           <h1>test test</h1>
+        </>
+    )
 }
