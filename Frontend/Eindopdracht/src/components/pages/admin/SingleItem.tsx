@@ -1,38 +1,44 @@
 import { Button, Image } from 'react-bootstrap';
 import {useState} from 'react';
+import {Container, Row, Col} from 'react-bootstrap';
 
 
 export default function SingleItem({item}:
         {item:{
         image:string, name:string, 
         license_plate: string, late: boolean,
-        reserved: boolean, status: string;
+        reserved: Date | null, status: string;
         }}
     ){
-        
+        let [itemLate , setItemLate]= useState('');
+        let currentDate = new Date();
 
+        if(item.reserved && (item.reserved.getTime() < currentDate.getTime())){
+                itemLate = 'LATE';
+        }
+
+        // if(){
+        //     itemLate = 'late';
+        // }else{
+        //     itemLate = 'not late';
+        // }
 
     return(
         <>
             <style>{`
-                p {
-                    margin: 4px;
+                .itemText{
+                    margin: 0px;
                     text-align: left;
                     display: flex;
-                }
-                img {
-                    height: 2vw;
-                    min-width: 2vw;
-                    margin-right: 10px;
+                    color: black;
                 }
             `}</style>
-            <Button variant="secondary" style={{minHeight:"20vh", maxHeight:"20vh", backgroundColor:"orange"}}>
+            <Button className="statusColumn" style={{minHeight:"20vh", maxHeight:"20vh", backgroundColor:"orange"}}>
             <Image src={item.image} rounded style={{height:"5vh", width:"5vw"}}/>
-            <p>{item.name}</p>
-            <p>{item.license_plate}</p>
-            <p>{item.late}</p>
-            <p>{item.reserved}</p>
-            <p>{item.status}</p>
+            <p className="itemText">{item.name}</p>
+            <p className="itemText">{item.license_plate}</p>
+            <p className="itemText">{item.reserved?.toLocaleDateString()}</p>
+            <p style={{color: "red", fontFamily: "bold"}}>{itemLate}</p>
 
             </Button>
         </>
