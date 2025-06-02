@@ -40,11 +40,15 @@ public class ItemService {
 
         Item item = itemRepo.findById(id).orElseThrow();
 
-        if(item.getStatus() == Status.OPERABLE){
-            item.setStatus(Status.BROKEN);
-        }else{
-            item.setStatus(Status.OPERABLE);
-        }
+//        if(item.getStatus() == Status.OPERABLE){
+//            item.setStatus(Status.BROKEN);
+//        }else{
+//            item.setStatus(Status.OPERABLE);
+//        }
+
+        item.setStatus(
+                (item.getStatus().equals(Status.OPERABLE)) ? Status.BROKEN : Status.OPERABLE
+        );
 
         Item updatedItem = itemRepo.save(item);
 
@@ -61,7 +65,7 @@ public class ItemService {
 
             return mapToItem(updatedItem);
 
-        }else{
+        }
 
             return new ItemDTO(
                     item.getId(),
@@ -73,7 +77,6 @@ public class ItemService {
                     item.getType(),
                     item.getStatus(),
                     item.getCar());
-        }
     }
 
     private ItemDTO mapToItem(Item item){
