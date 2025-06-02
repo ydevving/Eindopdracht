@@ -2,37 +2,90 @@ package com.itvitae.Eindopdracht.Service;
 
 import com.itvitae.Eindopdracht.Model.User;
 import com.itvitae.Eindopdracht.Repository.UserRepository;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
+
+class TTLQueueThread extends Thread {
+
+    public TTLQueueThread() {
+        super("ttlThread");
+    }
+
+    @Override
+    public void run() {
+
+        System.out.println("Run TTLQueue service");
+
+        try {
+            while (true) {
+                synchronized (this) {
+                    AuthenticationService.userList.keySet().stream().peek((user) -> {
+                        if (AuthenticationService.userList.get(user).TTL().isAfter(LocalDateTime.now()))
+                            AuthenticationService.userList.remove(user);
+                    });
+                }
+
+
+                synchronized (this) {
+                    AuthenticationService.adminList.keySet().stream().peek((user) -> {
+                        if (AuthenticationService.adminList.get(user).TTL().isAfter(LocalDateTime.now()))
+                            AuthenticationService.adminList.remove(user);
+                    });
+                }
+
+                // Checks every minute if User's token is expired
+                sleep(TimeUnit.MINUTES.toMillis(1));
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
 
 @Service
 public class AuthenticationService {
-    static HashMap<User, String> userList = new HashMap<>();
-    static HashMap<User, String> adminList = new HashMap<>();
 
-    static private boolean initialized = false;
+    public record Token(
+            String token,
+            LocalDateTime TTL
+    ) {
+        public static Token of(String token, LocalDateTime TTL) {
+            return new Token(token, TTL);
+        }
+    }
+
+    public static HashMap<User, Token> userList = new HashMap<>();
+    public static HashMap<User, Token> adminList = new HashMap<>();
+
+    private static LocalDateTime defaultTTL = LocalDateTime.now().plusWeeks(1);
+    private static TTLQueueThread ttlThread = new TTLQueueThread();
 
     @Autowired
     UserRepository userRepo;
 
-    AuthenticationService() throws SQLException {
-        // Access control list
+    @PostConstruct
+    void init() throws SQLException {
+        ttlThread.start();
 
-        if (initialized || userRepo == null)
-            return;
+//        Optional<User> admin = userRepo.findByUsername("admin");
+//
+//        if (!(admin.isPresent()))
+//            throw new SQLException("User 'admin' has not been found in the Database!");
+//
+//        this.add(admin.get());
+    }
 
-        Optional<User> admin = userRepo.findByUsername("admin");
-
-        if (!(admin.isPresent()))
-            throw new SQLException("User 'admin' has not been found in the Database!");
-
-        this.adminList.put(admin.get(), generateToken());
-
-        initialized = true;
+    @PreDestroy
+    void destruct() {
+        ttlThread.interrupt();
     }
 
     private String generateToken() {
@@ -57,7 +110,7 @@ public class AuthenticationService {
     public String addUser(User user) {
         String token = this.generateToken();
 
-        this.userList.put(user, token);
+        this.userList.put(user, Token.of(token, defaultTTL));
 
         return token;
     }
@@ -65,8 +118,8 @@ public class AuthenticationService {
     public String addAdmin(User user) {
         String token = generateToken();
 
-        this.userList.put(user, token);
-        this.adminList.put(user, token);
+        this.userList.put(user, Token.of(token, defaultTTL));
+        this.adminList.put(user, Token.of(token, defaultTTL));
 
         return token;
     }

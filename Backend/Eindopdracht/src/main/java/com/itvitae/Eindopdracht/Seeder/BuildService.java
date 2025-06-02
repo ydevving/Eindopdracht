@@ -220,7 +220,7 @@ class BuildService {
         String imgURL = values.get(4);
 
         if (!isValidURL(imgURL) && !isImgNull)
-            throw new Seeder.BadCSVFormatException("IMAGE_URL (5th column) is an invalid URL, note: must be in HTTP(S) format");
+            throw new Seeder.BadCSVFormatException("IMAGE_URL (5th column) is an invalid URL, note: must include HTTP(S) schema");
 
         String description = values.get(5);
 

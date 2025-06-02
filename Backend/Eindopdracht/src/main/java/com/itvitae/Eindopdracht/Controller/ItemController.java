@@ -22,8 +22,8 @@ public class ItemController {
 
     @GetMapping
     @Auth
-    List<ItemDTO> getAllItems() {
-        return itemService.generateItemDTOList(itemRepository.findAll());
+    ResponseEntity<List<ItemDTO>> getAllItems() {
+        return ResponseEntity.ok(itemService.generateItemDTOList(itemRepository.findAll()));
    }
 
    @GetMapping("/{itemId}")

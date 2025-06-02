@@ -41,7 +41,7 @@ public class AuthAspect {
         HttpServletRequest request = this.getCurrentHttpRequest();
 
         if (request == null)
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No HTTP request found");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         String token = request.getHeader("Authorization");
 
