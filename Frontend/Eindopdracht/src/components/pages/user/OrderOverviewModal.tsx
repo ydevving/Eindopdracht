@@ -7,12 +7,21 @@ export default function OrderOverviewModal({item, seeOrder, setSeeOrder}: { item
     if (!item.car)
         return (<><h4>Couldn't find a car object in item object</h4></>);
 
+    // {item.car.brand} {item.name}
 
     return (
-        <Modal show={true} centered>
+        <Modal show={true} onHide={() => setSeeOrder(false)} centered>
             <Modal.Header closeButton>
-                <Modal.Title>Order Overview - {item.car.brand} {item.name}</Modal.Title>
+                <Modal.Title>Order Overview</Modal.Title>
             </Modal.Header>
+            <Modal.Body
+            style={{
+            maxHeight: '80vh',
+            overflowY: 'auto'
+            }}
+            >
+                <h4>What is up</h4>
+            </Modal.Body>
         </Modal>
     );
 }

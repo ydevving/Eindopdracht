@@ -35,7 +35,7 @@ export default function ItemButton({item}:
     return (
         <>
             <style>{`
-                // Give the right elements the styling and do not generalize
+                // Give the right elements the styling and do not generl
             `}</style>
             <Button style={{minWidth:"30vw", maxWidth:"30vw", backgroundColor:"#242424"}}>
                 <Image src={item.image} rounded style={{height:"auto", width:"20vw"}}/>
