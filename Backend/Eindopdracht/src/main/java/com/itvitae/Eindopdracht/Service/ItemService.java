@@ -39,11 +39,8 @@ public class ItemService {
 
         Item item = itemRepo.findById(id).orElseThrow();
 
-        if(item.getStatus() == Status.OPERABLE){
+        if (item.getStatus() == Status.OPERABLE)
             item.setStatus(Status.BROKEN);
-        }else{
-            item.setStatus(Status.OPERABLE);
-        }
 
         Item updatedItem = itemRepo.save(item);
 
