@@ -19,7 +19,7 @@ export default function ItemColumns({columns}:{
             name:"Toyota 1000-THR Earthmover", 
             license_plate: "licenseplate 1",
             late: false,
-            reserved: true,
+            reserved: null,
             status: "available"
         },
         {
@@ -27,7 +27,7 @@ export default function ItemColumns({columns}:{
             name:"Toy Yoda",
             license_plate: "licenseplate 1",
             late: true,
-            reserved: true,
+            reserved: new Date(2025, 1, 23),
             status: "late"
            
         },
@@ -36,7 +36,7 @@ export default function ItemColumns({columns}:{
             name:"Toyota 8",
            license_plate: "licenseplate 1",
             late: false,
-            reserved: true,
+            reserved: new Date(2025, 10, 23),
             status: "broken"
         },
         {
@@ -44,7 +44,7 @@ export default function ItemColumns({columns}:{
             name:"page 2",
             license_plate: "licenseplate 1",
             late: false,
-            reserved: true,
+            reserved: new Date(2025, 10, 23),
             status: "rented"
            
         },
@@ -53,7 +53,7 @@ export default function ItemColumns({columns}:{
             name:"Toy Yoda",
             license_plate: "licenseplate 1",
             late: true,
-            reserved: true,
+            reserved: new Date(2025, 4, 23),
             status: "late"
            
         },
@@ -62,16 +62,16 @@ export default function ItemColumns({columns}:{
             name:"Toyota 1000-THR Earthmover", 
             license_plate: "licenseplate 1",
             late: false,
-            reserved: true,
+            reserved: new Date(2025, 10, 23),
             status: "available"
         },
         {
             image:"placeholderCar.jpg",
             name:"Toy Yoda",
             license_plate: "licenseplate 1",
-            late: true,
-            reserved: true,
-            status: "late"
+            late: false,
+            reserved: new Date(2025, 9, 23),
+            status: "available"
            
         },
         {
@@ -79,7 +79,7 @@ export default function ItemColumns({columns}:{
             name:"Toyota 8",
            license_plate: "licenseplate 1",
             late: false,
-            reserved: true,
+            reserved: new Date(2025, 10, 23),
             status: "broken"
         },
         {
@@ -87,7 +87,7 @@ export default function ItemColumns({columns}:{
             name:"page 2",
             license_plate: "licenseplate 1",
             late: false,
-            reserved: true,
+            reserved: new Date(2025, 10, 23),
             status: "rented"
            
         },
@@ -95,8 +95,8 @@ export default function ItemColumns({columns}:{
             image:"placeholderCar.jpg",
             name:"Toy Yoda",
             license_plate: "licenseplate 1",
-            late: true,
-            reserved: true,
+            late: false,
+            reserved: new Date(2025, 4, 23),
             status: "late"
            
         }
@@ -108,26 +108,26 @@ export default function ItemColumns({columns}:{
 
     return(
         <div style={{display:"flex", flexDirection:"column"}}>
-            <p>{columns}</p>
+            <p style={{color:"black"}}>{columns}</p>
             <style>{`
-                .btn-secondary{
-                    width: 20vw;
+                .statusColumn{
+                    width: 25vw;
                     max-height: 5vh;
                     min-height: 5vh;
                     min-width: 20vw;
                 }
             `}</style>
             {upDown === 0 ? 
-            <Button variant="secondary" disabled>{"^"}</Button> : 
-            <Button variant="secondary" onClick={() => scrollupDown(-1)}>{"^"}</Button> }
+            <Button className="statusColumn" disabled>{"^"}</Button> : 
+            <Button className="statusColumn" onClick={() => scrollupDown(-1)}>{"^"}</Button> }
             
             <SingleItem item={filteredItems[(3*upDown)]}/>
             {filteredItems[(3*upDown)+1] ? <SingleItem item={filteredItems[(3*upDown)+1]}/> : <></>}
             {filteredItems[(3*upDown)+2] ? <SingleItem item={filteredItems[(3*upDown)+2]}/> : <></>} 
                 
             { ( (upDown+1) >= (filteredItems.length/3) ) ? 
-            <Button variant="secondary" disabled style={{position:"absolute", bottom:"0px"}}>{"v"}</Button> :
-            <Button variant="secondary" style={{position:"absolute", bottom:"0px"}} onClick={() => scrollupDown(1)}>{"v"}</Button>}
+            <Button className="statusColumn" disabled style={{position:"absolute", bottom:"0px"}}>{"v"}</Button> :
+            <Button className="statusColumn" style={{position:"absolute", bottom:"0px"}} onClick={() => scrollupDown(1)}>{"v"}</Button>}
 
         </div>
     )
