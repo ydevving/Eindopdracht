@@ -1,15 +1,15 @@
-import { Outlet } from "react-router"
 import ItemColumns from './ItemColumns'
-import {useState} from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
+import SearchBar from './SearchBar';
 
 export default function Admin() {
-    const [columns, setColumns] =useState(["available", "late", "broken","rented" ])
-
     return (
-        <Container fluid>
+        <Container style={{ marginTop: '40px', backgroundColor: '#FAF9F9', borderRadius: '6px' }} fluid>
             <Row>
-                <ItemColumns/> 
+                <SearchBar />
+            </Row>
+            <Row xs='auto'>
+                <ItemColumns />
             </Row>
         </Container>
     )

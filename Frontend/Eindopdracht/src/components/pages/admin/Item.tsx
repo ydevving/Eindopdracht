@@ -1,16 +1,15 @@
-import Button from 'react-bootstrap/Button';
+import type React from 'react';
 import Card from 'react-bootstrap/Card';
 
-export default function Item() {
+export default function Item({name, description, style}: {name: string, description: string, style?: React.CSSProperties}) {
   return (
-    <Card onClick={() => {console.log("Clicked card!");}} style={{ width: '18rem' }}>
+    <Card onClick={() => {console.log("Clicked card!");}} style={{ width: '18rem', padding: '13 px', cursor: 'pointer' ,...style }}>
       <Card.Img variant="top" src="holder.js/100px180" />
       <Card.Body>
-        <Card.Title>BMW M4 Competition Cabrio</Card.Title>
+        <Card.Title>{name}</Card.Title>
         <Card.Text>
-          Dikke vette cabrio heerlijk voor het vakantieleven, vakantieman.
+          {description}
         </Card.Text>
-        <Button variant="primary"></Button>
       </Card.Body>
     </Card>
   );

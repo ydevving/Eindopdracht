@@ -1,102 +1,122 @@
-import {Container, Row, Col, Card, Button} from "react-bootstrap";
-import SingleItem from './SingleItem';
+import ItemColumn from "./ItemColumn";
 
 export default function ItemColumns() {
 
-    const itemList = [
+    const _itemList = [
         {
-            image:"placeholderCar.jpg",
-            name:"Toyota 1000-THR Earthmover", 
+            image: "placeholderCar.jpg",
+            name: "BMW M4 Competition Cabrio",
             license_plate: "licenseplate 1",
             late: false,
             reserved: null,
             status: "available"
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toy Yoda",
+            image: "placeholderCar.jpg",
+            name: "Toy Yoda",
             license_plate: "licenseplate 1",
             late: true,
             reserved: new Date(2025, 1, 23),
             status: "late"
-           
+
+        },
+    ];
+
+    const itemList = [
+        {
+            image: "placeholderCar.jpg",
+            name: "BMW M4 Competition Cabrio",
+            license_plate: "licenseplate 1",
+            late: false,
+            reserved: null,
+            status: "available"
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toyota 8",
-           license_plate: "licenseplate 1",
+            image: "placeholderCar.jpg",
+            name: "Toy Yoda",
+            license_plate: "licenseplate 1",
+            late: true,
+            reserved: new Date(2025, 1, 23),
+            status: "late"
+
+        },
+        {
+            image: "placeholderCar.jpg",
+            name: "Toyota 8",
+            license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 10, 23),
             status: "broken"
         },
         {
-            image:"placeholderCar.jpg",
-            name:"page 2",
+            image: "placeholderCar.jpg",
+            name: "page 2",
             license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 10, 23),
             status: "rented"
-           
+
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toy Yoda",
+            image: "placeholderCar.jpg",
+            name: "Toy Yoda",
             license_plate: "licenseplate 1",
             late: true,
             reserved: new Date(2025, 4, 23),
             status: "late"
-           
+
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toyota 1000-THR Earthmover", 
+            image: "placeholderCar.jpg",
+            name: "Toyota 1000-THR Earthmover",
             license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 10, 23),
             status: "available"
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toy Yoda",
+            image: "placeholderCar.jpg",
+            name: "Toy Yoda",
             license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 9, 23),
             status: "available"
-           
+
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toyota 8",
-           license_plate: "licenseplate 1",
+            image: "placeholderCar.jpg",
+            name: "Toyota 8",
+            license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 10, 23),
             status: "broken"
         },
         {
-            image:"placeholderCar.jpg",
-            name:"page 2",
+            image: "placeholderCar.jpg",
+            name: "page 2",
             license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 10, 23),
             status: "rented"
-           
+
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toy Yoda",
+            image: "placeholderCar.jpg",
+            name: "Toy Yoda",
             license_plate: "licenseplate 1",
             late: false,
             reserved: new Date(2025, 4, 23),
             status: "late"
-           
+
         }
-        
-    ]
+    ];
+
+    const categories = ["Beschikbaar", "Laat", "Beschadigd", "Verhuurd"];
 
     return (
-        <Container>
-            
-        </Container>
+        <>
+            {categories.map((category, index) => (<ItemColumn key={index} items={itemList} category={category} />))}
+        </>
     );
 
 }
