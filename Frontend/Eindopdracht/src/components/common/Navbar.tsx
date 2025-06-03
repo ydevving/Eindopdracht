@@ -36,13 +36,13 @@ export default function NavbarComponent() {
                             padding: '0.4rem 1rem',
                             fontSize: '0.9rem',
                             borderRadius: '6px',
-                        }}>my rentals</Button>
+                        }}>Mijn Transacties</Button>
                         <Button onClick={() => navigate("/login")} variant ='outline-danger' style={{
                             margin: '0.5rem',
                             padding: '0.4rem 1rem',
                             fontSize: '0.9rem',
                             borderRadius: '6px',
-                        }}>Log out</Button>
+                        }}>Uitloggen</Button>
                     </Nav>
                 </Container>
             </Navbar>
