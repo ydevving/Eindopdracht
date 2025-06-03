@@ -9,12 +9,7 @@ export default function Admin() {
     return (
         <Container fluid>
             <Row>
-            <Outlet/>
-            <p style={{color: "black", alignItems: "center"}}>admin</p>
-            </Row>
-        
-            <Row>
-                    {columns.map((e)=> <Col md={3}><ItemColumns columns={e}/></Col>)} 
+                <ItemColumns/> 
             </Row>
         </Container>
     )
