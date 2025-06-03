@@ -1,4 +1,4 @@
-import {BrowserRouter, Outlet, Route, Routes} from 'react-router';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router';
 import Login from './components/pages/login/Login';
 import Admin from './components/pages/admin/Admin';
 import User from './components/pages/user/User';
@@ -15,29 +15,28 @@ function App() {
         <Routes>
           <Route element={
             <>
-              <Navbar/>
-              <Outlet/>
+              <Navbar />
+              <Outlet />
             </>
-            }>
-            <Route path="/login?" element={<Login/>}/>
-            <Route path="user/transactions" element={<Transactions />}></Route>
-            <Route path="user" element={<User/>}>
-              <Route path="item/:itemID" 
-                element={<ItemDetails 
-                    item={{
-                      image:"/src/assets/placeholderCar.jpg",
-                      name:"Toyota 1000-THR Earthmover", 
-                      price:50, 
-                      seats:10000, 
-                      storage:25000000, 
-                      type:"Supreme Machine", 
-                      isAutomatic:true
-                  }}/>
+          }>
+            <Route path="/login?" element={<Login />} />
+            <Route path="user" element={<User />}>
+              <Route path="item/:itemID"
+                element={<ItemDetails
+                  item={{
+                    image: "/src/assets/placeholderCar.jpg",
+                    name: "Toyota 1000-THR Earthmover",
+                    price: 50,
+                    seats: 10000,
+                    storage: 25000000,
+                    type: "Supreme Machine",
+                    isAutomatic: true
+                  }} />
                 }
               />
             </Route>
-            <Route path="/admin" element={<Admin/>}>
-              <Route path="./transactions/:userID/:itemID?" element={<Transactions/>}/>
+            <Route path="/admin" element={<Admin />}>
+              {/* <Route path="./transactions/:userID/:itemID?" element={<Transactions />} /> */}
             </Route>
           </Route>
         </Routes>
