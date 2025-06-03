@@ -17,27 +17,15 @@ export default function SingleItem({item}:
                 itemLate = 'LATE';
         }
 
-        // if(){
-        //     itemLate = 'late';
-        // }else{
-        //     itemLate = 'not late';
-        // }
+        //my-0 = margin top & bottom set to 0
 
     return(
         <>
-            <style>{`
-                .itemText{
-                    margin: 0px;
-                    text-align: left;
-                    display: flex;
-                    color: black;
-                }
-            `}</style>
-            <Button className="statusColumn" style={{minHeight:"20vh", maxHeight:"20vh", backgroundColor:"orange"}}>
+            <Button className="statusColumn" style={{minWidth: "25vw", maxWidth: "25vw", minHeight:"20vh", maxHeight:"20vh", backgroundColor:"lightblue"}}>
             <Image src={item.image} rounded style={{height:"5vh", width:"5vw"}}/>
-            <p className="itemText">{item.name}</p>
-            <p className="itemText">{item.license_plate}</p>
-            <p className="itemText">{item.reserved?.toLocaleDateString()}</p>
+            <p className="my-0" style={{color: "black"}}>{item.name}</p>
+            <p className="my-0"style={{color: "black"}}>{item.license_plate}</p>
+            <p className="my-0"style={{color: "black"}}>{item.reserved?.toLocaleDateString()}</p>
             <p style={{color: "red", fontFamily: "bold"}}>{itemLate}</p>
 
             </Button>

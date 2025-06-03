@@ -105,29 +105,23 @@ export default function ItemColumns({columns}:{
 
     const filteredItems = itemList.filter((itemList) => itemList.status == columns); //filters the items by status
 
+    //py-0 = padding top & bottom set to 0
 
     return(
         <div style={{display:"flex", flexDirection:"column"}}>
             <p style={{color:"black"}}>{columns}</p>
-            <style>{`
-                .statusColumn{
-                    width: 25vw;
-                    max-height: 5vh;
-                    min-height: 5vh;
-                    min-width: 20vw;
-                }
-            `}</style>
+            
             {upDown === 0 ? 
-            <Button className="statusColumn" disabled>{"^"}</Button> : 
-            <Button className="statusColumn" onClick={() => scrollupDown(-1)}>{"^"}</Button> }
+            <Button className="py-0" disabled style={{minWidth: "25vw", maxWidth: "25vw", backgroundColor: "navy"}}>{"^"}</Button> : 
+            <Button className="py-0" style={{minWidth: "25vw", maxWidth: "25vw", backgroundColor: "navy"}}onClick={() => scrollupDown(-1)}>{"^"}</Button> }
             
             <SingleItem item={filteredItems[(3*upDown)]}/>
             {filteredItems[(3*upDown)+1] ? <SingleItem item={filteredItems[(3*upDown)+1]}/> : <></>}
             {filteredItems[(3*upDown)+2] ? <SingleItem item={filteredItems[(3*upDown)+2]}/> : <></>} 
                 
             { ( (upDown+1) >= (filteredItems.length/3) ) ? 
-            <Button className="statusColumn" disabled style={{position:"absolute", bottom:"0px"}}>{"v"}</Button> :
-            <Button className="statusColumn" style={{position:"absolute", bottom:"0px"}} onClick={() => scrollupDown(1)}>{"v"}</Button>}
+            <Button className="py-0" disabled style={{minWidth: "25vw", maxWidth: "25vw", position:"absolute", bottom:"0px", backgroundColor: "navy"}}>{"v"}</Button> :
+            <Button className="py-0" style={{minWidth: "25vw", maxWidth: "25vw", position:"absolute", bottom:"0px", backgroundColor: "navy"}} onClick={() => scrollupDown(1)}>{"v"}</Button>}
 
         </div>
     )
