@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 class TTLQueueThread extends Thread {
 
     public TTLQueueThread() {
-        super("ttlThread");
+//        super("ttlThread");
     }
 
     @Override
@@ -66,14 +66,14 @@ public class AuthenticationService {
     public static HashMap<User, Token> adminList = new HashMap<>();
 
     private static LocalDateTime defaultTTL = LocalDateTime.now().plusWeeks(1);
-    private static TTLQueueThread ttlThread = new TTLQueueThread();
+//    private static TTLQueueThread ttlThread = new TTLQueueThread();
 
     @Autowired
     UserRepository userRepo;
 
     @PostConstruct
     void init() throws SQLException {
-        ttlThread.start();
+//        ttlThread.start();
 
 //        Optional<User> admin = userRepo.findByUsername("admin");
 //
@@ -85,7 +85,7 @@ public class AuthenticationService {
 
     @PreDestroy
     void destruct() {
-        ttlThread.interrupt();
+//        ttlThread.interrupt();
     }
 
     private String generateToken() {
@@ -130,7 +130,7 @@ public class AuthenticationService {
 
     public Optional<User> retrieveUserFromToken(String token) {
         return Stream.concat(adminList.entrySet().stream(), userList.entrySet().stream())
-                .filter(entry -> entry.getValue().equals(token))
+                .filter(entry -> entry.getValue().token.equals(token))
                 .map(Map.Entry::getKey)
                 .findFirst();
     }
