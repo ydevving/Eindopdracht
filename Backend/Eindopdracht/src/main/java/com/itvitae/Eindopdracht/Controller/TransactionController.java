@@ -6,6 +6,7 @@ import com.itvitae.Eindopdracht.DTO.TransactionMinimalDTO;
 import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Repository.TransactionRepository;
 import com.itvitae.Eindopdracht.Service.TransactionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,17 +29,23 @@ public class TransactionController {
     // searching based on itemId
     @Auth
     @GetMapping("/user/{username}")
-    List<TransactionMinimalDTO> getAllByUsernameMinimal(@PathVariable String username) {
+    ResponseEntity<List<TransactionMinimalDTO>> getAllByUsernameMinimal(@PathVariable String username) {
         List<Transaction> transactions = transactionRepository.findAllByRentingUserUsername(username);
-        return this.transactionService.generateTransactionMinimalDTOList(transactions);
+        if (transactions.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(this.transactionService.generateTransactionMinimalDTOList(transactions));
     }
 
     // Admin can find all transactions for a specific item including more information about the renting user
     // Searching based on Username
     @Auth(requiresAdmin = true)
     @GetMapping("/admin/{username}")
-    List<TransactionDTO> getAllByUsername(@PathVariable String username) {
+    ResponseEntity<List<TransactionDTO>> getAllByUsername(@PathVariable String username) {
         List<Transaction> transactions = transactionRepository.findAllByRentingUserUsername(username);
-        return this.transactionService.generateTransactionDTOList(transactions);
+        if (transactions.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(this.transactionService.generateTransactionDTOList(transactions));
     }
 }
