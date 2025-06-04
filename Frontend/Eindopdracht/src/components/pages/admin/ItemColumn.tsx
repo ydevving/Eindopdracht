@@ -14,11 +14,13 @@ export default function ItemColumn({ items, category }:
                     <h4 style={{ width: '100%', textAlign: 'center' }}>{category}</h4>
                 </Row>
 
-                {
-                    items.map((value, index) => {
-                        return (<Row key={index} md={4}><Item style={{ marginBlock: '15px' }} name={value.name} description={value.license_plate} /></Row>);
-                    })
-                }
+                <Container style={{ maxHeight: '70vh', overflowY: 'scroll' }}>
+                    {
+                        items.map((value, index) => {
+                            return (<Row key={index} md={4}><Item style={{ marginBlock: '15px' }} name={value.name} description={value.license_plate} /></Row>);
+                        })
+                    }
+                </Container>
             </Col>
         </Container>
     );
