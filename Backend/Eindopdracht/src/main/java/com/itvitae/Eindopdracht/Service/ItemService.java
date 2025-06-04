@@ -47,7 +47,7 @@ public class ItemService {
 //        }
 
         item.setStatus(
-                (item.getStatus().equals(Status.OPERABLE)) ? Status.BROKEN : Status.OPERABLE
+                (item.getStatus().equals(Status.AVAILABLE)) ? Status.BROKEN : Status.AVAILABLE
         );
 
         Item updatedItem = itemRepo.save(item);
@@ -58,7 +58,7 @@ public class ItemService {
     public ItemDTO setStatusUser(Long id){
         Item item = itemRepo.findById(id).orElseThrow();
 
-        if(item.getStatus() == Status.OPERABLE){
+        if(item.getStatus() == Status.AVAILABLE){
             item.setStatus(Status.BROKEN);
 
             Item updatedItem = itemRepo.save(item);
