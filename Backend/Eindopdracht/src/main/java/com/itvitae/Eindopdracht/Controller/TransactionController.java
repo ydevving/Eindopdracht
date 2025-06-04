@@ -33,7 +33,7 @@ public class TransactionController {
         return this.transactionService.generateTransactionMinimalDTOList(transactions);
     }
 
-    // Admin can find all transactions for a specific item including more information about the rentinguser
+    // Admin can find all transactions for a specific item including more information about the renting user
     // Searching based on Username
     @Auth(requiresAdmin = true)
     @GetMapping("/admin/{username}")

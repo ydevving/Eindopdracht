@@ -4,7 +4,10 @@ import { FaSearch } from 'react-icons/fa';
 
 
 function searchUser(username: string) {
+    // Add back-end integration
 
+    // TODO: First Implement Session.ts, configure the login page so that the token gets stored in sessionstorage, and create wrapper
+    // functions so that you can reuse the token easily and maybe tweak options
 }
 
 
