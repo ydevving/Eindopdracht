@@ -101,7 +101,7 @@ public class UserController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/{username}")
     @Auth
     public ResponseEntity userExists(@RequestParam String username) {
         Optional<User> _user = this.userService.exists(username);
