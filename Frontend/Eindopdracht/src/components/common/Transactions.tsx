@@ -2,23 +2,48 @@
 import { Container, Row, Col, Button, Modal, Table, } from 'react-bootstrap';
 import { Outlet } from 'react-router';
 import { useEffect, useState } from'react';
+import type { Transaction } from '../../entities/types';
+import { TransactionSchema } from '../../entities/types';
 
 export default function Transactions({show, onHide}: {show: boolean, onHide: () => void}) {
     
-    const [transactions, setTransactions] = useState<Array<any>>([])
+    const [transactions, setTransactions] = useState<Array<Transaction>>([])
     
     useEffect(() => {
-        fetch("http://localhost:8080/transaction/user/${userId}")
+        if (transactions.length == 0){
+        fetch("http://localhost:8080/transaction/user/sterre_van+oort")
         .then((response) => {
             if (!response.ok) {
                 throw new Error('failed to retrieve transactions');
             }
             return response.json();
         })
-        .then((transactionData) => setTransactions(transactionData))
+        .then((transactionData) => {
+
+            for (let i = 0; i < transactionData.length; i++) {
+
+                let t = transactionData[i];
+                
+                try {
+                    transactionData[i]['rentedAt'] = new Date(t.rentedAt);
+                    transactionData[i]['rentedUntil'] = new Date(t.rentedUntil); 
+
+                    console.log(t);
+                    const data = TransactionSchema.parse(t);
+                    console.log(data.rentedAt);
+                }
+                catch(error) {
+                    console.error("Invalid transaction data!", error)
+                }
+            }
+
+            setTransactions(transactionData); 
+            console.log(transactionData);
+        })
         .catch((error) => console.error('Error loading JSON', error))
-        // console.log(transactionData)
-    })
+        
+    }
+    }, [])
     return (
         <>
             <Modal show={show} onHide={onHide}>
@@ -31,13 +56,19 @@ export default function Transactions({show, onHide}: {show: boolean, onHide: () 
                             <tr>
                                 <th>Start datum</th>
                                 <th>Eind datum</th>
-                                <th>type</th>
-                                <th>model</th>
-                                <th>prijs</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Prijs</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {transactionsArray.map()} */}
+                            {transactions.map((transaction)=>(
+                                <tr>
+                                   <td>{transaction.rentedAt.toLocaleDateString()}</td>
+                                   <td>{transaction.rentedUntil.toLocaleDateString()}</td>
+                                   <td></td>
+                                </tr>
+                            ))}
                         </tbody>
                     </Table>
                 </Modal.Body>

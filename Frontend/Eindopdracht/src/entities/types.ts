@@ -12,6 +12,10 @@ export const UserSchema = z.object({
     city:     z.string()
 });
 
+export const UserMinimalSchema = z.object({
+    username: z.string()
+});
+
 export const CarSchema = z.object({
     licenseplate:     z.string(),
     brand:            z.string(),
@@ -34,14 +38,14 @@ export const ItemSchema = z.object({
     description:  z.string().max(1000),
     storageSpace: z.int().nullable(),
     status:       statusEnum,
-    imgURL:       z.url().nullable()
+    imgUrl:       z.url().nullable()
 });
 
 export const TransactionSchema = z.object({
     id:          z.int(),
     rentedAt:    z.date(),
     rentedUntil: z.date(),
-    rentingUser: UserSchema,
+    rentingUser: UserMinimalSchema,
     item:        ItemSchema
 });
 
