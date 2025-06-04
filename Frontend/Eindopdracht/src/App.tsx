@@ -6,8 +6,25 @@ import Transactions from './components/common/Transactions';
 import ItemDetails from './components/common/ItemDetails';
 import Navbar from './components/common/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { useEffect } from 'react'
+import Session from './Session';
+
 
 function App() {
+
+  useEffect(() => {
+          if (Session.instance.isTokenPresent() === true)
+              return;
+  
+  
+          Session.instance.POST(`/user/login`, { username: 'admin', password: 'admin' })
+          .then((data: any) => data.json())
+          .then((obj) => {
+              console.log(obj);
+              Session.setToken(obj['token']);
+              console.log(Session.instance.getToken());
+          });
+  });
 
   return (
     <>
