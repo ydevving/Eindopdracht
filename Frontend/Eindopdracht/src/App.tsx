@@ -18,7 +18,7 @@ function App() {
   
   
           Session.instance.POST(`/user/login`, { username: 'admin', password: 'admin' })
-          .then((data: any) => data.json())
+          .then((data: Response) => data.json())
           .then((obj) => {
               Session.setToken(obj['token']);
           });
