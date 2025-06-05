@@ -47,7 +47,7 @@ export default function User() {
 
         storageSpace: 80,
         status: "OPERABLE",
-        imgURL: "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png",
+        imgUrl: "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png",
     };
 
     item = ItemSchema.parse(item);
