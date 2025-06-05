@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://localhost:5173"}, methods = {
+@CrossOrigin(origins = {"*"}, methods = {
         RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
 })
 @Tag(name = "User Management", description = "APIs for managing users")
@@ -113,6 +114,19 @@ public class UserController {
     }
 
     @GetMapping("/info")
+    @Auth
+    public ResponseEntity<UserInfoDTO> getOwnInformation(@RequestHeader("Authorization") String token) {
+        Optional<User> _user = this.authService.retrieveUserFromToken(token);
+
+        if (_user.isEmpty())
+            return ResponseEntity.badRequest().build();
+
+        User user = _user.get();
+
+        return ResponseEntity.ok().body(new UserInfoDTO(user.getEmail(), user.getCity(), user.getAddress()));
+    }
+
+    @GetMapping("/admin/info/{username}")
     @Auth(requiresAdmin = true)
     public ResponseEntity<UserInfoDTO> getInformation(@RequestParam String username) {
         Optional<User> _user = this.userService.exists(username);
