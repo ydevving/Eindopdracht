@@ -11,7 +11,7 @@ export default function Transactions({show, onHide}: {show: boolean, onHide: () 
     
     useEffect(() => {
         if (transactions.length == 0){
-        fetch("http://localhost:8080/transaction/user/sterre_van+oort")
+        fetch("http://localhost:8080/transaction/user/royce_schut")
         .then((response) => {
             if (!response.ok) {
                 throw new Error('failed to retrieve transactions');
@@ -57,7 +57,7 @@ export default function Transactions({show, onHide}: {show: boolean, onHide: () 
                                 <th>Start datum</th>
                                 <th>Eind datum</th>
                                 <th>Type</th>
-                                <th>Model</th>
+                                <th>name</th>
                                 <th>Prijs</th>
                             </tr>
                         </thead>
@@ -66,7 +66,9 @@ export default function Transactions({show, onHide}: {show: boolean, onHide: () 
                                 <tr>
                                    <td>{transaction.rentedAt.toLocaleDateString()}</td>
                                    <td>{transaction.rentedUntil.toLocaleDateString()}</td>
-                                   <td></td>
+                                   <td>{transaction.item.type}</td>
+                                   <td>{transaction.item.car == null ? transaction.item.name: transaction.item.car.brand + transaction.item.name}</td>
+                                   <td>{transaction.item.price}</td>
                                 </tr>
                             ))}
                         </tbody>
