@@ -4,9 +4,10 @@ import Item from "./Item";
 
 export default function ItemColumn({ items, category }:
     {
-        items: { name: string, license_plate: string }[],
+        items: { name: string, license_plate: string, reserved: Date | null }[],
         category: string
     }) {
+
     return (
         <Container style={{ marginTop: '40px', backgroundColor: '#FAF9F9', borderRadius: '6px' }} fluid>
             <Col style={{ color: 'black', padding: '18px' }}>
@@ -17,7 +18,13 @@ export default function ItemColumn({ items, category }:
                 <Container style={{ maxHeight: '70vh', overflowY: 'scroll' }}>
                     {
                         items.map((value, index) => {
-                            return (<Row key={index} md={4}><Item style={{ marginBlock: '15px' }} name={value.name} description={value.license_plate} /></Row>);
+                            const info = (
+                                <>
+                                    <p>{value.license_plate}</p>
+                                    <p>{(value.reserved) ? value.reserved.toLocaleDateString() : ''}</p>
+                                </>
+                            );
+                            return (<Row key={index} md={4}><Item style={{ marginBlock: '15px' }} name={value.name} description={info} /></Row>);
                         })
                     }
                 </Container>

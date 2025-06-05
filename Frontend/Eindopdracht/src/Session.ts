@@ -2,7 +2,7 @@
 export default class Session {
     static #instance: Session;
     private token: string;
-    
+
     private baseURL: string = 'http://localhost:8080';
     private defaultOptions: RequestInit = {
         mode: 'cors',
@@ -36,16 +36,22 @@ export default class Session {
         return Session.#instance;
     }
 
-    public GET(endpoint: string) {
-        return fetch(`${this.baseURL}${endpoint}`, { method: 'GET', headers: { 'Authorization': Session.instance.token }, ...Session.instance.defaultOptions });
+    private _createRequest(endpoint: string, options: RequestInit): Promise<Response> {
+        endpoint = (!endpoint.startsWith('/')) ? `/${endpoint}` : endpoint;
+
+        return fetch(`${this.baseURL}${endpoint}`, { headers: { Authorization: Session.instance.token, ...this.defaultHeaders }, ...options, ...this.defaultOptions });
     }
 
-    public POST(endpoint: string, data: object): Promise<object> {
-        return fetch(`${this.baseURL}${endpoint}`, { method: 'POST', headers: {...this.defaultHeaders}, body: JSON.stringify(data), ...Session.instance.defaultOptions });
-   }
+    public GET(endpoint: string): Promise<Response> {
+        return this._createRequest(endpoint, { method: 'GET' });
+    }
 
-   public PATCH(endpoint: string) {
-        return fetch(`${this.baseURL}${endpoint}`, { method: 'PATCH', ...Session.instance.defaultOptions });
-   }
-   
+    public POST(endpoint: string, data: object): Promise<Response> {
+        return this._createRequest(endpoint, { method: 'POST', body: JSON.stringify(data) });
+    }
+
+    public PATCH(endpoint: string): Promise<Response> {
+        return this._createRequest(endpoint, { method: 'PATCH' });
+    }
+
 }

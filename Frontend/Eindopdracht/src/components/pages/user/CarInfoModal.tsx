@@ -31,7 +31,7 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
           {/* Left: Image and specs */}
           <Col md={6} className='text-center'>
             <img
-              src={(item.imgURL) ? item.imgURL : ''}
+              src={(item.imgUrl) ? item.imgUrl : ''}
               alt={`${item.name}`}
               style={{ width: '100%', maxHeight: '200px', objectFit: 'contain' }}
             />
