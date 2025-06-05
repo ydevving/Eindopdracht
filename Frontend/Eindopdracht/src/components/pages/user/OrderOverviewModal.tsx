@@ -2,7 +2,7 @@
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import type { Item } from '../../../entities/types';
 import { useEffect, useState } from 'react'
-// import Session from '../../../Session';
+import Session from '../../../Session';
 
 export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
     let [user, setUser] = useState([''])
