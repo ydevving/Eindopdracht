@@ -243,7 +243,7 @@ class BuildService {
                 .type(type)
                 .description(description)
                 .storageSpace(storageSpace)
-                .status(Status.OPERABLE)
+                .status(Status.AVAILABLE)
                 .imgUrl(imgURL)
                 .build();
 

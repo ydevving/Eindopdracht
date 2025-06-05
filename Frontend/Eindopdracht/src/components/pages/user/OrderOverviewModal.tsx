@@ -5,6 +5,24 @@ import { useEffect, useState } from 'react'
 import Session from '../../../Session';
 
 export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
+    let [user, setUser] = useState([''])
+
+    console.log(Session.instance.getToken())
+
+    useEffect(()=> {
+        Session.instance.GET(`/info`)
+        .then((data: Response) => data.json())
+        .then((json: { email: string, city: string, address: string }) => {
+            const email = json['email'];
+            const city = json['city'];
+            const address = json['address'];
+
+            console.log(email, city, address);
+        })
+        .catch();
+    }
+    );
+
 
     if (!item.car)
         return (<><h4>Couldn't find a car object in item object</h4></>);
