@@ -1,25 +1,25 @@
 
-import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { Container, Modal, Button, Row, Col } from 'react-bootstrap';
 import type { Item } from '../../../entities/types';
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Session from '../../../Session';
 
-export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
-    let [user, setUser] = useState([''])
-
-    console.log(Session.instance.getToken())
+export default function OrderOverviewModal({ selected, item, seeOrder, setSeeOrder }: { selected: string, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
+    let [userInfo, setUserInfo] = useState({ name: '', email: '', city: '', address: '' });
 
     useEffect(() => {
         Session.instance.GET(`/user/info`)
-        .then((data: Response) => data.json())
-        .then((json: { email: string, city: string, address: string }) => {
-            const email = json['email'];
-            const city = json['city'];
-            const address = json['address'];
+            .then((data: Response) => data.json())
+            .then((json: { username: string, email: string, city: string, address: string }) => {
+                setUserInfo({
+                    name: json['username'],
+                    email: json['email'],
+                    city: json['city'],
+                    address: json['address']
+                });
 
-            console.log(email, city, address);
-        })
-        .catch();
+                console.log(userInfo.name, userInfo.email, userInfo.city, userInfo.address);
+            })
     }
     );
 
@@ -30,28 +30,61 @@ export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { it
     // {item.car.brand} {item.name}
 
     return (
-        <Modal show={seeOrder} onHide={() => setSeeOrder(false)} centered>
+        <Modal show={seeOrder} onHide={() => setSeeOrder(false)} size='lg' centered>
             <Modal.Header closeButton>
-                <Modal.Title>Order Overzicht</Modal.Title>
+                <Modal.Title><h2>Check jouw bestelling</h2></Modal.Title>
             </Modal.Header>
             <Modal.Body
                 style={{
-                    maxHeight: '80vh',
+                    minHeight: '70vh',
+                    maxWidth: '40vw',
                     overflowY: 'auto'
                 }}
             >
-                <h4>Check jouw bestelling</h4>
-                <p className="my-0" > {item.car.brand}</p>
-                <p className="my-0">{item.name}</p>
-                <p className="my-0">gebruikersnaam </p>
-                <p className="my-0">voornaam </p>
-                <p className="my-0">achternaam</p>
-                <p className="my-0">{item.status}</p>
-                <p className="my-0">{item.price}</p>
+                <Container>
+                    <Row>
+                        <Col md={5}>
+                            <h4 className="mb-1 text-weight-bold">Jouw Gegevens</h4>
+                            <p className="my-0">{userInfo.name}</p>
+                            <p className="my-0">{userInfo.city}</p>
+                            <p className="my-0">{userInfo.address}</p>
+                            <p className="my-0">{userInfo.email} </p>
+                        </Col>
+                        <Col md={{span: 4, offset: 3}}>
+                            <h4 className="mb-1 text-weight-bold">Bestelling Gegevens</h4>
+                            <p className="my-0">{item.car.brand}</p>
+                            <p className="my-0">{item.name}</p>
+                            <p className="my-0">{item.status}</p>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md={5}>
+                        <h4 className="mt-5 mb-1 text-weight-bold">Huur Gegevens</h4>
+                        <p className="my-0">Gekozen Huur Periode: {selected}</p>
+                        <p className="my-0">Totale Prijs van Huur: €{item.price}</p>
+                        </Col>
+
+                        <Col md={{span: 4, offset: 3}}>
+                        <h4 className="mt-5 mb-1 text-weight-bold">Voorwaardes:</h4>
+                        <p className="my-0" > Huur Auto/Voorwerp zelf ophalen en Terugbrengen</p>
+                        <p className="my-0 text-danger">Boete is van spraken wanneer Verhuurde Voorwerp niet optijd is Teruggebracht</p>
+                        </Col>
+                    </Row>
+
+                </Container>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="danger" onClick={() => setSeeOrder(false)}>Cancel Order</Button>
-                <Button variant="succes" onClick={() => setSeeOrder(false)}>Confirm Order</Button>
+                <Container>
+                    <Row >
+                        <Col>
+                            <Button className="px-5" variant="danger" onClick={() => setSeeOrder(false)}>Cancel Order</Button>
+                        </Col>
+                        <Col className='d-flex justify-content-end'>
+                            <Button className="px-5 bg-success" onClick={() => setSeeOrder(false)}>Confirm Order</Button>
+                        </Col>
+                    </Row>
+                </Container>
             </Modal.Footer>
         </Modal>
     );
