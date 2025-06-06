@@ -246,7 +246,6 @@ class BuildService {
                 .type(type)
                 .description(description)
                 .storageSpace(storageSpace)
-                .status(Status.AVAILABLE)
                 .imgUrl(imgURL)
                 .build();
 
@@ -269,10 +268,12 @@ class BuildService {
         if (values.get(2).equals("NULL"))
             throw new Seeder.BadCSVFormatException("USER (1st column) cannot be null!");
 
-        Optional<User> user = this.userService.exists(values.get(2));
+        Optional<User> _user = this.userService.exists(values.get(2));
 
-        if (user.isEmpty())
+        if (_user.isEmpty())
             throw new Seeder.BadCSVFormatException("USER (1st column) does not exist in Database!");
+
+        User user = _user.get();
 
         Integer item_ref;
 
@@ -287,14 +288,14 @@ class BuildService {
         if (item == null)
             throw new Seeder.BadCSVFormatException("ITEM_UNIQUE_REF (4th column) is not present in the REF_ID array");
 
+        item.setRentingUser(user);
+
         Transaction transaction = Transaction.builder()
                 .rentedAt(Date.valueOf(values.get(0)))
                 .rentedUntil(Date.valueOf(values.get(1)))
-                .rentingUser(user.get())
+                .rentingUser(user)
                 .item(item)
                 .build();
-
-//        transaction = transactionRepo.save(transaction);
 
         return (T)transaction;
     }

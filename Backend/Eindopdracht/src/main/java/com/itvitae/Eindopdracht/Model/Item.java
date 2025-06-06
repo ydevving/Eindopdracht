@@ -44,7 +44,7 @@ public class Item implements Entities {
     private Short storageSpace;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Status status;
 
     @OneToMany(mappedBy = "item")
@@ -53,5 +53,10 @@ public class Item implements Entities {
 
     @Column(nullable = true)
     private String imgUrl;
+
+    @OneToOne
+    @JoinColumn(nullable = true)
+    @JsonBackReference
+    private User rentingUser;
 
 }
