@@ -77,7 +77,7 @@ public class Seeder implements CommandLineRunner, Entities {
         modelValues.put(ModelType.USER, new ModelInfo<User>(5, buildService::buildUser));
         modelValues.put(ModelType.ITEM, new ModelInfo<Item>(8, buildService::buildItem));
         modelValues.put(ModelType.CAR, new ModelInfo<Car>(8, buildService::buildCar));
-        modelValues.put(ModelType.TRANSACTION, new ModelInfo<Transaction>(4, buildService::buildTransaction));
+        modelValues.put(ModelType.TRANSACTION, new ModelInfo<Transaction>(5, buildService::buildTransaction));
     }
 
     @SuppressWarnings("unchecked")

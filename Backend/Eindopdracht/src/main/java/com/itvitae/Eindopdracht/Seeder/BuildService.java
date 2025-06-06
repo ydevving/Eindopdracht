@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -247,6 +248,7 @@ class BuildService {
                 .description(description)
                 .storageSpace(storageSpace)
                 .imgUrl(imgURL)
+                .status(Status.AVAILABLE)
                 .build();
 
         Integer item_ref;
@@ -288,9 +290,31 @@ class BuildService {
         if (item == null)
             throw new Seeder.BadCSVFormatException("ITEM_UNIQUE_REF (4th column) is not present in the REF_ID array");
 
+        boolean is_broken = false;
+        String brokenValue = values.get(4);
+
+        if (!brokenValue.equals("NULL")) {
+            if (brokenValue.toLowerCase().equals("true"))
+                is_broken = true;
+            else if (brokenValue.toLowerCase().equals("false"))
+                is_broken = false;
+            else {
+                try {
+                    int value = Integer.valueOf(brokenValue);
+
+                    is_broken = (value > 0);
+                } catch (NumberFormatException e) {
+                    throw new Seeder.BadCSVFormatException("IS_BROKEN (5th column) must be a valid number for a boolean to be either truthy or falsy");
+                }
+            }
+        }
+
+        item.setStatus((is_broken) ? Status.BROKEN : Status.RENTED);
+        item = itemRepo.save(item);
+
         Transaction transaction = Transaction.builder()
-                .rentedAt(Date.valueOf(values.get(0)))
-                .rentedUntil(Date.valueOf(values.get(1)))
+                .rentedAt(LocalDate.parse(values.get(0)))
+                .rentedUntil(LocalDate.parse(values.get(1)))
                 .rentingUser(user)
                 .item(item)
                 .build();

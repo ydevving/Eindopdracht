@@ -5,6 +5,7 @@ import com.itvitae.Eindopdracht.Generic.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "_transaction")
@@ -19,10 +20,10 @@ public class Transaction implements Entities {
     private Long id;
 
     @Column(nullable = false)
-    private Date rentedAt;
+    private LocalDate rentedAt;
 
     @Column(nullable = false)
-    private Date rentedUntil;
+    private LocalDate rentedUntil;
 
     @ManyToOne
     @JoinColumn(nullable = false)

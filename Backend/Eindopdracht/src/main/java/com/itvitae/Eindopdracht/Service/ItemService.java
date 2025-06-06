@@ -1,26 +1,87 @@
 package com.itvitae.Eindopdracht.Service;
 
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
-import com.itvitae.Eindopdracht.Enum.ItemType;
+import com.itvitae.Eindopdracht.DTO.ItemsUserDTO;
+import com.itvitae.Eindopdracht.DTO.UserDTO;
+import com.itvitae.Eindopdracht.DTO.UserMinimalDTO;
 import com.itvitae.Eindopdracht.Enum.Status;
-import com.itvitae.Eindopdracht.Model.Car;
 import com.itvitae.Eindopdracht.Model.Item;
+import com.itvitae.Eindopdracht.Model.Transaction;
+import com.itvitae.Eindopdracht.Model.User;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import com.itvitae.Eindopdracht.Repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
 
-    public ItemService() {};
-    @Autowired
     ItemRepository itemRepo;
+    TransactionRepository transactionRepo;
+
+    public ItemService(
+            ItemRepository itemRepo,
+            TransactionRepository transactionRepo
+    ) {
+        this.itemRepo = itemRepo;
+        this.transactionRepo = transactionRepo;
+    };
 
     public Optional<Item> getItemFromId(Long id) {
         return itemRepo.findById(id);
+    }
+
+    public List<ItemDTO> getAvailableItems() {
+        return itemRepo.findByStatus(Status.AVAILABLE).stream().map(this::mapToItemDTO).toList();
+    }
+
+    public List<ItemsUserDTO> getRentedItems() {
+        LocalDate currentDate = LocalDate.now();
+
+        return transactionRepo.findRentals(currentDate).stream()
+                .map(transaction -> {
+                    User user = transaction.getRentingUser();
+
+                    return new ItemsUserDTO(
+                        List.of(transaction.getItem()),
+                        new UserDTO(user.getUsername(), user.getEmail(), user.getAddress(), user.getCity())
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<ItemsUserDTO> getLateRentals() {
+        LocalDate currentDate = LocalDate.now();
+
+        return transactionRepo.findLateRentals(currentDate).stream()
+                .map(transaction -> {
+                            User user = transaction.getRentingUser();
+
+                            return new ItemsUserDTO(
+                                    List.of(transaction.getItem()),
+                                    new UserDTO(user.getUsername(), user.getEmail(), user.getAddress(), user.getCity())
+                            );
+                })
+                .collect(Collectors.toList());
+    }
+
+    public List<ItemsUserDTO> getDamagedRentals() {
+        LocalDate currentDate = LocalDate.now();
+
+        return transactionRepo.findDamagedRentals().stream()
+                .map(transaction -> {
+                    User user = transaction.getRentingUser();
+
+                    return new ItemsUserDTO(
+                            List.of(transaction.getItem()),
+                            new UserDTO(user.getUsername(), user.getEmail(), user.getAddress(), user.getCity())
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
     public List<ItemDTO> generateItemDTOList(List<Item> itemList) {

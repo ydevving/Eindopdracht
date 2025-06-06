@@ -1,9 +1,11 @@
 package com.itvitae.Eindopdracht.Controller;
 import com.itvitae.Eindopdracht.Annotation.Auth;
+import com.itvitae.Eindopdracht.DTO.ItemsUserDTO;
 import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +77,26 @@ public class ItemController {
 
         //Parts needed: itemDTO, ItemService(function to set status and map to DTO)
 
+    }
+
+    @GetMapping("/available")
+    ResponseEntity<List<ItemDTO>> getAvailableItems() {
+        return ResponseEntity.ok(itemService.getAvailableItems());
+    }
+
+    @GetMapping("/rentals")
+    ResponseEntity<List<ItemsUserDTO>> getRentals() {
+        return ResponseEntity.ok(itemService.getRentedItems());
+    }
+
+    @GetMapping("/late")
+    ResponseEntity<List<ItemsUserDTO>> getLateRentals() {
+        return ResponseEntity.ok(itemService.getLateRentals());
+    }
+
+    @GetMapping("/damaged")
+    ResponseEntity<List<ItemsUserDTO>> getDamagedRentals() {
+        return ResponseEntity.ok(itemService.getDamagedRentals());
     }
 
 }
