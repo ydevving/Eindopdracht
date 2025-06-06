@@ -44,7 +44,7 @@ export default function User() {
         description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veritatis accusamus assumenda ab temporibus, dolor labore maxime doloribus, deleniti, necessitatibus modi beatae nostrum voluptas dignissimos excepturi et voluptatibus aspernatur! Quidem, cumque.\nNon est necessitatibus nulla expedita blanditiis aperiam laborum aut officiis suscipit voluptas nam consequatur fuga reprehenderit facilis fugit praesentium modi quas repellat, dolore corrupti accusamus error? Voluptatibus, ex sapiente. Fugiat!\nNon, maxime, sed numquam dolore fuga omnis facilis aliquid optio est, inventore consectetur consequuntur amet labore magni eveniet tempore velit illum laborum asperiores architecto id. Cum exercitationem assumenda possimus nihil?\nQuo nulla omnis quaerat blanditiis fuga recusandae dolor maxime sit illum eum possimus consequatur, sunt aut dolorem doloribus voluptatum nam nobis architecto quam minima doloremque ut porro corporis repudiandae? Fugit.`,
 
         storageSpace: 80,
-        status: "AVAILABLE",
+        status: "BROKEN",
         imgUrl: "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png",
         rentingUser: UserMinimalSchema.parse({ username: 'royce_schut' })
     };

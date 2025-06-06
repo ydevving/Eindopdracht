@@ -2,7 +2,7 @@ import { z } from "zod/v4";
 
 export const fuelTypeEnum = z.enum(['PETROL', 'DIESEL', 'HYBRID_PETROL', 'HYBRID_DIESEL']);
 export const typeEnum = z.enum(["SEDAN", "SUV", "STATIONWAGON", "HATCHBACK", "CABRIO", "ROOFBOX", "TRAILER", "BICYCLE_ROOF_RACK", "BICYCLE_TRUNK_RACK", "TV", "MODEM", "GPS"]);
-export const statusEnum = z.enum(['AVAILABLE', 'RENTED','BROKEN']);
+export const statusEnum = z.enum(['BROKEN']).nullable();
 
 export const UserSchema = z.object({
     username: z.string(),
