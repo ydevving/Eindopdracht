@@ -9,7 +9,7 @@ export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { it
 
     console.log(Session.instance.getToken())
 
-    useEffect(()=> {
+    useEffect(() => {
         Session.instance.GET(`/user/info`)
         .then((data: Response) => data.json())
         .then((json: { email: string, city: string, address: string }) => {
@@ -30,7 +30,7 @@ export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { it
     // {item.car.brand} {item.name}
 
     return (
-        <Modal show={true} onHide={() => setSeeOrder(false)} centered>
+        <Modal show={seeOrder} onHide={() => setSeeOrder(false)} centered>
             <Modal.Header closeButton>
                 <Modal.Title>Order Overzicht</Modal.Title>
             </Modal.Header>
