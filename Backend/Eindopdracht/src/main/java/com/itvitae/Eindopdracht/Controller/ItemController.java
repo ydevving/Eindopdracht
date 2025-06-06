@@ -36,17 +36,7 @@ public class ItemController {
 
         Item item = _item.get();
 
-        return ResponseEntity.ok(new ItemDTO(
-                item.getId(),
-                item.getImgUrl(),
-                item.getName(),
-                item.getPrice(),
-                item.getDescription(),
-                item.getStorageSpace(),
-                item.getType(),
-                item.getStatus(),
-                item.getCar()
-        ));
+        return ResponseEntity.ok(this.itemService.mapToItemDTO(item));
     }
 
     @PatchMapping("/user/{itemId}")
