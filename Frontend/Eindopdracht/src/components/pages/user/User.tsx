@@ -1,4 +1,3 @@
-import ItemButton from "./ItemButton";
 import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
@@ -7,7 +6,6 @@ import CarInfoModal from "./CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../entities/types.ts';
 import type { Item } from "../../../entities/types.ts";
-import { Outlet } from "react-router";
 
 export default function User() {
 
@@ -55,10 +53,7 @@ export default function User() {
     const navigate = useNavigate();
 
     return (
-        <div>
-            <div>
-                <ItemList/>
-            </div>
+        <div >
             <div>
                 <ProductFilter filterList={filterList} setFilterList={setFilterList} />
             </div>
@@ -71,7 +66,9 @@ export default function User() {
             <div>
                 <Button onClick={handleShow}>Rent A Car</Button>
             </div>
-
+            <div>
+            <ItemList filterList={filterList}/>
+           </div>
             <CarInfoModal show={itemModal} onHide={() => setItemModal(false)} item={item} />
         </div>
 
