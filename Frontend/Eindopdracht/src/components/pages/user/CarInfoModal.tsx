@@ -3,10 +3,36 @@ import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { FaCarSide, FaCogs, FaUsers, FaSuitcase } from 'react-icons/fa';
 import type { Item } from '../../../entities/types';
 import OrderOverviewModal from './OrderOverviewModal';
+import Form from 'react-bootstrap/Form';
 
 export default function CarInfoModal({ show, onHide, item }: {show: boolean, onHide: () => void, item: Item}) {
 
   const availability = ['Ma. 1 Juni - Di. 2 Juni', 'Ma. 1 Juni - Wo. 3 Juni', 'Wo. 3 Juni - Zo. 7 Juni'];
+  const [check, setcheck] = useState([false,false,false])
+  let [selected, setSelected] = useState('');
+
+  let clickedCheck = [...check]
+
+  function assignSelected(range: string){
+
+    //setSelected(range);
+  }
+  
+  if(selected == availability[0]){                
+           clickedCheck[0] = !clickedCheck[0]      
+           setcheck(clickedCheck)               
+  }
+  if(selected == availability[1]){
+            clickedCheck[1] = !clickedCheck[1]
+           setcheck(clickedCheck)
+  }
+        
+  if(selected == availability[2]){
+            clickedCheck[2] = !clickedCheck[2]
+           setcheck(clickedCheck)
+  }
+
+
 
   if (!item.car)
     return (<><h4>Couldn't find a car object in item object</h4></>);
@@ -14,7 +40,7 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
   const [seeOrder, setSeeOrder]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
   if (seeOrder)
-    return (<OrderOverviewModal item={item} seeOrder={seeOrder} setSeeOrder={setSeeOrder} />);
+    return (<OrderOverviewModal selected={selected} item={item} seeOrder={seeOrder} setSeeOrder={setSeeOrder} />);
 
   return (
     <Modal show={show} onHide={onHide} size='lg' centered>
@@ -23,7 +49,8 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
       </Modal.Header>
       <Modal.Body
         style={{
-            maxHeight: '80vh',
+            minHeight: '78vh',
+            maxWidth: '40vw',
             overflowY: 'auto'
         }}
       >
@@ -48,12 +75,15 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
             <h3>€{item.price} / dag</h3>
             <p className='mt-3'><strong>Beschikbaarheid:</strong></p>
             <ul>
+              <Form>
               {
-                availability.map((range, index) => (
-                  <li key={index}>{range}</li>
+                availability.map((range,index) => (
+                  <Form.Check checked={check[index]} label={range} onClick={() => assignSelected(range)}/>
                 ))
               }
+              </Form>
             </ul>
+            <p>{selected}</p>
             <Button onClick={() => setSeeOrder(true)} variant='warning' className='mt-3 w-100'>Huren</Button>
           </Col>
         </Row>
