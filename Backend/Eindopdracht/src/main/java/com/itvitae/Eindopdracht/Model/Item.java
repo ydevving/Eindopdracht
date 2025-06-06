@@ -53,10 +53,4 @@ public class Item implements Entities {
 
     @Column(nullable = true)
     private String imgUrl;
-
-    @OneToOne
-    @JoinColumn(nullable = true)
-    @JsonBackReference
-    private User rentingUser;
-
 }
