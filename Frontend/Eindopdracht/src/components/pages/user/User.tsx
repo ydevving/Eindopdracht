@@ -5,7 +5,7 @@ import { useState } from 'react';
 import CarInfoModal from "./CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../entities/types.ts';
-import type { Item } from "../../../entities/types.ts";
+import { UserMinimalSchema, type Item } from "../../../entities/types.ts";
 
 export default function User() {
 
@@ -46,6 +46,7 @@ export default function User() {
         storageSpace: 80,
         status: "AVAILABLE",
         imgUrl: "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png",
+        rentingUser: UserMinimalSchema.parse({ username: 'royce_schut' })
     };
 
     item = ItemSchema.parse(item);

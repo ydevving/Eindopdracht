@@ -6,11 +6,12 @@ import com.itvitae.Eindopdracht.Model.Car;
 
 public record ItemDTO(
         Long id,
-        String imageURL,
         String name,
         Double price,
+        Car car,
+        ItemType type,
         String description,
         Short storageSpace,
-        ItemType type,
         Status status,
-        Car car) {}
+        String imgUrl
+) {}
