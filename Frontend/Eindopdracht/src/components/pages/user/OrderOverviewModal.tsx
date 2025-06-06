@@ -10,7 +10,7 @@ export default function OrderOverviewModal({ item, seeOrder, setSeeOrder }: { it
     console.log(Session.instance.getToken())
 
     useEffect(()=> {
-        Session.instance.GET(`/info`)
+        Session.instance.GET(`/user/info`)
         .then((data: Response) => data.json())
         .then((json: { email: string, city: string, address: string }) => {
             const email = json['email'];
