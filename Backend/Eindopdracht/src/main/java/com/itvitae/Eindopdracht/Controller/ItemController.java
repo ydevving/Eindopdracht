@@ -1,6 +1,7 @@
 package com.itvitae.Eindopdracht.Controller;
 import com.itvitae.Eindopdracht.Annotation.Auth;
 import com.itvitae.Eindopdracht.DTO.ItemsUserDTO;
+import com.itvitae.Eindopdracht.DTO.OverviewDTO;
 import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Service.ItemService;
@@ -84,11 +85,6 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getAvailableItems());
     }
 
-    @GetMapping("/rentals")
-    ResponseEntity<List<ItemsUserDTO>> getRentals() {
-        return ResponseEntity.ok(itemService.getRentedItems());
-    }
-
     @GetMapping("/late")
     ResponseEntity<List<ItemsUserDTO>> getLateRentals() {
         return ResponseEntity.ok(itemService.getLateRentals());
@@ -97,6 +93,16 @@ public class ItemController {
     @GetMapping("/damaged")
     ResponseEntity<List<ItemsUserDTO>> getDamagedRentals() {
         return ResponseEntity.ok(itemService.getDamagedRentals());
+    }
+
+    @GetMapping("/rentals")
+    ResponseEntity<List<ItemsUserDTO>> getRentals() {
+        return ResponseEntity.ok(itemService.getRentedItems());
+    }
+
+    @GetMapping("/overview")
+    ResponseEntity<OverviewDTO> getOverviewOfItems() {
+        return ResponseEntity.ok(itemService.getOverview());
     }
 
 }

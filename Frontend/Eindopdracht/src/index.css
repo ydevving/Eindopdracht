@@ -52,3 +52,23 @@ body {
   background: #555; 
 }
 
+
+.license-plate {
+  width: 135px;  
+  height: 30px;  
+  background-color: #ffcc00;
+  border: 2px solid #000;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Arial", sans-serif;
+}
+
+
+.plate-content {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000; 
+  letter-spacing: 2px;
+}

@@ -20,7 +20,10 @@ export default function ItemColumn({ items, category }:
                         items.map((value, index) => {
                             const info = (
                                 <>
-                                    <p>{value.license_plate}</p>
+                                    {/* <p>{value.license_plate}</p> */}
+                                    <div className="license-plate">
+                                        <span className="plate-content">AB-12-34</span>
+                                    </div>
                                     <p>{(value.reserved) ? value.reserved.toLocaleDateString() : ''}</p>
                                 </>
                             );
