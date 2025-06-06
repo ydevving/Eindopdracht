@@ -53,10 +53,7 @@ export default function User() {
     const navigate = useNavigate();
 
     return (
-        <div>
-            <div>
-                <ItemList/>
-            </div>
+        <div >
             <div>
                 <ProductFilter filterList={filterList} setFilterList={setFilterList} />
             </div>
@@ -69,7 +66,9 @@ export default function User() {
             <div>
                 <Button onClick={handleShow}>Rent A Car</Button>
             </div>
-
+            <div>
+            <ItemList filterList={filterList}/>
+           </div>
             <CarInfoModal show={itemModal} onHide={() => setItemModal(false)} item={item} />
         </div>
 

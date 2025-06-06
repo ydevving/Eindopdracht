@@ -1,17 +1,27 @@
 import { Button, Image } from 'react-bootstrap'
-export default function ItemButton({item}:
-        {item:{
-        image:string, name:string, 
-        price:number, seats?:number, 
-        storage:number, type:string, 
-        isAutomatic?:boolean
-        }}
+import { FaCarSide, FaCogs, FaUsers, FaSuitcase, FaTrailer } from 'react-icons/fa';
+type car = {
+    image:string, name:string, 
+    price:number, storage:number, 
+    type:string, description:string,
+    status:number,
+    isAutomatic:boolean, seats:number,
+    licensePlate:string, brand:string,
+}
+type accessory = {
+    image:string, name:string, 
+    price:number, storage:number, 
+    type:string, description:string,
+    status:number
+}
+export default function ItemButton({item}:{item:car|accessory}
     ) {
-    if (item.isAutomatic) {
-        var transmission = "automatic"
-    } else {
-        var transmission = "manual"
-    }
+        let transmission = ""
+        let carItem = item as car
+        if(item != undefined && 'isAutomatic' in carItem){
+            carItem.isAutomatic ? transmission = "automatic" : transmission = "manual"
+        }
+        
      
     // TO-DO: Specify specific elements with classname or ID
 
@@ -33,19 +43,16 @@ export default function ItemButton({item}:
     //             }
 
     return (
-        <>
-            <style>{`
-                // Give the right elements the styling and do not generl
-            `}</style>
-            <Button style={{minWidth:"30vw", maxWidth:"30vw", backgroundColor:"#242424"}}>
-                <Image src={item.image} rounded style={{height:"auto", width:"20vw"}}/>
-                <p><b style={{fontSize:"2vw", overflow:"wrap"}}>{item.name}</b></p>
-                <p style={{ display:"block", color:"#90EE90", fontSize:"2vw", textAlign:"center"}}>${item.price},-/day</p>
-                <p>{item.seats != undefined ? <Image src="/src/assets/type.svg"/> : <Image src="/src/assets/type2.svg"/>}{item.type}</p>
-                {item.seats != undefined ? <p><Image src="/src/assets/seats.svg"/>{item.seats}</p> : <></>}
-                {item.isAutomatic != undefined ? <p><Image src="/src/assets/transmission.svg"/>{transmission}</p> : <></>}
-                <p><Image src="/src/assets/storage.svg"/>{item.storage} {item.type.includes("BikeHolder") ? "bicycle(s)" : "L"}</p>
+        <>{ item != undefined ? <>
+            <Button style={{height:"100%"}}>
+                <Image src={item.image} fluid rounded/>
+                <p><b style={{fontSize:"2vw", overflow:"wrap"}}>{"  "}{item.name}</b></p>
+                <p style={{color:"#90EE90", textAlign:"center"}}>{"  "}${item.price},-/day</p>
+                <p>{carItem.seats ? <FaCarSide/> : <FaTrailer/>}{"  "}{item.type}</p>
+                {carItem.seats ? <p><FaUsers/>{"  "}{carItem.seats}</p> : <></>}
+                {carItem.seats ? <p><FaCogs/>{"  "}{transmission}</p> : <></>}
+                <p><FaSuitcase/>{"  "}{item.storage} {"type" in item && item.type.includes("Bike") ? "bicycle(s)" : "L"}</p>
             </Button>
-        </>
+    </> : <></>}</>
     )
 }

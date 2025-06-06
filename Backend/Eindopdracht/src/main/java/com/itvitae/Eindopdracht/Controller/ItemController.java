@@ -38,7 +38,7 @@ public class ItemController {
 
         Item item = _item.get();
 
-        return ResponseEntity.ok(this.itemService.mapToItemDTO(item));
+        return ResponseEntity.ok(itemService.mapToItemDTO(item));
     }
 
     @PatchMapping("/user/{itemId}")

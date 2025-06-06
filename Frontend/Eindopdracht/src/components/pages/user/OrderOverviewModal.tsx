@@ -3,6 +3,8 @@ import { Container, Modal, Button, Row, Col } from 'react-bootstrap';
 import type { Item } from '../../../entities/types';
 import { useEffect, useRef, useState } from 'react'
 import Session from '../../../Session';
+import { email } from 'zod/v4';
+import { _email } from 'zod/v4/core';
 
 export default function OrderOverviewModal({ selected, item, seeOrder, setSeeOrder }: { selected: string, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
     let [userInfo, setUserInfo] = useState({ name: '', email: '', city: '', address: '' });
@@ -30,7 +32,7 @@ export default function OrderOverviewModal({ selected, item, seeOrder, setSeeOrd
     // {item.car.brand} {item.name}
 
     return (
-        <Modal show={seeOrder} onHide={() => setSeeOrder(false)} size='lg' centered>
+        <Modal show={true} onHide={() => setSeeOrder(false)} size='lg' centered>
             <Modal.Header closeButton>
                 <Modal.Title><h2>Check jouw bestelling</h2></Modal.Title>
             </Modal.Header>
