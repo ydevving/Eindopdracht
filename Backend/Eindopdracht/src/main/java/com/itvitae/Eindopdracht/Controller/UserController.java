@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.itvitae.Eindopdracht.DTO.LoginResponseDTO;
 import com.itvitae.Eindopdracht.DTO.LoginForm;
+import com.itvitae.Eindopdracht.DTO.UserDTO;
 
 import java.util.Optional;
 
@@ -110,7 +111,7 @@ public class UserController {
 
     @GetMapping("/info")
     @Auth
-    public ResponseEntity<UserInfoDTO> getOwnInformation(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<UserDTO> getOwnInformation(@RequestHeader("Authorization") String token) {
         Optional<User> _user = this.authService.retrieveUserFromToken(token);
 
         if (_user.isEmpty())
@@ -118,7 +119,7 @@ public class UserController {
 
         User user = _user.get();
 
-        return ResponseEntity.ok().body(new UserInfoDTO(user.getEmail(), user.getCity(), user.getAddress()));
+        return ResponseEntity.ok().body(new UserDTO(user.getUsername(), user.getEmail(), user.getCity(), user.getAddress()));
     }
 
     @GetMapping("/admin/info/{username}")
