@@ -288,8 +288,6 @@ class BuildService {
         if (item == null)
             throw new Seeder.BadCSVFormatException("ITEM_UNIQUE_REF (4th column) is not present in the REF_ID array");
 
-        item.setRentingUser(user);
-
         Transaction transaction = Transaction.builder()
                 .rentedAt(Date.valueOf(values.get(0)))
                 .rentedUntil(Date.valueOf(values.get(1)))

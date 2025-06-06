@@ -37,8 +37,4 @@ public class User implements Entities {
     @OneToMany(mappedBy = "rentingUser")
     @JsonBackReference
     private List<Transaction> transactions;
-
-    @OneToOne(mappedBy = "rentingUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonBackReference
-    private Item rentingItem;
 }
