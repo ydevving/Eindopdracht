@@ -1,12 +1,17 @@
 
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import Item from "./Item";
+import { Container, Row, Col } from "react-bootstrap";
+import ItemCard from "./ItemCard";
+import type { Transaction } from "../../../entities/types";
 
-export default function ItemColumn({ items, category }:
+export default function ItemColumn({ transactions, category }:
     {
-        items: { name: string, license_plate: string, reserved: Date | null }[],
+        transactions: Transaction[],
         category: string
     }) {
+
+    let sendItems = null;
+
+    
 
     return (
         <Container style={{ marginTop: '40px', backgroundColor: '#FAF9F9', borderRadius: '6px' }} fluid>
@@ -17,17 +22,23 @@ export default function ItemColumn({ items, category }:
 
                 <Container style={{ maxHeight: '70vh', overflowY: 'scroll' }}>
                     {
-                        items.map((value, index) => {
+                        transactions.map((value, index) => {
+
+                            let licensePlate = (value.item.car?.licenseplate) ? (
+                                <div className="license-plate">
+                                        <span className="plate-content">{value.item.car.licenseplate}</span>
+                                </div>
+                             ) : null;
+
                             const info = (
                                 <>
-                                    {/* <p>{value.license_plate}</p> */}
-                                    <div className="license-plate">
-                                        <span className="plate-content">AB-12-34</span>
-                                    </div>
-                                    <p>{(value.reserved) ? value.reserved.toLocaleDateString() : ''}</p>
+                                    {licensePlate}
+                                    <p>{`Rented until ${value.rentedUntil.toLocaleDateString()}`}</p>
                                 </>
                             );
-                            return (<Row key={index} md={4}><Item style={{ marginBlock: '15px' }} name={value.name} description={info} /></Row>);
+                            return (<Row key={index} md={4}>
+                                        <ItemCard style={{ marginBlock: '15px' }} item={value.item} description={info} />
+                                    </Row>);
                         })
                     }
                 </Container>

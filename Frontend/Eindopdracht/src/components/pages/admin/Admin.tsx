@@ -11,8 +11,6 @@ export default function Admin() {
             <Row xs='auto'>
                 <ItemColumns />
             </Row>
-            
-
         </Container>
     )
 }

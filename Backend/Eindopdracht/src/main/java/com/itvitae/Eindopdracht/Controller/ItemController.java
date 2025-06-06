@@ -1,12 +1,13 @@
 package com.itvitae.Eindopdracht.Controller;
 import com.itvitae.Eindopdracht.Annotation.Auth;
-import com.itvitae.Eindopdracht.DTO.ItemsUserDTO;
+import com.itvitae.Eindopdracht.DTO.TransactionDTO;
+import com.itvitae.Eindopdracht.DTO.TransactionsUserDTO;
 import com.itvitae.Eindopdracht.DTO.OverviewDTO;
 import com.itvitae.Eindopdracht.Model.Item;
+import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -86,17 +87,17 @@ public class ItemController {
     }
 
     @GetMapping("/late")
-    ResponseEntity<List<ItemsUserDTO>> getLateRentals() {
+    ResponseEntity<List<TransactionDTO>> getLateRentals() {
         return ResponseEntity.ok(itemService.getLateRentals());
     }
 
     @GetMapping("/damaged")
-    ResponseEntity<List<ItemsUserDTO>> getDamagedRentals() {
+    ResponseEntity<List<TransactionDTO>> getDamagedRentals() {
         return ResponseEntity.ok(itemService.getDamagedRentals());
     }
 
     @GetMapping("/rentals")
-    ResponseEntity<List<ItemsUserDTO>> getRentals() {
+    ResponseEntity<List<TransactionDTO>> getRentals() {
         return ResponseEntity.ok(itemService.getRentedItems());
     }
 

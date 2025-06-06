@@ -19,7 +19,7 @@ export default function SearchBar() {
                     <div className="position-relative">
                         <Form.Control
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Search user's info..."
                             className="search-input"
                             style={{ paddingRight: '2.5rem' }}
                             onKeyDown={() => { }}

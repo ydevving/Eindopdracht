@@ -5,5 +5,5 @@ import java.time.LocalDate;
 
 import com.itvitae.Eindopdracht.Model.Item;
 
-public record TransactionDTO(long id, Item item, LocalDate rentedAt, LocalDate rentedUntil, UserDTO rentingUser) {
+public record TransactionDTO(long id, LocalDate rentedAt, LocalDate rentedUntil, UserDTO rentingUser, Item item) {
 }

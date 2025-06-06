@@ -26,10 +26,11 @@ public class TransactionService {
             );
             TransactionDTO transactionDTO = new TransactionDTO(
                     transactions.get(i).getId(),
-                    transactions.get(i).getItem(),
                     transactions.get(i).getRentedAt(),
                     transactions.get(i).getRentedUntil(),
-                    userDTO);
+                    userDTO,
+                    transactions.get(i).getItem()
+            );
             transactionDTOList.add(transactionDTO);
 
         }

@@ -4,9 +4,10 @@ export const fuelTypeEnum = z.enum(['PETROL', 'DIESEL', 'HYBRID_PETROL', 'HYBRID
 export const typeEnum = z.enum(["SEDAN", "SUV", "STATIONWAGON", "HATCHBACK", "CABRIO", "ROOFBOX", "TRAILER", "BICYCLE_ROOF_RACK", "BICYCLE_TRUNK_RACK", "TV", "MODEM", "GPS"]);
 export const statusEnum = z.enum(['AVAILABLE', 'RENTED','BROKEN']);
 
+export const TokenSchema = z.object({ token: z.uuidv4() });
+
 export const UserSchema = z.object({
     username: z.string(),
-    password: z.string(),
     email:    z.email(),
     address:  z.string(),
     city:     z.string()
@@ -49,8 +50,20 @@ export const TransactionSchema = z.object({
     item:        ItemSchema
 });
 
-export const TokenSchema = z.object({ token: z.uuidv4() });
+export const ItemsUserSchema = z.object({
+    item: z.array(ItemSchema),
+    user: UserSchema
+});
+
+export const OverviewSchema = z.object({
+    available: z.array(ItemSchema),
+    late:      z.array(ItemsUserSchema),
+    damaged:   z.array(ItemsUserSchema),
+    rentals:   z.array(ItemsUserSchema)
+});
 
 export type User = z.infer<typeof UserSchema>;
 export type Item = z.infer<typeof ItemSchema>;
 export type Transaction = z.infer<typeof TransactionSchema>;
+export type ItemsUser = z.infer<typeof ItemsUserSchema>;
+export type Overview = z.infer<typeof OverviewSchema>;

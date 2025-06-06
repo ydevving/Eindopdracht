@@ -1,10 +1,12 @@
 package com.itvitae.Eindopdracht.DTO;
 
+import com.itvitae.Eindopdracht.Model.Transaction;
+
 import java.util.List;
 
 public record OverviewDTO(
         List<ItemDTO> available,
-        List<ItemsUserDTO> late,
-        List<ItemsUserDTO> damaged,
-        List<ItemsUserDTO> rentals
+        List<TransactionDTO> late,
+        List<TransactionDTO> damaged,
+        List<TransactionDTO> rentals
 ) {}

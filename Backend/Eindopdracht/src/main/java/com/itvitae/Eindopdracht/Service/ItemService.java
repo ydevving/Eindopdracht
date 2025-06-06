@@ -36,49 +36,46 @@ public class ItemService {
         return itemRepo.findByStatus(Status.AVAILABLE).stream().map(this::mapToItemDTO).toList();
     }
 
-    public List<ItemsUserDTO> getLateRentals() {
+    public List<TransactionDTO> getLateRentals() {
         LocalDate currentDate = LocalDate.now();
 
-        return transactionRepo.findLateRentals(currentDate).stream()
-                .map(transaction -> {
-                    User user = transaction.getRentingUser();
-
-                    return new ItemsUserDTO(
-                            List.of(transaction.getItem()),
-                            new UserDTO(user.getUsername(), user.getEmail(), user.getAddress(), user.getCity())
-                    );
-                })
-                .collect(Collectors.toList());
+        return transactionRepo.findLateRentals(currentDate)
+                .stream()
+                .map((t) -> (new TransactionDTO(t.getId(),
+                        t.getRentedAt(),
+                        t.getRentedUntil(),
+                        new UserDTO(t.getRentingUser().getUsername(), t.getRentingUser().getEmail(), t.getRentingUser().getAddress(), t.getRentingUser().getCity()),
+                        t.getItem()
+                )
+                )).toList();
     }
 
-    public List<ItemsUserDTO> getDamagedRentals() {
+    public List<TransactionDTO> getDamagedRentals() {
         LocalDate currentDate = LocalDate.now();
 
-        return transactionRepo.findDamagedRentals().stream()
-                .map(transaction -> {
-                    User user = transaction.getRentingUser();
-
-                    return new ItemsUserDTO(
-                            List.of(transaction.getItem()),
-                            new UserDTO(user.getUsername(), user.getEmail(), user.getAddress(), user.getCity())
-                    );
-                })
-                .collect(Collectors.toList());
+        return transactionRepo.findDamagedRentals()
+                .stream()
+                .map((t) -> (new TransactionDTO(t.getId(),
+                        t.getRentedAt(),
+                        t.getRentedUntil(),
+                        new UserDTO(t.getRentingUser().getUsername(), t.getRentingUser().getEmail(), t.getRentingUser().getAddress(), t.getRentingUser().getCity()),
+                        t.getItem()
+                        )
+                )).toList();
     }
 
-    public List<ItemsUserDTO> getRentedItems() {
+    public List<TransactionDTO> getRentedItems() {
         LocalDate currentDate = LocalDate.now();
 
-        return transactionRepo.findRentals(currentDate).stream()
-                .map(transaction -> {
-                    User user = transaction.getRentingUser();
-
-                    return new ItemsUserDTO(
-                        List.of(transaction.getItem()),
-                        new UserDTO(user.getUsername(), user.getEmail(), user.getAddress(), user.getCity())
-                    );
-                })
-                .collect(Collectors.toList());
+        return transactionRepo.findRentals(currentDate)
+                .stream()
+                .map((t) -> (new TransactionDTO(t.getId(),
+                        t.getRentedAt(),
+                        t.getRentedUntil(),
+                        new UserDTO(t.getRentingUser().getUsername(), t.getRentingUser().getEmail(), t.getRentingUser().getAddress(), t.getRentingUser().getCity()),
+                        t.getItem()
+                )
+                )).toList();
     }
 
     public OverviewDTO getOverview() {
