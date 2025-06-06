@@ -1,4 +1,3 @@
-import ItemButton from "./ItemButton";
 import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
@@ -7,7 +6,6 @@ import CarInfoModal from "./CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../entities/types.ts';
 import { UserMinimalSchema, type Item } from "../../../entities/types.ts";
-import { Outlet } from "react-router";
 
 export default function User() {
 
