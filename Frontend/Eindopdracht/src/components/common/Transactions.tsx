@@ -2,9 +2,9 @@
 import { Container, Row, Col, Button, Modal, Table, } from 'react-bootstrap';
 import { Outlet } from 'react-router';
 import { useEffect, useState } from 'react';
-import type { Transaction } from '../../entities/types';
-import { TransactionSchema } from '../../entities/types';
-import Session from '../../Session';
+import type { Transaction } from '../../utilities/types';
+import { TransactionSchema } from '../../utilities/types';
+import Session from '../../utilities/Session';
 
 export default function Transactions({ show, onHide }: { show: boolean, onHide: () => void }) {
 
@@ -15,7 +15,6 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
             return;
 
         Session.instance.onTokenAvailable((token) => {
-            console.log("Callback received in Transactions.tsx", token);
             Session.instance.GET('/transaction/admin/royce_schut')
                 .then((data) => { console.log(data); return data.json() })
                 .then((transactionData) => {
@@ -25,9 +24,7 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                             t['rentedAt'] = new Date(t.rentedAt);
                             t['rentedUntil'] = new Date(t.rentedUntil);
 
-                            console.log(t);
                             const data = TransactionSchema.parse(t);
-                            console.log(data.rentedAt);
                         }
                         catch (error) {
                             console.error("Invalid transaction data!", error);
@@ -39,8 +36,6 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                 })
                 .catch((error) => console.error('Error loading JSON', error));
         })
-
-        console.log('done with it');
     }, []);
 
     

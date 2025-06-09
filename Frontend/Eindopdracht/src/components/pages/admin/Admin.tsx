@@ -2,7 +2,7 @@ import ItemColumns from './ItemColumns'
 import { Container, Row } from 'react-bootstrap';
 import SearchBar from './SearchBar';
 import ItemCard from './ItemCard';
-import { fuelTypeEnum, statusEnum, typeEnum } from '../../../entities/types';
+import { fuelTypeEnum, statusEnum, typeEnum } from '../../../utilities/types';
 
 export default function Admin() {
 
@@ -69,8 +69,8 @@ export default function Admin() {
                 <SearchBar />
             </Row>
             <Row xs='auto'>
-                {/* <ItemColumns /> */}
-                <ItemCard item={transaction[0]}  />
+                <ItemColumns />
+                {/* <ItemCard item={transaction[0]}  /> */}
             </Row>
         </Container>
     )

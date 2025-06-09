@@ -60,3 +60,28 @@ export type Item = z.infer<typeof ItemSchema>;
 export type Car = z.infer<typeof CarSchema>;
 export type Transaction = z.infer<typeof TransactionSchema>;
 export type Overview = z.infer<typeof OverviewSchema>;
+
+
+export function isItem(variable: any): variable is Item {
+    return (
+        typeof variable === 'object' &&
+        variable !== null &&
+        typeof variable?.name === 'string'
+    );
+}
+
+export function isTransaction(variable: any): variable is Transaction {
+    return (
+        typeof variable === 'object' &&
+        variable !== null &&
+        typeof variable?.rentedAt === 'object'
+    );
+}
+
+export function isCar(variable: any): variable is Car {
+    return (
+        typeof variable === 'object' &&
+        variable !== null &&
+        typeof variable?.licenseplate === 'string'
+    );
+}

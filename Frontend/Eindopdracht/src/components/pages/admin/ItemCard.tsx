@@ -1,40 +1,35 @@
 import type React from 'react';
 import Card from 'react-bootstrap/Card';
-import type { Item, Transaction } from '../../../entities/types';
+import ListGroup from 'react-bootstrap/ListGroup';
+import type { Item, Transaction, Car } from '../../../utilities/types';
+import { isItem, isTransaction, isCar } from "../../../utilities/types";
 import type { ReactElement } from 'react';
-
-function isItem(variable: any): variable is Item {
-    return (
-        typeof variable === 'object' &&
-        variable !== null &&
-        typeof variable?.name === 'string'
-    );
-}
-
-function isTransaction(variable: any): variable is Transaction {
-    return (
-        typeof variable === 'object' &&
-        variable !== null &&
-        typeof variable?.rentedAt === 'object'
-    );
-}
 
 export default function ItemCard({ item, description, style }: { item: Item | Transaction, description?: ReactElement, style?: React.CSSProperties }) {
 
-    console.log(isItem(item));
-    console.log(isTransaction(item))
+    const _item: Item = isItem(item) ? item : item.item;
+    const _transaction: Transaction | null = isTransaction(item) ? item : null;
+    const _car: Car | null = isCar(_item.car) ? _item.car : null;
 
-    return (<div>Testing</div>);
+    const subTitle = (_car) ? _car.brand : _item.type;
 
-    // return (
-    //     <Card className='d-flex flex-column gap-2' onClick={() => { console.log("Clicked card!"); }} style={{ width: '18rem', padding: '13px 20px', cursor: 'pointer', ...style }}>
-    //         <Card.Img variant="top" src={(item.imgUrl) ? item.imgUrl : ''} />
-    //         <Card.Body>
-    //             <Card.Title>{item.name}</Card.Title>
-    //             <Card.Text className='d-flex flex-column gap-2'>
-    //                 {description}
-    //             </Card.Text>
-    //         </Card.Body>
-    //     </Card>
-    // );
+    // return (<div>Testing</div>);
+
+    return (
+        <>
+            <style type="text/css">{".list-group-flush > div { padding-left: 0; }"}</style>
+            <Card className='d-flex flex-column gap-2' onClick={() => { console.log("Clicked card!"); }} style={{ width: '18rem', padding: '13px 20px', cursor: 'pointer', ...style }}>
+                <Card.Img variant="bottom" src={(_item.imgUrl) ? _item.imgUrl : undefined} />
+                <Card.Body>
+                    <Card.Title>{_item.name}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">{subTitle}</Card.Subtitle>
+                    <ListGroup className="list-group-flush">
+                        <ListGroup.Item>{description}</ListGroup.Item>
+                        <ListGroup.Item>Rent until 2050-02-01</ListGroup.Item>
+                        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                    </ListGroup>
+
+                </Card.Body>
+            </Card>
+        </>);
 }

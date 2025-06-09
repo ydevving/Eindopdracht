@@ -1,188 +1,146 @@
 import ItemColumn from "./ItemColumn";
-import type { Overview } from "../../../entities/types";
+import { ItemSchema, TransactionSchema } from "../../../utilities/types";
+import type { Overview, Transaction, Item } from "../../../utilities/types";
+import Session from "../../../utilities/Session";
+import { useEffect, useState } from "react";
+
+
+type categoriesType = {
+    available: [Item[], React.Dispatch<Item[]>],
+    late: [Transaction[], React.Dispatch<Transaction[]>],
+    damaged: [Transaction[], React.Dispatch<Transaction[]>],
+    rentals: [Transaction[], React.Dispatch<Transaction[]>]
+};
+
+type categoriesNamingType = {
+    available: "Beschikbaar",
+    late: "Laat",
+    damaged: "Beschadigd",
+    rentals: "Verhuurd"
+};
+
+
+async function getAvailable(categories: categoriesType): Promise<Item[] | void> {
+
+    return await Session.instance.GET('/item/available')
+            .then((data) => data.json())
+            .then((items) => {
+
+                // Validates incoming data
+                items.forEach((item: Item) => ItemSchema.parse(item));
+
+                categories['available'][1](items);
+
+                console.log('Returning available json now...');
+
+                setTimeout(() => { console.log("NOW FINALLY DONE") }, 1000 * 3);
+
+                return items;
+            })
+            .catch((error) => { console.error("An error occured on the /available endpoint in ItemColumns.tsx -", error); return error; });
+};
+
+async function getLate(categories: categoriesType): Promise<Transaction[] | void> {
+    return await Session.instance.GET('/item/late')
+        .then((data) => data.json())
+        .then((transactions) => {
+
+            // Validates incoming data
+            transactions.forEach((transaction: Transaction) => {
+                transaction.rentedAt = new Date(transaction.rentedAt);
+                transaction.rentedUntil = new Date(transaction.rentedUntil);
+
+                TransactionSchema.parse(transaction);
+            });
+
+            categories['late'][1](transactions);
+
+            console.log('Returning late json now...');
+            return transactions;
+        })
+        .catch((error) => { console.error("An error occured on the /late endpoint in ItemColumns.tsx -", error); return error; });
+};
+
+async function getDamaged(categories: categoriesType): Promise<Transaction[] | void> {
+    return await Session.instance.GET('/item/damaged')
+        .then((data) => data.json())
+        .then((transactions) => {
+
+            // Validates incoming data
+            transactions.forEach((transaction: Transaction) => {
+                transaction.rentedAt = new Date(transaction.rentedAt);
+                transaction.rentedUntil = new Date(transaction.rentedUntil);
+
+                TransactionSchema.parse(transaction);
+            });
+
+            categories['damaged'][1](transactions);
+
+            console.log('Returning damaged json now...');
+            return transactions;
+        })
+        .catch((error) => { console.error("An error occured on the /damaged endpoint in ItemColumns.tsx -", error); return error; });
+};
+
+async function getRentals(categories: categoriesType): Promise<Transaction[] | void> {
+    return await Session.instance.GET('/item/rentals')
+        .then((data) => data.json())
+        .then((transactions) => {
+
+            // Validates incoming data
+            transactions.forEach((transaction: Transaction) => {
+                transaction.rentedAt = new Date(transaction.rentedAt);
+                transaction.rentedUntil = new Date(transaction.rentedUntil);
+
+                TransactionSchema.parse(transaction);
+            });
+
+            categories['rentals'][1](transactions);
+
+            console.log('Returning rentals json now...');
+            return transactions;
+        })
+        .catch((error) => { console.error("An error occured on the /rentals endpoint in ItemColumns.tsx -", error); return error; });
+};
 
 export default function ItemColumns() {
 
-    const overviewList: Overview = {
-        "available": [
-            {
-                "id": 114,
-                "name": "5G Modem",
-                "price": 240.0,
-                "car": null,
-                "type": "MODEM",
-                "description": "Wil jij internet-verbinding hebben in de auto kies dan voor deze snelle 5G modem!",
-                "storageSpace": null,
-                "status": "AVAILABLE",
-                "imgUrl": null
-            },
-            {
-                "id": 115,
-                "name": "TomTom GO Classic 2nd gen",
-                "price": 119.0,
-                "car": null,
-                "type": "GPS",
-                "description": "De TomTom GO Classic 2e Generatie is de perfecte keuze voor wie op zoek is naar een betaalbare en betrouwbare GPS-navigatie. Met hoogwaardige TomTom-kaarten en maandelijkse kaartupdates voor Europa (inclusief 27 landen) en het vertrouwde TomTom Traffic, biedt dit systeem alles wat je nodig hebt voor een zorgeloze rit. Het 6-inch touchscreen biedt een hoge resolutie en een betere beeldkwaliteit, zodat je nooit meer een afslag of waarschuwing mist. Of je nu een korte rit of een lange reis maakt, de TomTom GO Classic 2nd GEN is je ideale navigatiepartner.",
-                "storageSpace": null,
-                "status": "AVAILABLE",
-                "imgUrl": null
-            },
-            {
-                "id": 116,
-                "name": "CRUZ black Bici-rack frameholder bike rack - Roof mounting bike carrier",
-                "price": 42.0,
-                "car": null,
-                "type": "BICYCLE_ROOF_RACK",
-                "description": "The CRUZ 'Bici-rack' is a basic but very solid and stable locking bike carrier - it's made of much stronger material than similar bike carriers in this price range. It fits roof bars up to 45mm wide, steel bars and aluminium bars, and downtubes to 90mm deep by 80mm wide.",
-                "storageSpace": 1,
-                "status": "AVAILABLE",
-                "imgUrl": null
-            },
-            {
-                "id": 117,
-                "name": "Thule 995001 OutWay Hanging 3-bike hanging trunk bike rack aluminium",
-                "price": 405.0,
-                "car": null,
-                "type": "BICYCLE_TRUNK_RACK",
-                "description": "Thule OutWay Hanging is designed to give you a quick and easy way to transport up to three bikes to wherever you want to ride. It fits on the boot of your car – great if you don't have a towbar or if you want to use the car roof for a cargo box. Twin hook attachment and sturdy steel cables with rubber protection (on all contact areas to the car) make sure that the hanging boot bike rack is fastened tightly to your car. This rack can hold up to a maximum weight of 45KG",
-                "storageSpace": 3,
-                "status": "AVAILABLE",
-                "imgUrl": null
-            }
-        ],
-        "late": [
-            {
-                "id": 41,
-                "rentedAt": new Date("2020-05-21"),
-                "rentedUntil": new Date("2024-05-25"),
-                "rentingUser": {
-                    "username": "royce_schut",
-                    "email": "roooycehier@outlook.com",
-                    "address": "Nassaustraat 113",
-                    "city": "Winschoten"
-                },
-                "item": {
-                    "id": 118,
-                    "name": "M4 Competition Cabrio",
-                    "price": 320.0,
-                    "car": {
-                        "licenseplate": "94-RO-BG",
-                        "brand": "BMW",
-                        "isAutomatic": true,
-                        "seats": 4,
-                        "towWeight": 0,
-                        "kilometerCounter": 30000,
-                        "modelYear": 2024,
-                        "fuelType": "PETROL"
-                    },
-                    "type": "CABRIO",
-                    "description": "Dikke vette cabrio heerlijk voor het vakantieleven, vakantieman.",
-                    "storageSpace": 80,
-                    "status": "RENTED",
-                    "imgUrl": "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png"
-                }
-            },
-            {
-                "id": 42,
-                "rentedAt": new Date("2020-06-21"),
-                "rentedUntil": new Date("2021-06-30"),
-                "rentingUser": {
-                    "username": "bartje_boekestijn",
-                    "email": "b.boekestijn@hotmail.com",
-                    "address": "Prangelaar 97",
-                    "city": "Woudenberg"
-                },
-                "item": {
-                    "id": 120,
-                    "name": "Sienna Spongebob",
-                    "price": 1.2340021E7,
-                    "car": {
-                        "licenseplate": "GB-799-N",
-                        "brand": "Toyota",
-                        "isAutomatic": true,
-                        "seats": 12,
-                        "towWeight": 25000,
-                        "kilometerCounter": 8430126,
-                        "modelYear": 1857,
-                        "fuelType": "PETROL"
-                    },
-                    "type": "HATCHBACK",
-                    "description": "The original Spongebob car available for rent at a hefty price",
-                    "storageSpace": 31023,
-                    "status": "RENTED",
-                    "imgUrl": "https://hips.hearstapps.com/autoweek/assets/s3fs-public/2014LAAS_SpongeBob_Movie_2015_Toyota_Sienna_001.jpg"
-                }
-            }
-        ],
-        "damaged": [
-            {
-                "id": 44,
-                "rentedAt": new Date("2000-03-08"),
-                "rentedUntil": new Date("2026-01-01"),
-                "rentingUser": {
-                    "username": "carl_wassenaar",
-                    "email": "wussunaartje@gmail.com",
-                    "address": "Ooievaarlaan 33",
-                    "city": "Culemborg"
-                },
-                "item": {
-                    "id": 113,
-                    "name": "Mini-TV",
-                    "price": 110.0,
-                    "car": null,
-                    "type": "TV",
-                    "description": "Een Mini-TV handig voor de kids voor op reis!",
-                    "storageSpace": null,
-                    "status": "BROKEN",
-                    "imgUrl": null
-                }
-            }
-        ],
-        "rentals": [
-            {
-                "id": 43,
-                "rentedAt": new Date("1990-01-01"),
-                "rentedUntil": new Date("2026-01-01"),
-                "rentingUser": {
-                    "username": "joos_breen",
-                    "email": "j.breen@breencompany.nl",
-                    "address": "Oostkade 14",
-                    "city": "Huizen"
-                },
-                "item": {
-                    "id": 119,
-                    "name": "Q5",
-                    "price": 84.0,
-                    "car": {
-                        "licenseplate": "64-NRL-7",
-                        "brand": "Audi",
-                        "isAutomatic": true,
-                        "seats": 5,
-                        "towWeight": 1996,
-                        "kilometerCounter": 45330,
-                        "modelYear": 2018,
-                        "fuelType": "DIESEL"
-                    },
-                    "type": "SUV",
-                    "description": "Stevig SUV'tje",
-                    "storageSpace": 240,
-                    "status": "RENTED",
-                    "imgUrl": null
-                }
-            }
-        ]
+    const categoriesNaming: categoriesNamingType = {
+        available: "Beschikbaar",
+        late: "Laat",
+        damaged: "Beschadigd",
+        rentals: "Verhuurd"
     };
 
-    const categories = {
-        "available": "Beschikbaar",
-        "late": "Laat",
-        "damaged": "Beschadigd",
-        "rentals": "Verhuurd"
+    let categories: categoriesType = {
+        available: useState<Item[]>([]),
+        late: useState<Transaction[]>([]),
+        damaged: useState<Transaction[]>([]),
+        rentals: useState<Transaction[]>([])
     };
+
+    useEffect(() => {
+        const request = () => {
+            console.log('ItemColumns useEffect');
+            getAvailable(categories);
+            getLate(categories);
+            getDamaged(categories);
+            getRentals(categories);
+        };
+
+        if (Session.instance.isTokenPresent())
+            return request();
+
+        Session.instance.onTokenAvailable(request);
+    }, []);
 
     return (
         <>
-            {Object.entries(categories).map(([key, value], index) => (<ItemColumn key={index} items={overviewList[key]} category={value} />))}
+            {
+                Object.entries(categories).map(([key, value]: [key: string, value: [Item[] | Transaction[], React.Dispatch<Item[]> | React.Dispatch<Transaction[]>]], index: number) =>
+                    (<ItemColumn key={index} items={value[0]} category={categoriesNaming[key as keyof typeof categoriesNaming]} />)
+                )
+            }
         </>
     );
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { FaCarSide, FaCogs, FaUsers, FaSuitcase } from 'react-icons/fa';
-import type { Item } from '../../../entities/types';
+import type { Item } from '../../../utilities/types';
 import OrderOverviewModal from './OrderOverviewModal';
 import Form from 'react-bootstrap/Form';
 

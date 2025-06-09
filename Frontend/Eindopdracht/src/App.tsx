@@ -7,7 +7,7 @@ import ItemDetails from './components/common/ItemDetails';
 import Navbar from './components/common/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect } from 'react'
-import Session from './Session';
+import Session from './utilities/Session';
 
 
 function App() {

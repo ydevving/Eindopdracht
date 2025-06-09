@@ -16,10 +16,10 @@ export default class Session {
     private constructor() { this.token = ''; }
 
     public static setToken(token: string): void {
-        console.log(`TOKEN SET TO: ${Session.instance.token}`);
         Session.instance.token = token;
         Session.instance.listeners.forEach((callback) => callback(token));
         Session.instance.listeners = []; // Clear listeners after notifying
+        console.log('I HAVE SET THE TOKEN GOOD SIR!!');
     }
 
     public isTokenPresent(): boolean {
@@ -32,7 +32,6 @@ export default class Session {
 
     public static get instance(): Session {
         if (!Session.#instance) {
-            console.log('Created a new Session instance!!!!');
             Session.#instance = new Session();
         }
 
@@ -41,7 +40,6 @@ export default class Session {
 
     public onTokenAvailable(callback: (value: string) => void) {
         if (Session.instance.token) {
-            console.log("Token callback() called!");
             callback(Session.instance.token);
         } else {
             this.listeners.push(callback);
@@ -50,8 +48,6 @@ export default class Session {
 
     private _createRequest(endpoint: string, options: RequestInit): Promise<Response> {
         endpoint = (!endpoint.startsWith('/')) ? `/${endpoint}` : endpoint;
-
-        console.log(`TOKEN: ${Session.instance.token}`);
 
         return fetch(`${this.baseURL}${endpoint}`, { headers: { Authorization: this.getToken(), ...this.defaultHeaders }, ...options, ...this.defaultOptions });
     }
@@ -69,7 +65,6 @@ export default class Session {
     }
 
     public testInitialize(): void {
-        console.log(`testInitialize: ${Session.instance.getToken()}`);
         if (Session.instance.isTokenPresent() === true)
             return;
 
@@ -78,7 +73,6 @@ export default class Session {
                 .then((data: Response) => data.json())
                 .then((json: { token: string }) => {
                     Session.setToken(json['token']);
-                    console.log(`Token set to: ${Session.instance.getToken()}`);
                 })
                 .catch((error) => console.error('An error occured -', error));
         };
