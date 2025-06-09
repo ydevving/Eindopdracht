@@ -24,7 +24,7 @@ export default function ItemColumn({ transactions, category }:
                     {
                         transactions.map((value, index) => {
 
-                            let licensePlate = (value.item.car?.licenseplate) ? (
+                            const licensePlate = (value.item.car?.licenseplate) ? (
                                 <div className="license-plate">
                                         <span className="plate-content">{value.item.car.licenseplate}</span>
                                 </div>

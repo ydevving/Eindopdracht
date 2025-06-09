@@ -13,15 +13,7 @@ import Session from './Session';
 function App() {
 
   useEffect(() => {
-          if (Session.instance.isTokenPresent() === true)
-              return;
-  
-  
-          Session.instance.POST(`/user/login`, { username: 'admin', password: 'admin' })
-          .then((data: Response) => data.json())
-          .then((json: { token: string }) => {
-              Session.setToken(json['token']);
-          });
+    // Session.instance.testInitialize();
   }, []);
 
   return (

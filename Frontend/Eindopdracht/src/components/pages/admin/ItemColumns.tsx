@@ -1,16 +1,12 @@
 import ItemColumn from "./ItemColumn";
-import type { ItemsUser } from "../../../entities/types";
-
-type overview = {
-    
-};
+import type { Overview } from "../../../entities/types";
 
 export default function ItemColumns() {
 
-    const overviewList: ItemsUser = {
+    const overviewList: Overview = {
         "available": [
             {
-                "id": 74,
+                "id": 114,
                 "name": "5G Modem",
                 "price": 240.0,
                 "car": null,
@@ -21,7 +17,7 @@ export default function ItemColumns() {
                 "imgUrl": null
             },
             {
-                "id": 75,
+                "id": 115,
                 "name": "TomTom GO Classic 2nd gen",
                 "price": 119.0,
                 "car": null,
@@ -32,7 +28,7 @@ export default function ItemColumns() {
                 "imgUrl": null
             },
             {
-                "id": 76,
+                "id": 116,
                 "name": "CRUZ black Bici-rack frameholder bike rack - Roof mounting bike carrier",
                 "price": 42.0,
                 "car": null,
@@ -43,7 +39,7 @@ export default function ItemColumns() {
                 "imgUrl": null
             },
             {
-                "id": 77,
+                "id": 117,
                 "name": "Thule 995001 OutWay Hanging 3-bike hanging trunk bike rack aluminium",
                 "price": 405.0,
                 "car": null,
@@ -56,133 +52,137 @@ export default function ItemColumns() {
         ],
         "late": [
             {
-                "item": [
-                    {
-                        "id": 78,
-                        "name": "M4 Competition Cabrio",
-                        "price": 320.0,
-                        "car": {
-                            "licenseplate": "94-RO-BG",
-                            "brand": "BMW",
-                            "isAutomatic": true,
-                            "seats": 4,
-                            "towWeight": 0,
-                            "kilometerCounter": 30000,
-                            "modelYear": 2024,
-                            "fuelType": "PETROL"
-                        },
-                        "type": "CABRIO",
-                        "description": "Dikke vette cabrio heerlijk voor het vakantieleven, vakantieman.",
-                        "storageSpace": 80,
-                        "status": "RENTED",
-                        "imgUrl": "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png"
-                    }
-                ],
-                "username": {
+                "id": 41,
+                "rentedAt": new Date("2020-05-21"),
+                "rentedUntil": new Date("2024-05-25"),
+                "rentingUser": {
                     "username": "royce_schut",
                     "email": "roooycehier@outlook.com",
                     "address": "Nassaustraat 113",
                     "city": "Winschoten"
+                },
+                "item": {
+                    "id": 118,
+                    "name": "M4 Competition Cabrio",
+                    "price": 320.0,
+                    "car": {
+                        "licenseplate": "94-RO-BG",
+                        "brand": "BMW",
+                        "isAutomatic": true,
+                        "seats": 4,
+                        "towWeight": 0,
+                        "kilometerCounter": 30000,
+                        "modelYear": 2024,
+                        "fuelType": "PETROL"
+                    },
+                    "type": "CABRIO",
+                    "description": "Dikke vette cabrio heerlijk voor het vakantieleven, vakantieman.",
+                    "storageSpace": 80,
+                    "status": "RENTED",
+                    "imgUrl": "https://www.van-poelgeest.nl/content/uploads/2024/02/BMW-m4-cabrio-1024x520.png"
                 }
             },
             {
-                "item": [
-                    {
-                        "id": 80,
-                        "name": "Sienna Spongebob",
-                        "price": 1.2340021E7,
-                        "car": {
-                            "licenseplate": "GB-799-N",
-                            "brand": "Toyota",
-                            "isAutomatic": true,
-                            "seats": 12,
-                            "towWeight": 25000,
-                            "kilometerCounter": 8430126,
-                            "modelYear": 1857,
-                            "fuelType": "PETROL"
-                        },
-                        "type": "HATCHBACK",
-                        "description": "The original Spongebob car available for rent at a hefty price",
-                        "storageSpace": 31023,
-                        "status": "RENTED",
-                        "imgUrl": "https://hips.hearstapps.com/autoweek/assets/s3fs-public/2014LAAS_SpongeBob_Movie_2015_Toyota_Sienna_001.jpg"
-                    }
-                ],
-                "username": {
+                "id": 42,
+                "rentedAt": new Date("2020-06-21"),
+                "rentedUntil": new Date("2021-06-30"),
+                "rentingUser": {
                     "username": "bartje_boekestijn",
                     "email": "b.boekestijn@hotmail.com",
                     "address": "Prangelaar 97",
                     "city": "Woudenberg"
+                },
+                "item": {
+                    "id": 120,
+                    "name": "Sienna Spongebob",
+                    "price": 1.2340021E7,
+                    "car": {
+                        "licenseplate": "GB-799-N",
+                        "brand": "Toyota",
+                        "isAutomatic": true,
+                        "seats": 12,
+                        "towWeight": 25000,
+                        "kilometerCounter": 8430126,
+                        "modelYear": 1857,
+                        "fuelType": "PETROL"
+                    },
+                    "type": "HATCHBACK",
+                    "description": "The original Spongebob car available for rent at a hefty price",
+                    "storageSpace": 31023,
+                    "status": "RENTED",
+                    "imgUrl": "https://hips.hearstapps.com/autoweek/assets/s3fs-public/2014LAAS_SpongeBob_Movie_2015_Toyota_Sienna_001.jpg"
                 }
             }
         ],
         "damaged": [
             {
-                "item": [
-                    {
-                        "id": 73,
-                        "name": "Mini-TV",
-                        "price": 110.0,
-                        "car": null,
-                        "type": "TV",
-                        "description": "Een Mini-TV handig voor de kids voor op reis!",
-                        "storageSpace": null,
-                        "status": "BROKEN",
-                        "imgUrl": null
-                    }
-                ],
-                "username": {
+                "id": 44,
+                "rentedAt": new Date("2000-03-08"),
+                "rentedUntil": new Date("2026-01-01"),
+                "rentingUser": {
                     "username": "carl_wassenaar",
                     "email": "wussunaartje@gmail.com",
                     "address": "Ooievaarlaan 33",
                     "city": "Culemborg"
+                },
+                "item": {
+                    "id": 113,
+                    "name": "Mini-TV",
+                    "price": 110.0,
+                    "car": null,
+                    "type": "TV",
+                    "description": "Een Mini-TV handig voor de kids voor op reis!",
+                    "storageSpace": null,
+                    "status": "BROKEN",
+                    "imgUrl": null
                 }
             }
         ],
         "rentals": [
             {
-                "item": [
-                    {
-                        "id": 79,
-                        "name": "Q5",
-                        "price": 84.0,
-                        "car": {
-                            "licenseplate": "64-NRL-7",
-                            "brand": "Audi",
-                            "isAutomatic": true,
-                            "seats": 5,
-                            "towWeight": 1996,
-                            "kilometerCounter": 45330,
-                            "modelYear": 2018,
-                            "fuelType": "DIESEL"
-                        },
-                        "type": "SUV",
-                        "description": "Stevig SUV'tje",
-                        "storageSpace": 240,
-                        "status": "RENTED",
-                        "imgUrl": null
-                    }
-                ],
-                "username": {
+                "id": 43,
+                "rentedAt": new Date("1990-01-01"),
+                "rentedUntil": new Date("2026-01-01"),
+                "rentingUser": {
                     "username": "joos_breen",
                     "email": "j.breen@breencompany.nl",
                     "address": "Oostkade 14",
                     "city": "Huizen"
+                },
+                "item": {
+                    "id": 119,
+                    "name": "Q5",
+                    "price": 84.0,
+                    "car": {
+                        "licenseplate": "64-NRL-7",
+                        "brand": "Audi",
+                        "isAutomatic": true,
+                        "seats": 5,
+                        "towWeight": 1996,
+                        "kilometerCounter": 45330,
+                        "modelYear": 2018,
+                        "fuelType": "DIESEL"
+                    },
+                    "type": "SUV",
+                    "description": "Stevig SUV'tje",
+                    "storageSpace": 240,
+                    "status": "RENTED",
+                    "imgUrl": null
                 }
             }
         ]
     };
 
     const categories = {
-        "available": "Beschikbaar", 
-        "late": "Laat", 
-        "damaged": "Beschadigd", 
+        "available": "Beschikbaar",
+        "late": "Laat",
+        "damaged": "Beschadigd",
         "rentals": "Verhuurd"
     };
 
     return (
         <>
-            {Object.entries(categories).map(([key, value], index) => (<ItemColumn key={index} items={overviewList[key]} category={category} />))}
+            {Object.entries(categories).map(([key, value], index) => (<ItemColumn key={index} items={overviewList[key]} category={value} />))}
         </>
     );
 

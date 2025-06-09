@@ -28,8 +28,6 @@ export const CarSchema = z.object({
     fuelType:         fuelTypeEnum
 });
 
-export type Car = z.infer<typeof CarSchema>;
-
 export const ItemSchema = z.object({
     id:           z.int(),
     name:         z.string(),
@@ -46,24 +44,19 @@ export const TransactionSchema = z.object({
     id:          z.int(),
     rentedAt:    z.date(),
     rentedUntil: z.date(),
-    rentingUser: UserMinimalSchema,
+    rentingUser: UserSchema,
     item:        ItemSchema
-});
-
-export const ItemsUserSchema = z.object({
-    item: z.array(ItemSchema),
-    user: UserSchema
 });
 
 export const OverviewSchema = z.object({
     available: z.array(ItemSchema),
-    late:      z.array(ItemsUserSchema),
-    damaged:   z.array(ItemsUserSchema),
-    rentals:   z.array(ItemsUserSchema)
+    late:      z.array(TransactionSchema),
+    damaged:   z.array(TransactionSchema),
+    rentals:   z.array(TransactionSchema)
 });
 
 export type User = z.infer<typeof UserSchema>;
 export type Item = z.infer<typeof ItemSchema>;
+export type Car = z.infer<typeof CarSchema>;
 export type Transaction = z.infer<typeof TransactionSchema>;
-export type ItemsUser = z.infer<typeof ItemsUserSchema>;
 export type Overview = z.infer<typeof OverviewSchema>;

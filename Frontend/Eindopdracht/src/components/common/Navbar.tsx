@@ -26,7 +26,7 @@ export default function NavbarComponent() {
                         fontWeight: '600',
                         fontSize: '1.3rem',
                         letterSpacing: '0.5px',
-                    }} href="/home" >Logisticus</Navbar.Brand>
+                    }} href="/" >Logisticus</Navbar.Brand>
                     <Nav>
                         <Button onClick={handleShow} style={{
                             margin: '0.5rem',
