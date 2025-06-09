@@ -5,7 +5,7 @@ import { useState } from 'react';
 import CarInfoModal from "./CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../entities/types.ts';
-import { UserMinimalSchema, type Item } from "../../../entities/types.ts";
+import type { Item } from '../../../entities/types.ts';
 
 export default function User() {
 
