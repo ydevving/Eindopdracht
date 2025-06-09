@@ -4,29 +4,23 @@ import { Outlet } from 'react-router';
 import { useEffect, useState } from'react';
 import type { Transaction } from '../../entities/types';
 import { TransactionSchema } from '../../entities/types';
+import Session from '../../Session';
 
 export default function Transactions({show, onHide}: {show: boolean, onHide: () => void}) {
     
     const [transactions, setTransactions] = useState<Array<Transaction>>([])
     
     useEffect(() => {
-        if (transactions.length == 0){
-        fetch("http://localhost:8080/transaction/user/royce_schut")
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('failed to retrieve transactions');
-            }
-            return response.json();
-        })
+        if (transactions.length == 0) {
+
+        Session.instance.GET('/transaction/user/royce_schut')
+        .then((data) => data.json())
         .then((transactionData) => {
-
-            for (let i = 0; i < transactionData.length; i++) {
-
-                let t = transactionData[i];
-                
+            console.log('Inside transactionData');
+            for (const t of transactionData) {
                 try {
-                    transactionData[i]['rentedAt'] = new Date(t.rentedAt);
-                    transactionData[i]['rentedUntil'] = new Date(t.rentedUntil); 
+                    t['rentedAt'] = new Date(t.rentedAt);
+                    t['rentedUntil'] = new Date(t.rentedUntil); 
 
                     console.log(t);
                     const data = TransactionSchema.parse(t);
@@ -48,7 +42,7 @@ export default function Transactions({show, onHide}: {show: boolean, onHide: () 
         <>
             <Modal show={show} onHide={onHide}>
                 <Modal.Header>
-                    <Modal.Title>mijn gehuurde producten</Modal.Title>
+                    <Modal.Title>Mijn Gehuurde Producten</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Table>
@@ -57,7 +51,7 @@ export default function Transactions({show, onHide}: {show: boolean, onHide: () 
                                 <th>Start datum</th>
                                 <th>Eind datum</th>
                                 <th>Type</th>
-                                <th>name</th>
+                                <th>Naam</th>
                                 <th>Prijs</th>
                             </tr>
                         </thead>

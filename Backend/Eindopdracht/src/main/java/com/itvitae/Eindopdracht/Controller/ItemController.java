@@ -1,6 +1,10 @@
 package com.itvitae.Eindopdracht.Controller;
 import com.itvitae.Eindopdracht.Annotation.Auth;
+import com.itvitae.Eindopdracht.DTO.TransactionDTO;
+import com.itvitae.Eindopdracht.DTO.TransactionsUserDTO;
+import com.itvitae.Eindopdracht.DTO.OverviewDTO;
 import com.itvitae.Eindopdracht.Model.Item;
+import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
@@ -36,17 +40,7 @@ public class ItemController {
 
         Item item = _item.get();
 
-        return ResponseEntity.ok(new ItemDTO(
-                item.getId(),
-                item.getImgUrl(),
-                item.getName(),
-                item.getPrice(),
-                item.getDescription(),
-                item.getStorageSpace(),
-                item.getType(),
-                item.getStatus(),
-                item.getCar()
-        ));
+        return ResponseEntity.ok(itemService.mapToItemDTO(item));
     }
 
     @PatchMapping("/user/{itemId}")
@@ -85,6 +79,31 @@ public class ItemController {
 
         //Parts needed: itemDTO, ItemService(function to set status and map to DTO)
 
+    }
+
+    @GetMapping("/available")
+    ResponseEntity<List<ItemDTO>> getAvailableItems() {
+        return ResponseEntity.ok(itemService.getAvailableItems());
+    }
+
+    @GetMapping("/late")
+    ResponseEntity<List<TransactionDTO>> getLateRentals() {
+        return ResponseEntity.ok(itemService.getLateRentals());
+    }
+
+    @GetMapping("/damaged")
+    ResponseEntity<List<TransactionDTO>> getDamagedRentals() {
+        return ResponseEntity.ok(itemService.getDamagedRentals());
+    }
+
+    @GetMapping("/rentals")
+    ResponseEntity<List<TransactionDTO>> getRentals() {
+        return ResponseEntity.ok(itemService.getRentedItems());
+    }
+
+    @GetMapping("/overview")
+    ResponseEntity<OverviewDTO> getOverviewOfItems() {
+        return ResponseEntity.ok(itemService.getOverview());
     }
 
 }
