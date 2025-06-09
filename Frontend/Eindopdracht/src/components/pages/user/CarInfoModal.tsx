@@ -7,40 +7,21 @@ import Form from 'react-bootstrap/Form';
 
 export default function CarInfoModal({ show, onHide, item }: {show: boolean, onHide: () => void, item: Item}) {
 
-  const availability = ['Ma. 1 Juni - Di. 2 Juni', 'Ma. 1 Juni - Wo. 3 Juni', 'Wo. 3 Juni - Zo. 7 Juni'];
-  const [check, setcheck] = useState([false,false,false])
-  let [selected, setSelected] = useState('');
+  const availability = [new Date(2025, 6, 1),  new Date(2025, 6, 2),  new Date(2025, 6, 3), new Date(2025, 6, 4)];
+  const endDate = [new Date(2025, 6,1), new Date(2025, 6,3 ), new Date(2025,6, 5), new Date(2025, 6, 8)];
+  const [selected, setSelected] = useState(Number);
 
-  let clickedCheck = [...check]
-
-  function assignSelected(range: string){
-
-    //setSelected(range);
+  function assignSelected(index: number){
+    setSelected(index)
   }
   
-  if(selected == availability[0]){                
-           clickedCheck[0] = !clickedCheck[0]      
-           setcheck(clickedCheck)               
-  }
-  if(selected == availability[1]){
-            clickedCheck[1] = !clickedCheck[1]
-           setcheck(clickedCheck)
-  }
-        
-  if(selected == availability[2]){
-            clickedCheck[2] = !clickedCheck[2]
-           setcheck(clickedCheck)
-  }
-
-
-
   if (!item.car)
     return (<><h4>Couldn't find a car object in item object</h4></>);
 
   const [seeOrder, setSeeOrder]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
 
   if (seeOrder)
-    return (<OrderOverviewModal selected={selected} item={item} seeOrder={seeOrder} setSeeOrder={setSeeOrder} />);
+    return (<OrderOverviewModal availability={availability[selected]} endDate={endDate[selected]} selected={selected} item={item} seeOrder={seeOrder} setSeeOrder={setSeeOrder} />);
 
   return (
     <Modal show={show} onHide={onHide} size='lg' centered>
@@ -78,12 +59,12 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
               <Form>
               {
                 availability.map((range,index) => (
-                  <Form.Check checked={check[index]} label={range} onClick={() => assignSelected(range)}/>
+                  <Form.Check type="radio" name="boxes" label={[range.toLocaleDateString(),<text> tot </text>, endDate[index].toLocaleDateString()]} onChange={()=> assignSelected(index)}/>
                 ))
               }
               </Form>
             </ul>
-            <p>{selected}</p>
+            
             <Button onClick={() => setSeeOrder(true)} variant='warning' className='mt-3 w-100'>Huren</Button>
           </Col>
         </Row>

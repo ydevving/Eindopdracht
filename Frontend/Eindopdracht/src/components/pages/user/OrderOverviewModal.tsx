@@ -6,8 +6,11 @@ import Session from '../../../Session';
 import { email } from 'zod/v4';
 import { _email } from 'zod/v4/core';
 
-export default function OrderOverviewModal({ selected, item, seeOrder, setSeeOrder }: { selected: string, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function OrderOverviewModal({ availability, endDate, selected, item, seeOrder, setSeeOrder }: { availability: Date,endDate:Date, selected:number, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
     let [userInfo, setUserInfo] = useState({ name: '', email: '', city: '', address: '' });
+
+    const itemPrice = item.price * (selected + 1);
+
 
     useEffect(() => {
         Session.instance.GET(`/user/info`)
@@ -63,8 +66,9 @@ export default function OrderOverviewModal({ selected, item, seeOrder, setSeeOrd
                     <Row>
                         <Col md={5}>
                         <h4 className="mt-5 mb-1 text-weight-bold">Huur Gegevens</h4>
-                        <p className="my-0">Gekozen Huur Periode: {selected}</p>
-                        <p className="my-0">Totale Prijs van Huur: €{item.price}</p>
+                        <p className="my-0">Begin van Huur: {availability.toLocaleDateString()}</p>
+                        <p className="my-0">Eind van Huur: {endDate.toLocaleDateString()}</p>
+                        <p className="my-0">Totale Prijs van Huur: €{itemPrice}</p>
                         </Col>
 
                         <Col md={{span: 4, offset: 3}}>

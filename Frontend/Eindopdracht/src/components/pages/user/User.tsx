@@ -59,7 +59,7 @@ export default function User() {
             </div>
 
             <div>
-                Filtered by {filterList.map((e) => <div>{e.filter}:{e.value}</div>)}
+                Filtered by {filterList.map((e) => <div style={{color:"black"}}>{e.filter}:{e.value}</div>)}
                 <Button onClick={() => { console.log(filterList); navigate("/user/transactions") }}></Button>
             </div>
 
