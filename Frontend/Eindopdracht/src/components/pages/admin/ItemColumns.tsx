@@ -5,14 +5,14 @@ import Session from "../../../utilities/Session";
 import { useEffect, useState } from "react";
 
 
-type categoriesType = {
+interface categoriesType {
     available: [Item[], React.Dispatch<Item[]>],
     late: [Transaction[], React.Dispatch<Transaction[]>],
     damaged: [Transaction[], React.Dispatch<Transaction[]>],
     rentals: [Transaction[], React.Dispatch<Transaction[]>]
 };
 
-type categoriesNamingType = {
+interface categoriesNamingType {
     available: "Beschikbaar",
     late: "Laat",
     damaged: "Beschadigd",
@@ -30,10 +30,6 @@ async function getAvailable(categories: categoriesType): Promise<Item[] | void> 
                 items.forEach((item: Item) => ItemSchema.parse(item));
 
                 categories['available'][1](items);
-
-                console.log('Returning available json now...');
-
-                setTimeout(() => { console.log("NOW FINALLY DONE") }, 1000 * 3);
 
                 return items;
             })
@@ -55,7 +51,6 @@ async function getLate(categories: categoriesType): Promise<Transaction[] | void
 
             categories['late'][1](transactions);
 
-            console.log('Returning late json now...');
             return transactions;
         })
         .catch((error) => { console.error("An error occured on the /late endpoint in ItemColumns.tsx -", error); return error; });
@@ -76,7 +71,6 @@ async function getDamaged(categories: categoriesType): Promise<Transaction[] | v
 
             categories['damaged'][1](transactions);
 
-            console.log('Returning damaged json now...');
             return transactions;
         })
         .catch((error) => { console.error("An error occured on the /damaged endpoint in ItemColumns.tsx -", error); return error; });
@@ -97,7 +91,6 @@ async function getRentals(categories: categoriesType): Promise<Transaction[] | v
 
             categories['rentals'][1](transactions);
 
-            console.log('Returning rentals json now...');
             return transactions;
         })
         .catch((error) => { console.error("An error occured on the /rentals endpoint in ItemColumns.tsx -", error); return error; });
@@ -126,6 +119,11 @@ export default function ItemColumns() {
             getLate(categories);
             getDamaged(categories);
             getRentals(categories);
+
+            /* 
+             * The reason I'm not using the '/item/overview' endpoint is cause I think it makes more sense to
+             * process these items seperately for more fine-grained control and slightly modular architecture - YDevving
+            */
         };
 
         if (Session.instance.isTokenPresent())

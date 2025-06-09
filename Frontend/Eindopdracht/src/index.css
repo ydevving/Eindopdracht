@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5 !important;
@@ -34,41 +37,59 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 9px;
+  width: 8px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
-/* Handle */
+
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: #555;
 }
 
-
-.license-plate {
-  width: 135px;  
-  height: 30px;  
+.plate {
+  display: flex;
+  width: 100%;
+  max-width: 240px;
+  height: 42px;
   background-color: #ffcc00;
   border: 2px solid #000;
-  border-radius: 5px;
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: 'Share Tech Mono', monospace;
+  margin-top: 10px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.eu-banner {
+  width: 50px;
+  background-color: #003399;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: relative;
+  font-size: 10px;
+}
+
+.eu-stars {
+  width: 25px;
+  height: 25px;
+  margin-bottom: 2px;
+}
+
+.plate-number {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Arial", sans-serif;
-}
-
-
-.plate-content {
-  font-size: 16px;
-  font-weight: bold;
-  color: #000; 
+  font-size: 20px;
+  color: black;
   letter-spacing: 2px;
 }

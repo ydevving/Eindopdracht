@@ -3,10 +3,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import type { Transaction, Item, Car } from "../../../utilities/types";
 import { isItem, isTransaction, isCar } from "../../../utilities/types";
+import LicensePlate from "../../common/LicensePlate";
 
 export default function ItemColumn({ items, category }:
     {
-        items: Item[] | Transaction[],
+        items: (Item | Transaction)[],
         category: string
     }) {
 
@@ -15,10 +16,10 @@ export default function ItemColumn({ items, category }:
         <Container style={{ marginTop: '40px', backgroundColor: '#FAF9F9', borderRadius: '6px' }} fluid>
             <Col style={{ color: 'black', padding: '18px' }}>
                 <Row md={4}>
-                    <h4 style={{ width: '100%', textAlign: 'center' }}>{category}</h4>
+                    <h3 style={{ width: '100%', textAlign: 'center' }}>{category}</h3>
                 </Row>
 
-                <Container style={{ maxHeight: '70vh', overflowY: 'scroll' }}>
+                <Container style={{ maxHeight: '70vh', overflowY: 'auto', marginInline: '8px' }}>
                     {
                         items.map((value: Item | Transaction, index: number) => {
 
@@ -27,14 +28,7 @@ export default function ItemColumn({ items, category }:
                             let _transaction = isTransaction(value) ? value : null;
                             let _car = isCar(_item.car) ? _item.car : null;
 
-                            // if (!_car)
-                            // return <p>This is not a car, a regular item still needs to be implemented</p>;
-
-                            const licensePlate = (_car) ? (
-                                <div className="license-plate">
-                                        <span className="plate-content">{_car.licenseplate}</span>
-                                </div>
-                             ) : null;
+                            const licensePlate = (_car) ? (<LicensePlate licensePlate={_car.licenseplate} />) : null;
 
                             console.log(_item.car);
                             console.log((_car) ? 'present' : 'no presento!');
@@ -48,10 +42,8 @@ export default function ItemColumn({ items, category }:
                                 </>
                             );
 
-                            console.log('20 deep?? in this bih')
-
                             return (<Row key={index} md={4}>
-                                <ItemCard style={{ marginBlock: '15px' }} item={_item} description={info} />
+                                <ItemCard style={{ marginBlock: '15px' }} item={value} description={info} />
                             </Row>);
                         })
                     }
