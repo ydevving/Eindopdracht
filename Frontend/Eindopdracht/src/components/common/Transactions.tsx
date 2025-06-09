@@ -17,7 +17,7 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
         Session.instance.onTokenAvailable((token) => {
             Session.instance.GET('/transaction/admin/royce_schut')
                 .then((data) => { console.log(data); return data.json() })
-                .then((transactionData) => {
+                .then((transactionData: Array<Transaction>) => {
                     console.log('Inside transactionData');
                     for (const t of transactionData) {
                         try {
@@ -30,24 +30,44 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                             console.error("Invalid transaction data!", error);
                         }
                     }
-
-                    setTransactions(transactionData);
+                    console.log('transactionData: ');
                     console.log(transactionData);
+                    transactionData.sort((a, b) => b.rentedAt.valueOf() - a.rentedAt.valueOf());
+                    setTransactions(transactionData);
+                    
                 })
                 .catch((error) => console.error('Error loading JSON', error));
         })
     }, []);
 
-    
+    function checkTransactionDate(startDate: Date, endDate: Date): boolean {
+        const currentDate = new Date();
+        if (currentDate <= endDate && currentDate >= startDate) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+    function calculateAmountOfDays(startDate: Date, endDate: Date): number {
+        const oneDay = 24 * 60 * 60 * 1000;
+        return (Math.ceil(Math.abs((startDate.valueOf() - endDate.valueOf()) / oneDay)) + 1);
+    }
+
+    function calculateTotalPrice(startDate: Date, endDate: Date, price: number): number {
+        return (calculateAmountOfDays(startDate, endDate) * price);
+    }
+
 
     return (
         <>
-            <Modal show={show} onHide={onHide}>
-                <Modal.Header>
+            <Modal show={show} onHide={onHide} size='lg'>
+                <Modal.Header closeButton>
                     <Modal.Title>Mijn Gehuurde Producten</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Table>
+                    <Table >
                         <thead>
                             <tr>
                                 <th>Start datum</th>
@@ -58,18 +78,20 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                             </tr>
                         </thead>
                         <tbody>
-                            {transactions.map((transaction) => { 
+                            {transactions.map((transaction) => {
                                 let itemType = transaction.item.type.toString();
-                                
+
                                 return (
-                                <tr>
-                                    <td>{transaction.rentedAt.toLocaleDateString()}</td>
-                                    <td>{transaction.rentedUntil.toLocaleDateString()}</td>
-                                    <td>{`${itemType.toUpperCase().charAt(0)}${itemType.slice(1).toLowerCase()}`}</td>
-                                    <td>{!transaction.item.car ? `${transaction.item.name}` : `${transaction.item.car.brand} ${transaction.item.name}`}</td>
-                                    <td>{`€${transaction.item.price}`}</td>
-                                </tr>
-                            )})}
+                                    <tr key={transaction.id}>
+                                        <td className='align-middle'>{transaction.rentedAt.toLocaleDateString()}</td>
+                                        <td className='align-middle'>{transaction.rentedUntil.toLocaleDateString()}</td>
+                                        <td className='align-middle'>{`${itemType.toUpperCase().charAt(0)}${itemType.slice(1).toLowerCase()}`}</td>
+                                        <td className='align-middle'>{!transaction.item.car ? `${transaction.item.name}` : `${transaction.item.car.brand} ${transaction.item.name}`}</td>
+                                        <td className='align-middle'>{`€${calculateTotalPrice(transaction.rentedAt, transaction.rentedUntil, transaction.item.price)}`}</td>
+                                        <td style={{border: '0'}}>{checkTransactionDate(transaction.rentedAt, transaction.rentedUntil) ? <Button variant='danger' className='ms-3'>schade melden</Button> : <></>}</td>
+                                    </tr>
+                                )
+                            })}
                         </tbody>
                     </Table>
                 </Modal.Body>
