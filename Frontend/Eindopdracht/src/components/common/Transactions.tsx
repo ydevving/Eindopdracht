@@ -16,9 +16,8 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
 
         Session.instance.onTokenAvailable((token) => {
             Session.instance.GET('/transaction/admin/royce_schut')
-                .then((data) => { console.log(data); return data.json() })
+                .then((data) => { return data.json(); })
                 .then((transactionData: Array<Transaction>) => {
-                    console.log('Inside transactionData');
                     for (const t of transactionData) {
                         try {
                             t['rentedAt'] = new Date(t.rentedAt);
@@ -30,8 +29,6 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                             console.error("Invalid transaction data!", error);
                         }
                     }
-                    console.log('transactionData: ');
-                    console.log(transactionData);
                     transactionData.sort((a, b) => b.rentedAt.valueOf() - a.rentedAt.valueOf());
                     setTransactions(transactionData);
                     

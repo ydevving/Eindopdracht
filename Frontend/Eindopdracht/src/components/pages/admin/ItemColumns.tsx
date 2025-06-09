@@ -114,7 +114,6 @@ export default function ItemColumns() {
 
     useEffect(() => {
         const request = () => {
-            console.log('ItemColumns useEffect');
             getAvailable(categories);
             getLate(categories);
             getDamaged(categories);

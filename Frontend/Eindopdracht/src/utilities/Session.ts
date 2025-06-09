@@ -19,7 +19,6 @@ export default class Session {
         Session.instance.token = token;
         Session.instance.listeners.forEach((callback) => callback(token));
         Session.instance.listeners = []; // Clear listeners after notifying
-        console.log('I HAVE SET THE TOKEN GOOD SIR!!');
     }
 
     public isTokenPresent(): boolean {

@@ -4,6 +4,7 @@ import ItemCard from "./ItemCard";
 import type { Transaction, Item, Car } from "../../../utilities/types";
 import { isItem, isTransaction, isCar } from "../../../utilities/types";
 import LicensePlate from "../../common/LicensePlate";
+import type { ReactElement } from "react";
 
 export default function ItemColumn({ items, category }:
     {
@@ -30,20 +31,11 @@ export default function ItemColumn({ items, category }:
 
                             const licensePlate = (_car) ? (<LicensePlate licensePlate={_car.licenseplate} />) : null;
 
-                            console.log(_item.car);
-                            console.log((_car) ? 'present' : 'no presento!');
-
-                            const info = (
-                                <>
-                                    <div>
-                                        {licensePlate}
-                                        {/* {_transaction && (<p>{`Rented until ${_transaction.rentedUntil.toLocaleDateString()}`}</p>)} */}
-                                    </div>
-                                </>
-                            );
+                            const _description: (ReactElement | null)[] = [(licensePlate), (_transaction && (<b>{`Rented until ${_transaction.rentedUntil.toLocaleDateString()}`}</b>))];
+                            const isNullArray: boolean = _description.every((v) => v === null);
 
                             return (<Row key={index} md={4}>
-                                <ItemCard style={{ marginBlock: '15px' }} item={value} description={info} />
+                                <ItemCard style={{ marginBlock: '15px' }} item={value} description={(!isNullArray) ? _description : undefined} />
                             </Row>);
                         })
                     }

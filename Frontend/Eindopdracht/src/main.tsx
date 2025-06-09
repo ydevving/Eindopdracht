@@ -5,8 +5,6 @@ import './index.css'
 import App from './App.tsx'
 import Session from './utilities/Session.ts';
 
-console.log("This runs first i suppose??");
-
 // Automatically logs in as 'admin'
 Session.instance.testInitialize();
 
