@@ -59,13 +59,13 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
 
     return (
         <>
-            <Modal show={show} onHide={onHide} size='lg'>
+            <Modal show={show} onHide={onHide} size='lg' >
                 <Modal.Header closeButton>
                     <Modal.Title>Mijn Gehuurde Producten</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                    <Table >
-                        <thead>
+                <Modal.Body >
+                    <Table responsive='lg'>
+                        <thead >
                             <tr>
                                 <th>Start datum</th>
                                 <th>Eind datum</th>
@@ -85,7 +85,7 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                                         <td className='align-middle'>{`${itemType.toUpperCase().charAt(0)}${itemType.slice(1).toLowerCase()}`}</td>
                                         <td className='align-middle'>{!transaction.item.car ? `${transaction.item.name}` : `${transaction.item.car.brand} ${transaction.item.name}`}</td>
                                         <td className='align-middle'>{`€${calculateTotalPrice(transaction.rentedAt, transaction.rentedUntil, transaction.item.price)}`}</td>
-                                        <td style={{border: '0'}}>{checkTransactionDate(transaction.rentedAt, transaction.rentedUntil) ? <Button variant='danger' className='ms-3'>schade melden</Button> : <></>}</td>
+                                        <td style={{border: '0'}} className='align-middle'>{checkTransactionDate(transaction.rentedAt, transaction.rentedUntil) ? <Button variant='danger' className='ms-3'>schade melden</Button> : <></>}</td>
                                     </tr>
                                 )
                             })}
