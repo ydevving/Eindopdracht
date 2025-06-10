@@ -44,7 +44,7 @@ public class Item implements Entities {
     private Short storageSpace;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Status status;
 
     @OneToMany(mappedBy = "item")

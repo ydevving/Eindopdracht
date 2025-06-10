@@ -97,23 +97,25 @@ public class ItemService {
         ).toList();
     }
 
-    public ItemDTO setStatusAdmin(Long id){
+    public ItemDTO setStatusToAvailableAdmin(Long id){
 
         Item item = itemRepo.findById(id).orElseThrow();
 
-        item.setStatus(
-                (item.getStatus().equals(Status.BROKEN)) ? null : Status.BROKEN
-        );
+        if (item.getStatus().equals(Status.BROKEN)) {
+            item.setStatus(Status.AVAILABLE);
 
-        item = itemRepo.save(item);
+            item = itemRepo.save(item);
 
-        return mapToItemDTO(item);
+            return mapToItemDTO(item);
+        }
+
+        return mapToItemDTO(null);
     }
 
-    public ItemDTO setStatusUser(Long id){
+    public ItemDTO setStatusToBrokenUser(Long id){
         Item item = itemRepo.findById(id).orElseThrow();
 
-        if(item.getStatus() == null){
+        if(item.getStatus().equals(Status.RENTED)){
             item.setStatus(Status.BROKEN);
 
             item = itemRepo.save(item);
@@ -121,7 +123,7 @@ public class ItemService {
             return mapToItemDTO(item);
         }
 
-        return mapToItemDTO(item);
+        return null;
     }
 
     public ItemDTO mapToItemDTO(Item item){

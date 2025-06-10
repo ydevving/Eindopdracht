@@ -8,6 +8,7 @@ import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,15 +47,18 @@ public class ItemController {
         return ResponseEntity.ok(itemService.mapToItemDTO(item));
     }
 
-    @PatchMapping("/user/{itemId}")
+    @PatchMapping("/user/broken/{itemId}")
     @Auth
     ResponseEntity<ItemDTO> modifyStatusUser(@PathVariable long itemId){
 
         if(itemRepository.existsById(itemId)) {
 
-            ItemDTO updatedDTO = itemService.setStatusUser(itemId);
+            ItemDTO updatedDTO = itemService.setStatusToBrokenUser(itemId);
 
-            return ResponseEntity.ok(updatedDTO);
+            if (updatedDTO != null)
+                return ResponseEntity.ok(updatedDTO);
+
+            return ResponseEntity.badRequest().build();
 
         }else{
 
@@ -65,16 +69,18 @@ public class ItemController {
 
     }
 
-    @PatchMapping("/admin/{itemId}")
+    @PatchMapping("/admin/fixed/{itemId}")
     @Auth(requiresAdmin = true)
-    ResponseEntity<ItemDTO> modifyStatusAdmin(@PathVariable long itemId){
+    ResponseEntity<ItemDTO> modifyStatusToBrokenAdmin(@PathVariable long itemId){
 
         if(itemRepository.existsById(itemId)) {
 
-            ItemDTO updatedDTO = itemService.setStatusAdmin(itemId);
+            ItemDTO updatedDTO = itemService.setStatusToAvailableAdmin(itemId);
 
-            return ResponseEntity.ok(updatedDTO);
+            if (updatedDTO != null)
+                return ResponseEntity.ok(updatedDTO);
 
+            return ResponseEntity.badRequest().build();
         }else{
 
             return ResponseEntity.notFound().build();
