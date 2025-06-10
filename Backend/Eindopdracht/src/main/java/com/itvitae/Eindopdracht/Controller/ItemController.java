@@ -5,7 +5,9 @@ import com.itvitae.Eindopdracht.DTO.TransactionsUserDTO;
 import com.itvitae.Eindopdracht.DTO.OverviewDTO;
 import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Model.Transaction;
+import com.itvitae.Eindopdracht.Model.User;
 import com.itvitae.Eindopdracht.Repository.ItemRepository;
+import com.itvitae.Eindopdracht.Service.AuthenticationService;
 import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
 import org.apache.coyote.Response;
@@ -28,6 +30,9 @@ public class ItemController {
     @Autowired
     ItemService itemService;
 
+    @Autowired
+    AuthenticationService authService;
+
     @GetMapping
     @Auth
     ResponseEntity<List<ItemDTO>> getAllItems() {
@@ -49,7 +54,17 @@ public class ItemController {
 
     @PatchMapping("/user/broken/{itemId}")
     @Auth
-    ResponseEntity<ItemDTO> modifyStatusUser(@PathVariable long itemId){
+    ResponseEntity<ItemDTO> modifyStatusUser(@RequestHeader("Authorization") String token, @PathVariable long itemId){
+
+        Optional<User> _user = this.authService.retrieveUserFromToken(token);
+
+        if (_user.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        User user = _user.get();
+
+        if (!this.authService.itemBelongsToUser(itemId, user.getUsername()) && !this.authService.isAdmin(user))
+            return ResponseEntity.notFound().build();
 
         if(itemRepository.existsById(itemId)) {
 

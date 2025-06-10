@@ -1,6 +1,8 @@
 package com.itvitae.Eindopdracht.Service;
 
+import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Model.User;
+import com.itvitae.Eindopdracht.Repository.TransactionRepository;
 import com.itvitae.Eindopdracht.Repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -71,6 +74,9 @@ public class AuthenticationService {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    TransactionRepository transactionRepo;
+
     @PostConstruct
     void init() throws SQLException {
 //        ttlThread.start();
@@ -133,5 +139,21 @@ public class AuthenticationService {
                 .filter(entry -> entry.getValue().token.equals(token))
                 .map(Map.Entry::getKey)
                 .findFirst();
+    }
+
+    public boolean itemBelongsToUser(long itemID, String username) {
+
+        List<Transaction> transactions = transactionRepo.findItemRentingUser(LocalDate.now(), username);
+
+        if (transactions.size() == 1) {
+            Transaction transaction = transactions.get(0);
+
+//            if (username.equals("admin"))
+//                return true;
+
+            return (transaction.getRentingUser().getUsername().equals(username) && transaction.getItem().getId().equals(itemID));
+        }
+
+        return false;
     }
 }

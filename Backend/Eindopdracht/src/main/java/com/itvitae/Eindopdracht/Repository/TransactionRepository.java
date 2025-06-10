@@ -14,6 +14,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findAllByRentingUserUsername(String username);
     List<Transaction> findAllByItemId(long itemId);
 
+    @Query("SELECT t FROM Transaction t WHERE t.rentedUntil < :currentDate AND t.item.status = RENTED AND t.rentingUser.username = :username")
+    List<Transaction> findItemRentingUser(LocalDate currentDate, String username);
+
     @Query("SELECT t FROM Transaction t WHERE t.rentedUntil < :currentDate AND t.item.status = RENTED")
     List<Transaction> findLateRentals(LocalDate currentDate);
 
