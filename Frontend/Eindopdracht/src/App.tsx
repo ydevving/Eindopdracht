@@ -6,12 +6,16 @@ import Transactions from './components/common/Transactions';
 import ItemDetails from './components/common/ItemDetails';
 import Navbar from './components/common/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect, useState, useContext, createContext } from 'react'
+import { useEffect, useState, useContext, createContext, useRef } from 'react'
 import Session from './utilities/Session';
+import CarInfoModal from './components/common/CarInfoModal';
+import type { Item, Transaction } from './utilities/types';
 
 
 
 export const GlobalContext: React.Context<any> = createContext<any>(false);
+
+type ItemDisplayType = Item | Transaction | null;
 
 function App() {
 
@@ -19,16 +23,18 @@ function App() {
     // Session.instance.testInitialize();
   }, []);
 
+  const itemDisplay = useRef(null);
   const [itemModal, setItemModal]: [boolean, React.Dispatch<boolean>] = useState<boolean>(false);
 
   return (
     <>
       <BrowserRouter>
-        <GlobalContext value={[itemModal, setItemModal]}>
+        <GlobalContext value={[itemModal, setItemModal, itemDisplay]}>
           <Routes>
             <Route element={
               <>
                 <Navbar />
+                {(itemModal) ? (<CarInfoModal _item={itemDisplay.current} />) : null}
                 <Outlet />
               </>
             }>

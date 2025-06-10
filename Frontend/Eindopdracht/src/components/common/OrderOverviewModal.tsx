@@ -1,12 +1,10 @@
-
 import { Container, Modal, Button, Row, Col } from 'react-bootstrap';
 import type { Item } from '../../utilities/types';
 import { useEffect, useRef, useState } from 'react'
 import Session from '../../utilities/Session';
-import { email } from 'zod/v4';
-import { _email } from 'zod/v4/core';
 
-export default function OrderOverviewModal({ availability, endDate, selected, item, seeOrder, setSeeOrder }: { availability: Date,endDate:Date, selected:number, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+export default function OrderOverviewModal({ availability, endDate, selected, item, seeOrder, setSeeOrder }: { availability: Date, endDate:Date, selected: number, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
     let [userInfo, setUserInfo] = useState({ name: '', email: '', city: '', address: '' });
 
     const itemPrice = item.price * (selected + 1);
@@ -26,13 +24,11 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                 console.log(userInfo.name, userInfo.email, userInfo.city, userInfo.address);
             })
     }
-    );
+    , []);
 
 
     if (!item.car)
         return (<><h4>Couldn't find a car object in item object</h4></>);
-
-    // {item.car.brand} {item.name}
 
     return (
         <Modal show={true} onHide={() => setSeeOrder(false)} size='lg' centered>

@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Modal, Button, Row, Col } from 'react-bootstrap';
 import { FaCarSide, FaCogs, FaUsers, FaSuitcase } from 'react-icons/fa';
 import type { Item } from '../../utilities/types';
+import { isItem, isTransaction, isCar } from '../../utilities/types';
 import OrderOverviewModal from './OrderOverviewModal';
 import Form from 'react-bootstrap/Form';
+import { GlobalContext } from '../../App';
 
-export default function CarInfoModal({ show, onHide, item }: {show: boolean, onHide: () => void, item: Item}) {
+export default function CarInfoModal({ _item, onHide }: { _item: any, onHide?: () => void }) {
 
   const availability = [new Date(2025, 6, 1),  new Date(2025, 6, 2),  new Date(2025, 6, 3), new Date(2025, 6, 4)];
   const endDate = [new Date(2025, 6,1), new Date(2025, 6,3 ), new Date(2025,6, 5), new Date(2025, 6, 8)];
   const [selected, setSelected] = useState(Number);
 
+  const [itemModal, setItemModal, itemDisplay, setItemDisplay] = useContext(GlobalContext);
+
+  // if (!itemDisplay)
+    // return;
+
+  let item = isItem(itemDisplay.current) ? itemDisplay.current : itemDisplay.current?.item;
+
   function assignSelected(index: number){
     setSelected(index)
   }
   
-  if (!item.car)
+  if (!isCar(item?.car))
     return (<><h4>Couldn't find a car object in item object</h4></>);
 
   const [seeOrder, setSeeOrder]: [boolean, React.Dispatch<React.SetStateAction<boolean>>] = useState<boolean>(false);
@@ -23,8 +32,10 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
   if (seeOrder)
     return (<OrderOverviewModal availability={availability[selected]} endDate={endDate[selected]} selected={selected} item={item} seeOrder={seeOrder} setSeeOrder={setSeeOrder} />);
 
+  const onHideCB = (typeof onHide === 'function') ? onHide : (() => setItemModal(false));
+  
   return (
-    <Modal show={show} onHide={onHide} size='lg' centered>
+    <Modal show={itemModal} onHide={() => { setItemModal(false);}} size='lg' centered>
       <Modal.Header closeButton>
         <Modal.Title>{item.car.brand} {item.name}</Modal.Title>
       </Modal.Header>
@@ -58,8 +69,8 @@ export default function CarInfoModal({ show, onHide, item }: {show: boolean, onH
             <ul>
               <Form>
               {
-                availability.map((range,index) => (
-                  <Form.Check type="radio" name="boxes" label={[range.toLocaleDateString(),<text> tot </text>, endDate[index].toLocaleDateString()]} onChange={()=> assignSelected(index)}/>
+                availability.map((range, index) => (
+                  <Form.Check key={index} type="radio" name="boxes" label={[range.toLocaleDateString(),<span> tot </span>, endDate[index].toLocaleDateString()]} onChange={()=> assignSelected(index)}/>
                 ))
               }
               </Form>

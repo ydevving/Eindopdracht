@@ -69,7 +69,6 @@ export default function User() {
             <div>
             <ItemList filterList={filterList}/>
            </div>
-            <CarInfoModal show={itemModal} onHide={() => setItemModal(false)} item={item} />
         </div>
 
     )
