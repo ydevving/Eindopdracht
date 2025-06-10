@@ -1,10 +1,10 @@
-
 import { Container, Row, Col } from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import type { Transaction, Item, Car } from "../../../utilities/types";
 import { isItem, isTransaction, isCar } from "../../../utilities/types";
 import LicensePlate from "../../common/LicensePlate";
-import type { ReactElement } from "react";
+import { useState, type ReactElement } from "react";
+
 
 export default function ItemColumn({ items, category }:
     {
@@ -12,6 +12,7 @@ export default function ItemColumn({ items, category }:
         category: string
     }) {
 
+    const [itemModal, setItemModal] = useState<boolean>(false);
 
     return (
         <Container style={{ marginTop: '40px', backgroundColor: '#FAF9F9', borderRadius: '6px' }} fluid>

@@ -6,9 +6,12 @@ import Transactions from './components/common/Transactions';
 import ItemDetails from './components/common/ItemDetails';
 import Navbar from './components/common/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useEffect } from 'react'
+import { useEffect, useState, useContext, createContext } from 'react'
 import Session from './utilities/Session';
 
+
+
+export const GlobalContext: React.Context<any> = createContext<any>(false);
 
 function App() {
 
@@ -16,37 +19,41 @@ function App() {
     // Session.instance.testInitialize();
   }, []);
 
+  const [itemModal, setItemModal]: [boolean, React.Dispatch<boolean>] = useState<boolean>(false);
+
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route element={
-            <>
-              <Navbar />
-              <Outlet />
-            </>
-          }>
-            <Route path="/login?" element={<Login />} />
-            <Route path="user" element={<User />}>
-              <Route path="item/:itemID"
-                element={<ItemDetails
-                  item={{
-                    image: "/src/assets/placeholderCar.jpg",
-                    name: "Toyota 1000-THR Earthmover",
-                    price: 50,
-                    seats: 10000,
-                    storage: 25000000,
-                    type: "Supreme Machine",
-                    isAutomatic: true
-                  }} />
-                }
-              />
+        <GlobalContext value={[itemModal, setItemModal]}>
+          <Routes>
+            <Route element={
+              <>
+                <Navbar />
+                <Outlet />
+              </>
+            }>
+              <Route path="/login?" element={<Login />} />
+              <Route path="user" element={<User />}>
+                <Route path="item/:itemID"
+                  element={<ItemDetails
+                    item={{
+                      image: "/src/assets/placeholderCar.jpg",
+                      name: "Toyota 1000-THR Earthmover",
+                      price: 50,
+                      seats: 10000,
+                      storage: 25000000,
+                      type: "Supreme Machine",
+                      isAutomatic: true
+                    }} />
+                  }
+                />
+              </Route>
+              <Route path="/admin" element={<Admin />}>
+                {/* <Route path="./transactions/:userID/:itemID?" element={<Transactions />} /> */}
+              </Route>
             </Route>
-            <Route path="/admin" element={<Admin />}>
-              {/* <Route path="./transactions/:userID/:itemID?" element={<Transactions />} /> */}
-            </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </GlobalContext>
       </BrowserRouter>
     </>
   )

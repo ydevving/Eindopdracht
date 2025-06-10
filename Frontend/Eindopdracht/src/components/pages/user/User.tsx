@@ -2,7 +2,7 @@ import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
 import { useState } from 'react';
-import CarInfoModal from "./CarInfoModal.tsx";
+import CarInfoModal from "../../common/CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../utilities/types.ts';
 import type { Item } from '../../../utilities/types.ts';

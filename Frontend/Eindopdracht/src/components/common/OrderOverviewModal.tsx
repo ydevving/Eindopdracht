@@ -1,8 +1,8 @@
 
 import { Container, Modal, Button, Row, Col } from 'react-bootstrap';
-import type { Item } from '../../../utilities/types';
+import type { Item } from '../../utilities/types';
 import { useEffect, useRef, useState } from 'react'
-import Session from '../../../utilities/Session';
+import Session from '../../utilities/Session';
 import { email } from 'zod/v4';
 import { _email } from 'zod/v4/core';
 

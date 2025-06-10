@@ -3,8 +3,9 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import type { Item, Transaction, Car } from '../../../utilities/types';
 import { isItem, isTransaction, isCar } from "../../../utilities/types";
-import type { ReactElement } from 'react';
+import { useContext, type ReactElement } from 'react';
 import placeholderImage from '../../../assets/placeholderImage.webp';
+import { GlobalContext } from '../../../App';
 
 export default function ItemCard({ item, description, style }: { item: (Item | Transaction), description?: (ReactElement | null)[], style?: React.CSSProperties }) {
 
