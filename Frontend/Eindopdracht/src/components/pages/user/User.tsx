@@ -15,7 +15,7 @@ export default function User() {
         value: string | boolean | number;
 
     }>;
-    const [filterList, setFilterList] = useState<filterValue>([{ filter: '', value: '' }]); //useState of filterList with an initialstate of filterValue object with array filter '' & value ''
+    const [filterList, setFilterList] = useState<filterValue>([]); //useState of filterList with an initialstate of filterValue object with array filter '' & value ''
 
     console.log(filterList); // console log of filterList state.
 
@@ -53,18 +53,32 @@ export default function User() {
 
     const navigate = useNavigate();
 
+    //filter filterList by type:
+    const typeList = filterList.filter((filter)=> filter.filter == "type")
+    //filter filterList by != type:
+    const elseList = filterList.filter((filter) => filter.filter != "type")
+
+    function typeShow(){
+        if(typeList[0]){
+        return(
+            <>
+            <Col xs="auto">Type:</Col>
+            {typeList.map((e) => <Col xs="auto" style={{color:"black",paddingLeft: 0, paddingRight: 5}}>{e.value},</Col>)}
+            </> 
+        )}
+    }
+
     return (
         <Container fluid style={{backgroundColor:'rgb(251, 247, 244)', paddingLeft: 0, paddingRight: 0}}>
             
             <Row>           
                 <ProductFilter filterList={filterList} setFilterList={setFilterList} />                    
             </Row>
-
-            <Row>
-                <Col>
-                {filterList.map((e) => <div style={{color:"black"}}>{e.filter}:{e.value}</div>)}
-                {/* <Button onClick={() => { console.log(filterList); navigate("/user/transactions") }}></Button> */}
-                 </Col>     
+   
+            <Row style={{color: "black"}}>
+            <div>Applied filters:</div>
+            {typeShow()}
+            {elseList.map((e) => <Col xs="auto" style={{color:"black"}}>{e.filter} : {e.value}</Col>)}       
             </Row>
 
             <Row>

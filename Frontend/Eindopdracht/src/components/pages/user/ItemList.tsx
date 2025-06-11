@@ -159,11 +159,15 @@ export default function ItemList({filterList}:{filterList:Array<{filter:string, 
         )
     }
         
-    return(<>
-        <Pagination >
-            {pagiList}
-        </Pagination>
+    return(<>    
         <Container fluid>
+            <Row>
+                <Col>
+                <Pagination >
+                {pagiList}
+                </Pagination>
+                </Col>
+            </Row>
             <Row>
                 { page === 0 ? 
                     <Col xs={1} style={{padding:0}}>
