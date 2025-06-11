@@ -1,14 +1,14 @@
 import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
-import CarInfoModal from "../../common/CarInfoModal.tsx";
+import { useContext, useState } from 'react';
+import ItemInfoModal from "../../common/ItemInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../utilities/types.ts';
 import type { Item } from '../../../utilities/types.ts';
 
 export default function User() {
-
+    
     type filterValue = Array<{ //typescript alias of filterValue Array objects containing filter & value
         filter: string,
         value: string | boolean | number;
