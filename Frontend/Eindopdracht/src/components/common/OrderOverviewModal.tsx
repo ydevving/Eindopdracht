@@ -7,7 +7,7 @@ import Session from '../../utilities/Session';
 export default function OrderOverviewModal({ availability, endDate, selected, item, seeOrder, setSeeOrder }: { availability: Date, endDate:Date, selected: number, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
     let [userInfo, setUserInfo] = useState({ name: '', email: '', city: '', address: '' });
 
-    const itemPrice = item.price * (selected + 1);
+    const rentPrice = item.price * (selected + 1);
 
 
     useEffect(() => {
@@ -64,7 +64,7 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                         <h4 className="mt-5 mb-1 text-weight-bold">Huur Gegevens</h4>
                         <p className="my-0">Begin van Huur: {availability.toLocaleDateString()}</p>
                         <p className="my-0">Eind van Huur: {endDate.toLocaleDateString()}</p>
-                        <p className="my-0">Totale Prijs van Huur: €{itemPrice}</p>
+                        <p className="my-0">Totale Prijs van Huur: €{rentPrice}</p>
                         </Col>
 
                         <Col md={{span: 4, offset: 3}}>
@@ -80,10 +80,10 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                 <Container>
                     <Row >
                         <Col>
-                            <Button className="px-5" variant="danger" onClick={() => setSeeOrder(false)}>Cancel Order</Button>
+                            <Button className="px-5 errorCancel" onClick={() => setSeeOrder(false)}>Cancel Order</Button>
                         </Col>
                         <Col className='d-flex justify-content-end'>
-                            <Button className="px-5 bg-success" onClick={() => setSeeOrder(false)}>Confirm Order</Button>
+                            <Button className="px-5 succesConfirm"  onClick={() => setSeeOrder(false)}>Confirm Order</Button>
                         </Col>
                     </Row>
                 </Container>

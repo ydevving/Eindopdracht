@@ -93,3 +93,74 @@ body {
   color: black;
   letter-spacing: 2px;
 }
+
+.active .page-link{
+  background-color: #ffc107;
+  border-color: orange;
+  color: #212529;
+}
+
+.page-link{
+  background-color: #fff;
+  color: #212529;
+}
+
+.primary{
+  background-color: #fff;
+  color: #212529;
+  accent-color: yellow;
+  border-color: #dee2e6;
+}
+.primary:hover{
+  background-color: lightgray;
+  color:#212529;
+  border-color: #212529;
+}
+
+.secondary{
+  background-color: #fff;
+  color: #212529;
+  accent-color: yellow;
+  border-color: #dee2e6;
+}
+
+.secondary:hover{
+  background-color: lightgray;
+  color:#212529;
+  border-color: #212529;
+}
+
+.buttons{
+  background-color: #ffc107;
+  color: #212529;
+  accent-color: yellow;
+  border-color: #ffc107;
+}
+
+.buttons:hover{
+  background-color: #ffca2c;
+  color: #212529;
+  border-color: #ffca2c;
+}
+
+.errorCancel{
+  background-color: red;
+  color: black;
+  border-color: red;
+}
+
+.errorCancel:hover{
+  background-color: darkred;
+  border-color: darkred;
+}
+
+.succesConfirm{
+  background-color: green;
+  color: black;
+  border-color: green;
+}
+
+.succesConfirm:hover{
+  background-color: darkgreen;
+  border-color: darkgreen;
+}

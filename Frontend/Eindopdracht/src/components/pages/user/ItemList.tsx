@@ -160,18 +160,18 @@ export default function ItemList({filterList}:{filterList:Array<{filter:string, 
     }
         
     return(<>
-        <Pagination>
+        <Pagination >
             {pagiList}
         </Pagination>
         <Container fluid>
             <Row>
                 { page === 0 ? 
                     <Col xs={1} style={{padding:0}}>
-                        <Button style={{height:"100%", width:"100%"}} disabled>{"<"}</Button>
+                        <Button className="primary" style={{backgroundColor: "#fff", borderColor: "#dee2e6", height:"100%", width:"100%"}} disabled>{"<"}</Button>
                     </Col>
                     : 
                     <Col xs={1} style={{padding:0}}>
-                        <Button style={{height:"100%", width:"100%"}} onClick={() => scrollPage(-1)}>{"<"}</Button>
+                        <Button className="primary" style={{height:"100%", width:"100%"}} onClick={() => scrollPage(-1)}>{"<"}</Button>
                     </Col> 
                 }
 
@@ -187,11 +187,11 @@ export default function ItemList({filterList}:{filterList:Array<{filter:string, 
                 
                 { ((page+1)*3) >= (newItemList.length) ? 
                     <Col xs={1} style={{padding:0}}>
-                        <Button style={{height:"100%", width:"100%"}} disabled>{">"}</Button>
+                        <Button className="primary" style={{backgroundColor: "#fff", borderColor: "#dee2e6", height:"100%", width:"100%"}} disabled>{">"}</Button>
                     </Col> 
                     :
                     <Col xs={1} style={{padding:0}}>
-                        <Button style={{height:"100%", width:"100%"}} onClick={() => scrollPage(1)}>{">"}</Button>
+                        <Button className="primary" style={{height:"100%", width:"100%"}} onClick={() => scrollPage(1)}>{">"}</Button>
                     </Col>
                 }
             </Row>

@@ -6,6 +6,7 @@ import CarInfoModal from "../../common/CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../utilities/types.ts';
 import type { Item } from '../../../utilities/types.ts';
+import {Container, Row, Col} from 'react-bootstrap';
 
 export default function User() {
 
@@ -53,23 +54,29 @@ export default function User() {
     const navigate = useNavigate();
 
     return (
-        <div >
-            <div>
-                <ProductFilter filterList={filterList} setFilterList={setFilterList} />
-            </div>
+        <Container fluid style={{backgroundColor:'rgb(251, 247, 244)'}}>
+            
+            <Row>             
+                <ProductFilter filterList={filterList} setFilterList={setFilterList} />      
+            </Row>
 
-            <div>
-                Filtered by {filterList.map((e) => <div style={{color:"black"}}>{e.filter}:{e.value}</div>)}
-                <Button onClick={() => { console.log(filterList); navigate("/user/transactions") }}></Button>
-            </div>
+            <Row>
+                <Col>
+                {filterList.map((e) => <div style={{color:"black"}}>{e.filter}:{e.value}</div>)}
+                {/* <Button onClick={() => { console.log(filterList); navigate("/user/transactions") }}></Button> */}
+                </Col>      
+            </Row>
 
-            <div>
-                <Button onClick={handleShow}>Rent A Car</Button>
-            </div>
-            <div>
+            <Row>
+                <Col>
+                <Button className="buttons" onClick={handleShow}>Rent A Car</Button>
+                </Col>
+            </Row>
+            
+            <Row>
             <ItemList filterList={filterList}/>
-           </div>
-        </div>
+           </Row>
+        </Container>
 
     )
 }

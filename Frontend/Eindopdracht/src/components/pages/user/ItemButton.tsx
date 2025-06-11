@@ -44,7 +44,7 @@ export default function ItemButton({item}:{item:car|accessory}
 
     return (
         <>{ item != undefined ? <>
-            <Button style={{height:"100%"}}>
+            <Button className="secondary" style={{height:"100%"}}>
                 <Image src={item.image} fluid rounded/>
                 <p><b style={{fontSize:"2vw", overflow:"wrap"}}>{"  "}{item.name}</b></p>
                 <p style={{color:"#90EE90", textAlign:"center"}}>{"  "}${item.price},-/day</p>
