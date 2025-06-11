@@ -54,17 +54,17 @@ export default function User() {
     const navigate = useNavigate();
 
     return (
-        <Container fluid style={{backgroundColor:'rgb(251, 247, 244)'}}>
+        <Container fluid style={{backgroundColor:'rgb(251, 247, 244)', paddingLeft: 0, paddingRight: 0}}>
             
-            <Row>             
-                <ProductFilter filterList={filterList} setFilterList={setFilterList} />      
+            <Row>           
+                <ProductFilter filterList={filterList} setFilterList={setFilterList} />                    
             </Row>
 
             <Row>
                 <Col>
                 {filterList.map((e) => <div style={{color:"black"}}>{e.filter}:{e.value}</div>)}
                 {/* <Button onClick={() => { console.log(filterList); navigate("/user/transactions") }}></Button> */}
-                </Col>      
+                 </Col>     
             </Row>
 
             <Row>

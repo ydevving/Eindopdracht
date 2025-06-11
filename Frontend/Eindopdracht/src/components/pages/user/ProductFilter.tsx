@@ -93,8 +93,8 @@ function ProductFilter({filterList, setFilterList}:{                //function t
             
             <Row>
                 <Col>
-            <Button className="px-2 buttons" onClick={handleShow}>Filter products</Button>
-                </Col>
+                    <Button className="px-2 buttons" onClick={handleShow}>Filter products</Button>
+               </Col>
             </Row> 
         
             <Container>
