@@ -85,3 +85,17 @@ export function isCar(variable: any): variable is Car {
         typeof variable?.licenseplate === 'string'
     );
 }
+
+export function enumToString(_enum: string): string {
+    
+    switch (_enum) {
+        case 'SUV':
+        case 'TV':
+        case 'GPS':
+            return _enum;
+        default:
+            return _enum.split('_').map((s) => `${s.charAt(0).toUpperCase()}${s.slice(1).toLowerCase()}`).join(' ');;
+    }
+    
+    return "";
+}
