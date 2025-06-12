@@ -2,7 +2,7 @@ import ItemList from "./ItemList"
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
 import { useContext, useState } from 'react';
-import ItemInfoModal from "../../common/ItemInfoModal.tsx";
+import ItemInfoModal from "../../common/CarInfoModal.tsx";
 import { useNavigate } from "react-router";
 import { ItemSchema, typeEnum } from '../../../utilities/types.ts';
 import type { Item } from '../../../utilities/types.ts';
@@ -79,12 +79,6 @@ export default function User() {
             <div>Applied filters:</div>
             {typeShow()}
             {elseList.map((e) => <Col xs="auto" style={{color:"black"}}>{e.filter} : {e.value}</Col>)}       
-            </Row>
-
-            <Row>
-                <Col>
-                <Button className="buttons" onClick={handleShow}>Rent A Car</Button>
-                </Col>
             </Row>
             
             <Row>

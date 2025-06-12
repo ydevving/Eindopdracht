@@ -1,58 +1,51 @@
-import { Button, Image } from 'react-bootstrap'
+import { Button, CardText, Image, ListGroup } from 'react-bootstrap'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap';
+import Card from 'react-bootstrap/card';
 import { FaCarSide, FaCogs, FaUsers, FaSuitcase, FaTrailer } from 'react-icons/fa';
-type car = {
-    image:string, name:string, 
-    price:number, storage:number, 
-    type:string, description:string,
-    status:number,
-    isAutomatic:boolean, seats:number,
-    licensePlate:string, brand:string,
-}
-type accessory = {
-    image:string, name:string, 
-    price:number, storage:number, 
-    type:string, description:string,
-    status:number
-}
-export default function ItemButton({item}:{item:car|accessory}
-    ) {
-        let transmission = ""
-        let carItem = item as car
-        if(item != undefined && 'isAutomatic' in carItem){
-            carItem.isAutomatic ? transmission = "automatic" : transmission = "manual"
-        }
-        
-     
-    // TO-DO: Specify specific elements with classname or ID
+import type { Item, Transaction, Car } from '../../../utilities/types'
+import {useContext, type ReactElement} from 'react';
+import { GlobalContext } from '../../../App';
 
-    // {
-    //             * {
-    //                 max-width: 100%;
-    //                 min-width: 100%;
-    //                 font-size: 1vw;
-    //             }
-    //             p {
-    //                 margin: 4px;
-    //                 text-align: left;
-    //                 display: flex;
-    //             }
-    //             img {
-    //                 height: 2vw;
-    //                 min-width: 2vw;
-    //                 margin-right: 10px;
-    //             }
+export default function ItemButton({ item }: { item: Item }
+) 
+{
+    const [itemModal, setItemModal, itemDisplay] = useContext(GlobalContext)
 
-    return (
-        <>{ item != undefined ? <>
-            <Button className="secondary" style={{height:"100%"}}>
-                <Image src={item.image} fluid rounded/>
-                <p><b style={{fontSize:"2vw", overflow:"wrap"}}>{"  "}{item.name}</b></p>
-                <p style={{color:"#90EE90", textAlign:"center"}}>{"  "}${item.price},-/day</p>
-                <p>{carItem.seats ? <FaCarSide/> : <FaTrailer/>}{"  "}{item.type}</p>
-                {carItem.seats ? <p><FaUsers/>{"  "}{carItem.seats}</p> : <></>}
-                {carItem.seats ? <p><FaCogs/>{"  "}{transmission}</p> : <></>}
-                <p><FaSuitcase/>{"  "}{item.storage} {"type" in item && item.type.includes("Bike") ? "bicycle(s)" : "L"}</p>
-            </Button>
-    </> : <></>}</>
-    )
+    if (item.car !== null) {
+        return (
+            <>
+                {item != undefined ? <>
+                    <Card className="secondary h-100" onClick={() => {itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current)}}>
+                        <Card.Img src={item.imgUrl} />
+                        <Card.Body>
+                            <Card.Title> {item.car.brand + " " + item.name}</Card.Title>
+                            <Card.Subtitle className="mb-3"> €{item.price},-/dag</Card.Subtitle>
+                            <CardText className="d-flex align-items-center"><FaCarSide className="me-2"/>{item.type}</CardText>
+                            <CardText className="d-flex align-items-center"><FaUsers className="me-2"/>{item.car.seats}</CardText>
+                            <CardText className="d-flex align-items-center"><FaCogs className="me-2"/>{item.car.isAutomatic ? "Automaat" : "Handgeschakeld"}</CardText>
+                            <CardText className="d-flex align-items-center"><FaSuitcase className="me-2"/>{item.storageSpace} {"L"}</CardText>
+                        </Card.Body>
+                    </Card>
+                </> : <></>}
+            </>
+        )
+    }
+    if (item.car === null) {
+        return (
+            <>{
+                item != undefined ? <>
+                <Card className="secondary h-100" onClick={() => {itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current)}}>
+                    <Card.Img src={item.imgUrl} />
+                    <Card.Body>
+                        <Card.Title>{item.type}: {item.name}</Card.Title>
+                        <Card.Subtitle className="mb-3">€{item.price},-dag</Card.Subtitle>
+                        <CardText className='d-flex align-items-center'> <FaSuitcase className='me-2' />{"  "}{item.storageSpace} {"type" in item && item.type.includes("Bike") ? "bicycle(s)" : "L"}</CardText>
+                    </Card.Body>
+                </Card>
+            </> : <></>}
+            </>
+        )
+    }
 }
