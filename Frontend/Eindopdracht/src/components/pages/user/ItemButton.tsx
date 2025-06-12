@@ -1,8 +1,7 @@
-import { Button, CardText, Image, ListGroup } from 'react-bootstrap'
+import { Button, CardText, Image, ListGroup, Card } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap';
-import Card from 'react-bootstrap/card';
 import { FaCarSide, FaCogs, FaUsers, FaSuitcase, FaTrailer } from 'react-icons/fa';
 import type { Item, Transaction, Car } from '../../../utilities/types'
 import {useContext, type ReactElement} from 'react';
