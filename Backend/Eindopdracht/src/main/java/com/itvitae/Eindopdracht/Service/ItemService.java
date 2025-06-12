@@ -101,6 +101,14 @@ public class ItemService {
 
         Item item = itemRepo.findById(id).orElseThrow();
 
+        if (item.getStatus().equals(Status.RENTED)){
+            item.setStatus(Status.AVAILABLE);
+
+            item = itemRepo.save(item);
+
+            return mapToItemDTO(item);
+        }
+
         if (item.getStatus().equals(Status.BROKEN)) {
             item.setStatus(Status.AVAILABLE);
 
