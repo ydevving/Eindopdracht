@@ -37,7 +37,7 @@ export const ItemSchema = z.object({
     description:  z.string().max(1000),
     storageSpace: z.int().nullable(),
     status:       statusEnum,
-    imgUrl:       z.url()
+    imgUrl:       z.url().nullable()
 });
 
 export const TransactionSchema = z.object({
