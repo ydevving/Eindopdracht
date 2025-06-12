@@ -36,7 +36,7 @@ export default function ItemButton({ item }: { item: Item }
             <>{
                 item != undefined ? <>
                 <Card className="secondary h-100" onClick={() => {itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current)}}>
-                    <Card.Img src={item.imgUrl} />
+                    <Card.Img src={(item.imgUrl) ? item.imgUrl : undefined} />
                     <Card.Body>
                         <Card.Title>{item.type}: {item.name}</Card.Title>
                         <Card.Subtitle className="mb-3">€{item.price},-dag</Card.Subtitle>
