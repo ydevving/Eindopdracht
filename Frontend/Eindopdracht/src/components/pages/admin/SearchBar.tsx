@@ -1,7 +1,8 @@
 import React from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form,Button } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
-
+import {useState} from 'react'
+import CustomerInfo from './CustomerInfo';
 
 function searchUser(username: string) {
     // Add back-end integration
@@ -12,6 +13,12 @@ function searchUser(username: string) {
 
 
 export default function SearchBar() {
+    const [showCustomerModal, setShowCustomerModal] = useState<boolean>(false)
+    //const [searchedUser, setsearchedUser] = useState("")
+        
+        const handleClose = () => setShowCustomerModal(false);
+        const handleShow = () => setShowCustomerModal(true);
+        
     return (
         <Container>
             <Row className="justify-content-center">
@@ -36,7 +43,16 @@ export default function SearchBar() {
                         />
                     </div>
                 </Col>
+                <Col md={{span: 2}}>
+                    <Button onClick={handleShow} style={{
+                            backgroundColor: '#3D4E6D',
+                            color: '#FFFFFF',
+                            border: 'none',
+                            fontSize: '0.9rem',
+                            }}>Zoek Klant</Button>
+                </Col>    
             </Row>
+            <CustomerInfo show={showCustomerModal} onHide={handleClose}></CustomerInfo>
         </Container>
     );
 };

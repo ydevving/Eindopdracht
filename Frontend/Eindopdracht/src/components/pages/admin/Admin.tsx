@@ -1,5 +1,5 @@
 import ItemColumns from './ItemColumns'
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import SearchBar from './SearchBar';
 import ItemCard from './ItemCard';
 import { fuelTypeEnum, statusEnum, typeEnum } from '../../../utilities/types';
