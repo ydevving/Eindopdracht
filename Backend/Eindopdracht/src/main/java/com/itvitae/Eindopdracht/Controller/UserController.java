@@ -124,7 +124,7 @@ public class UserController {
 
     @GetMapping("/admin/info/{username}")
     @Auth(requiresAdmin = true)
-    public ResponseEntity<UserInfoDTO> getInformation(@RequestParam String username) {
+    public ResponseEntity<UserInfoDTO> getInformation(@PathVariable String username) {
         Optional<User> _user = this.userService.exists(username);
 
         if (_user.isEmpty())
