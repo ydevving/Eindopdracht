@@ -56,7 +56,9 @@ export default function User() {
     //filter filterList by type:
     const typeList = filterList.filter((filter)=> filter.filter == "type")
     //filter filterList by != type:
-    const elseList = filterList.filter((filter) => filter.filter != "type")
+    const elseList = filterList.filter((filter) => filter.filter != "type" && filter.filter != "transmission")
+
+    const transfilter = filterList.filter((filter)=> filter.filter == "transmission")
 
     function typeShow(){
         if(typeList[0]){
@@ -77,8 +79,9 @@ export default function User() {
    
             <Row style={{color: "black"}}>
             <div>Applied filters:</div>
-            {typeShow()}
-            {elseList.map((e) => <Col xs="auto" style={{color:"black"}}>{e.filter} : {e.value}</Col>)}       
+            {typeShow()} 
+            {transfilter[0] ? transfilter[0].value === true ? "Transmissie: Automaat" : "Transmissie: Handgeschakeld" : ""}
+            {elseList.map((e) => <Col xs="auto" style={{color:"black"}}>{e.filter} : {e.value.toString()}</Col>)}       
             </Row>
             
             <Row>

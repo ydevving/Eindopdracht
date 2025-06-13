@@ -9,12 +9,12 @@ import { GlobalContext } from '../../../App';
 import placeholderImage from '../../../assets/placeholderImage.webp';
 
 
-export default function ItemButton({ item }: { item: Item }
+export default function ItemButton({ item }: { item: Item | undefined }
 ) 
 {
     const [itemModal, setItemModal, itemDisplay] = useContext(GlobalContext)
 
-    if (item.car !== null) {
+    if (item != undefined ? item.car !== null : null) {
         return (
             <>
                 {item != undefined ? <>
@@ -33,12 +33,12 @@ export default function ItemButton({ item }: { item: Item }
             </>
         )
     }
-    if (item.car === null) {
+    if (item != undefined ? item.car === null: null) {
         return (
             <>{
                 item != undefined ? <>
                 <Card className="secondary h-100" onClick={() => {itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current)}}>
-                    <Card.Img src={(item.imgUrl) ? item.imgUrl : placeholderImage} />
+                    <Card.Img src={(item.imgUrl) ? item.imgUrl : undefined} />
                     <Card.Body>
                         <Card.Title>{item.type}: {item.name}</Card.Title>
                         <Card.Subtitle className="mb-3">€{item.price},-dag</Card.Subtitle>
