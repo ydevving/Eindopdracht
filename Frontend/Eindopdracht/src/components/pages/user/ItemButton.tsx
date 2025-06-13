@@ -7,12 +7,12 @@ import type { Item, Transaction, Car } from '../../../utilities/types'
 import {useContext, type ReactElement} from 'react';
 import { GlobalContext } from '../../../App';
 
-export default function ItemButton({ item }: { item: Item }
+export default function ItemButton({ item }: { item: Item | undefined }
 ) 
 {
     const [itemModal, setItemModal, itemDisplay] = useContext(GlobalContext)
 
-    if (item.car !== null) {
+    if (item != undefined ? item.car !== null : null) {
         return (
             <>
                 {item != undefined ? <>
@@ -31,7 +31,7 @@ export default function ItemButton({ item }: { item: Item }
             </>
         )
     }
-    if (item.car === null) {
+    if (item != undefined ? item.car === null: null) {
         return (
             <>{
                 item != undefined ? <>
