@@ -2,6 +2,7 @@ import ItemColumn from "./ItemColumn";
 import { ItemSchema, TransactionSchema } from "../../../utilities/types";
 import type { Overview, Transaction, Item } from "../../../utilities/types";
 import Session from "../../../utilities/Session";
+import { Endpoints } from "../../../utilities/Endpoints"
 import { useEffect, useState } from "react";
 
 
@@ -20,63 +21,7 @@ interface categoriesNamingType {
 };
 
 
-async function getAvailable(categories: categoriesType): Promise<Item[] | void> {
-
-    return await Session.instance.GET('/item/available')
-            .then((data) => data.json())
-            .then((items) => {
-
-                // Validates incoming data
-                items.forEach((item: Item) => ItemSchema.parse(item));
-
-                categories['available'][1](items);
-
-                return items;
-            })
-            .catch((error) => { console.error("An error occured on the /available endpoint in ItemColumns.tsx -", error); return error; });
-};
-
-async function getLate(categories: categoriesType): Promise<Transaction[] | void> {
-    return await Session.instance.GET('/item/late')
-        .then((data) => data.json())
-        .then((transactions) => {
-
-            // Validates incoming data
-            transactions.forEach((transaction: Transaction) => {
-                transaction.rentedAt = new Date(transaction.rentedAt);
-                transaction.rentedUntil = new Date(transaction.rentedUntil);
-
-                TransactionSchema.parse(transaction);
-            });
-
-            categories['late'][1](transactions);
-
-            return transactions;
-        })
-        .catch((error) => { console.error("An error occured on the /late endpoint in ItemColumns.tsx -", error); return error; });
-};
-
-async function getDamaged(categories: categoriesType): Promise<Transaction[] | void> {
-    return await Session.instance.GET('/item/damaged')
-        .then((data) => data.json())
-        .then((transactions) => {
-
-            // Validates incoming data
-            transactions.forEach((transaction: Transaction) => {
-                transaction.rentedAt = new Date(transaction.rentedAt);
-                transaction.rentedUntil = new Date(transaction.rentedUntil);
-
-                TransactionSchema.parse(transaction);
-            });
-
-            categories['damaged'][1](transactions);
-
-            return transactions;
-        })
-        .catch((error) => { console.error("An error occured on the /damaged endpoint in ItemColumns.tsx -", error); return error; });
-};
-
-async function getRentals(categories: categoriesType): Promise<Transaction[] | void> {
+async function getRentals(categories: categoriesType): Promise<Transaction[]> {
     return await Session.instance.GET('/item/rentals')
         .then((data) => data.json())
         .then((transactions) => {
@@ -114,10 +59,10 @@ export default function ItemColumns() {
 
     useEffect(() => {
         const request = () => {
-            getAvailable(categories);
-            getLate(categories);
-            getDamaged(categories);
-            getRentals(categories);
+            Endpoints.getAvailable().then((data) => categories['available'][1](data));
+            Endpoints.getLate().then((data) => categories['late'][1](data));
+            Endpoints.getDamaged().then((data) => categories['damaged'][1](data));
+            Endpoints.getRentals().then((data) => categories['rentals'][1](data));
 
             /* 
              * The reason I'm not using the '/item/overview' endpoint is cause I think it makes more sense to
