@@ -6,6 +6,8 @@ import { FaCarSide, FaCogs, FaUsers, FaSuitcase, FaTrailer } from 'react-icons/f
 import type { Item, Transaction, Car } from '../../../utilities/types'
 import {useContext, type ReactElement} from 'react';
 import { GlobalContext } from '../../../App';
+import placeholderImage from '../../../assets/placeholderImage.webp';
+
 
 export default function ItemButton({ item }: { item: Item }
 ) 
@@ -17,7 +19,7 @@ export default function ItemButton({ item }: { item: Item }
             <>
                 {item != undefined ? <>
                     <Card className="secondary h-100" onClick={() => {itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current)}}>
-                        <Card.Img src={(item.imgUrl) ? item.imgUrl : undefined} />
+                        <Card.Img src={(item.imgUrl) ? item.imgUrl : placeholderImage} />
                         <Card.Body>
                             <Card.Title> {item.car.brand + " " + item.name}</Card.Title>
                             <Card.Subtitle className="mb-3"> €{item.price},-/dag</Card.Subtitle>
@@ -36,7 +38,7 @@ export default function ItemButton({ item }: { item: Item }
             <>{
                 item != undefined ? <>
                 <Card className="secondary h-100" onClick={() => {itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current)}}>
-                    <Card.Img src={item.imgUrl} />
+                    <Card.Img src={(item.imgUrl) ? item.imgUrl : placeholderImage} />
                     <Card.Body>
                         <Card.Title>{item.type}: {item.name}</Card.Title>
                         <Card.Subtitle className="mb-3">€{item.price},-dag</Card.Subtitle>
