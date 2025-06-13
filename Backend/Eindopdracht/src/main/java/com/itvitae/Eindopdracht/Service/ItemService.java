@@ -9,10 +9,10 @@ import com.itvitae.Eindopdracht.Repository.ItemRepository;
 import com.itvitae.Eindopdracht.Repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ItemService {
@@ -30,6 +30,20 @@ public class ItemService {
 
     public Optional<Item> getItemFromId(Long id) {
         return itemRepo.findById(id);
+    }
+
+    public boolean isItemRented(long id) throws SQLException {
+        Optional<Item> item = itemRepo.findById(id);
+
+        if (item.isEmpty())
+            throw new SQLException("Item could not be fetched or found");
+
+        if (item.get().getStatus().equals(Status.RENTED))
+            return true;
+        else if (item.get().getStatus().equals(Status.AVAILABLE))
+            return false;
+
+        throw new RuntimeException("Status is not either 'RENTED' or 'AVAILABLE");
     }
 
     public List<ItemDTO> getAvailableItems() {
@@ -132,6 +146,17 @@ public class ItemService {
         }
 
         return null;
+    }
+
+    public boolean deleteItem(long itemID) {
+        Optional<Item> item = itemRepo.findById(itemID);
+
+        try {
+            item.ifPresent(value -> itemRepo.delete(value));
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
     }
 
     public ItemDTO mapToItemDTO(Item item){
