@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react"
+import { useState } from "react"
 import ItemButton from "./ItemButton"
 import Button from "react-bootstrap/Button"
 import Container from 'react-bootstrap/Container'
@@ -6,22 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Pagination from 'react-bootstrap/Pagination';
 import type {Item} from '../../../utilities/types';
-// type car = {
-//     image:string, name:string, 
-//     price:number, storage:number, 
-//     type:string, description:string,
-//     status:number,
-//     isAutomatic:boolean, seats:number,
-//     licensePlate:string, brand:string,
-// }
-// type accessory = {
-//     image:string, name:string, 
-//     price:number, storage:number, 
-//     type:string, description:string,
-//     status:number
-// }
 
-export default function ItemList({filterList}:{filterList:Array<{filter:string, value:string|boolean|number}>}){
+
+export default function ItemList({filterList}: {filterList:Array<{filter:string, value:string|boolean|number}>}){
     const [page, setPage] = useState(0)
     
     function scrollPage(scroll:number){
