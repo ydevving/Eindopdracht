@@ -12,6 +12,7 @@ import com.itvitae.Eindopdracht.Service.ItemService;
 import com.itvitae.Eindopdracht.DTO.ItemDTO;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,23 @@ public class ItemController {
         Item item = _item.get();
 
         return ResponseEntity.ok(itemService.mapToItemDTO(item));
+    }
+
+    @DeleteMapping("/{itemId}")
+    @Auth
+    ResponseEntity deleteItem(@PathVariable long itemId) {
+        try {
+            if (this.itemService.getItemFromId(itemId).isPresent()) {
+                this.itemService.deleteItem(itemId);
+                return ResponseEntity.ok().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("itemId should be a long value");
+        } catch (OptimisticLockingFailureException e) {
+            return ResponseEntity.badRequest().body("itemId OptimisticLockingFailureException exception");
+        }
+
+        return ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/user/broken/{itemId}")
