@@ -8,7 +8,7 @@ import Navbar from './components/common/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { useEffect, useState, useContext, createContext, useRef } from 'react'
 import Session from './utilities/Session';
-import CarInfoModal from './components/common/CarInfoModal';
+import ItemInfoModal from './components/common/ItemInfoModal';
 import type { Item, Transaction } from './utilities/types';
 
 
@@ -23,18 +23,14 @@ function App() {
     // Session.instance.testInitialize();
   }, []);
 
-  const itemDisplay = useRef(null);
-  const [itemModal, setItemModal]: [boolean, React.Dispatch<boolean>] = useState<boolean>(false);
-
   return (
     <>
       <BrowserRouter>
-        <GlobalContext value={[itemModal, setItemModal, itemDisplay]}>
+        <GlobalContext value={[]}>
           <Routes>
             <Route element={
               <>
                 <Navbar />
-                {(itemModal) ? (<CarInfoModal _item={itemDisplay.current} />) : null}
                 <Outlet />
               </>
             }>

@@ -164,3 +164,7 @@ body {
   background-color: darkgreen;
   border-color: darkgreen;
 }
+
+.item-info-admin > span > p {
+  font-weight: bold;
+}
