@@ -4,14 +4,6 @@ import { FaSearch } from 'react-icons/fa';
 import { useState } from 'react'
 import CustomerInfo from './CustomerInfo';
 
-function searchUser(username: string) {
-    // Add back-end integration
-
-    // TODO: First Implement Session.ts, configure the login page so that the token gets stored in sessionstorage, and create wrapper
-    // functions so that you can reuse the token easily and maybe tweak options
-}
-
-
 export default function SearchBar() {
     const [showCustomerModal, setShowCustomerModal] = useState<boolean>(false)
     const [searchText, setSearchText] = useState<string>(''); 
@@ -21,7 +13,7 @@ export default function SearchBar() {
 
     return (
         <Container>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center" >
                 <Col md={6}>
                     <div className="position-relative" style={{ marginLeft: '15%' }}>
                         <Form.Control
@@ -48,12 +40,13 @@ export default function SearchBar() {
                         />
                     </div>
                 </Col>
-                <Col md={{ span: 2 }}>
+                <Col md={{ span: 2 }} style={{marginBlock: 'auto'}}>
                     <Button onClick={handleShow} style={{
                         backgroundColor: '#3D4E6D',
                         color: '#FFFFFF',
                         border: 'none',
                         fontSize: '0.9rem',
+                        paddingBlock: '0.4rem'
                     }}>Zoek Klant</Button>
                 </Col>
             </Row>
