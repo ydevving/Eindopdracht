@@ -61,6 +61,12 @@ export type Car = z.infer<typeof CarSchema>;
 export type Transaction = z.infer<typeof TransactionSchema>;
 export type Overview = z.infer<typeof OverviewSchema>;
 
+export interface categoriesType {
+    available: [Item[], React.Dispatch<Item[]>],
+    late: [Transaction[], React.Dispatch<Transaction[]>],
+    damaged: [Transaction[], React.Dispatch<Transaction[]>],
+    rentals: [Transaction[], React.Dispatch<Transaction[]>]
+};
 
 export function isItem(variable: any): variable is Item {
     return (

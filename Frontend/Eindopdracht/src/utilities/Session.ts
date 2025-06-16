@@ -63,6 +63,10 @@ export default class Session {
         return this._createRequest(endpoint, { method: 'PATCH' });
     }
 
+    public DELETE(endpoint: string): Promise<Response> {
+        return this._createRequest(endpoint, { method: 'DELETE' });
+    }
+
     public testInitialize(): void {
         if (Session.instance.isTokenPresent() === true)
             return;

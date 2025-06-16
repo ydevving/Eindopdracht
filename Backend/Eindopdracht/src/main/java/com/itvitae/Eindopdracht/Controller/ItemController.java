@@ -3,6 +3,7 @@ import com.itvitae.Eindopdracht.Annotation.Auth;
 import com.itvitae.Eindopdracht.DTO.TransactionDTO;
 import com.itvitae.Eindopdracht.DTO.TransactionsUserDTO;
 import com.itvitae.Eindopdracht.DTO.OverviewDTO;
+import com.itvitae.Eindopdracht.Enum.Status;
 import com.itvitae.Eindopdracht.Model.Item;
 import com.itvitae.Eindopdracht.Model.Transaction;
 import com.itvitae.Eindopdracht.Model.User;
@@ -13,6 +14,7 @@ import com.itvitae.Eindopdracht.DTO.ItemDTO;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,9 +58,18 @@ public class ItemController {
     @DeleteMapping("/{itemId}")
     @Auth
     ResponseEntity deleteItem(@PathVariable long itemId) {
+
+        Optional<Item> _item = this.itemService.getItemFromId(itemId);
+
         try {
-            if (this.itemService.getItemFromId(itemId).isPresent()) {
-                this.itemService.deleteItem(itemId);
+            if (_item.isPresent()) {
+                Item item = _item.get();
+
+                if (item.getStatus().equals(Status.AVAILABLE))
+                    this.itemService.deleteItem(itemId);
+                else
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
                 return ResponseEntity.ok().build();
             }
         } catch (IllegalArgumentException e) {

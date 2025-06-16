@@ -3,15 +3,9 @@ import { ItemSchema, TransactionSchema } from "../../../utilities/types";
 import type { Overview, Transaction, Item } from "../../../utilities/types";
 import Session from "../../../utilities/Session";
 import { Endpoints } from "../../../utilities/Endpoints"
-import { useEffect, useState } from "react";
-
-
-interface categoriesType {
-    available: [Item[], React.Dispatch<Item[]>],
-    late: [Transaction[], React.Dispatch<Transaction[]>],
-    damaged: [Transaction[], React.Dispatch<Transaction[]>],
-    rentals: [Transaction[], React.Dispatch<Transaction[]>]
-};
+import { useContext, useEffect, useState } from "react";
+import { AdminContext } from "./Admin";
+import type { categoriesType } from "../../../utilities/types";
 
 interface categoriesNamingType {
     available: "Beschikbaar",
@@ -20,26 +14,6 @@ interface categoriesNamingType {
     rentals: "Verhuurd"
 };
 
-
-async function getRentals(categories: categoriesType): Promise<Transaction[]> {
-    return await Session.instance.GET('/item/rentals')
-        .then((data) => data.json())
-        .then((transactions) => {
-
-            // Validates incoming data
-            transactions.forEach((transaction: Transaction) => {
-                transaction.rentedAt = new Date(transaction.rentedAt);
-                transaction.rentedUntil = new Date(transaction.rentedUntil);
-
-                TransactionSchema.parse(transaction);
-            });
-
-            categories['rentals'][1](transactions);
-
-            return transactions;
-        })
-        .catch((error) => { console.error("An error occured on the /rentals endpoint in ItemColumns.tsx -", error); return error; });
-};
 
 export default function ItemColumns() {
 
@@ -50,12 +24,10 @@ export default function ItemColumns() {
         rentals: "Verhuurd"
     };
 
-    let categories: categoriesType = {
-        available: useState<Item[]>([]),
-        late: useState<Transaction[]>([]),
-        damaged: useState<Transaction[]>([]),
-        rentals: useState<Transaction[]>([])
-    };
+
+    let [itemModal, setItemModal, currentItem, category, categories]: 
+    [boolean, React.Dispatch<React.SetStateAction<boolean>>, React.RefObject<Item>, React.RefObject<string>, categoriesType] 
+    = useContext(AdminContext);
 
     useEffect(() => {
         const request = () => {
