@@ -16,6 +16,7 @@ export default class Session {
     private constructor() { this.token = ''; }
 
     public static setToken(token: string): void {
+        console.log(`Token set to: ${token}`);
         Session.instance.token = token;
         Session.instance.listeners.forEach((callback) => callback(token));
         Session.instance.listeners = []; // Clear listeners after notifying

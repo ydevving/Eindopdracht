@@ -35,12 +35,13 @@ function ErrorAlert() {
 
 function bringItem(
     item: Item | Transaction, 
-    categories: categoriesType
-    // currentItem: React.RefObject<Item | Transaction | null>, 
-    // setItemModal: React.Dispatch<boolean>
+    categories: categoriesType,
+    currentItem: React.RefObject<Item | Transaction | null>, 
+    setItemModal: React.Dispatch<boolean>
 ): void {
 
     const doRequest = async () => {
+        console.log(`Current token: ${Session.instance.getToken()}`)
         const status: any = await Session.instance.GET(`/item/${item.id}`)
             .then((data: Response) => data.json())
             .then((json) => {
@@ -52,7 +53,7 @@ function bringItem(
             return false;
         }
 
-        await Session.instance.GET(`/item/admin/fixed/${item.id}`)
+        await Session.instance.PATCH(`/item/admin/fixed/${item.id}`)
             .then((data: Response) => {
                 if (data.ok) {
                     return data.json();
@@ -66,6 +67,7 @@ function bringItem(
                 }
             })
             .then((json) => {
+                
                 if (json['status'] === 'AVAILABLE') {
 
                     let keys: string[] = Object.keys(categories);
@@ -92,8 +94,8 @@ function bringItem(
                                 let newArray: Transaction[] = transactionArray.filter((value) => value.id !== item.id);
                                 setTransactionArray(newArray);
 
-                                // currentItem.current = null;
-                                // setItemModal(false);
+                                currentItem.current = null;
+                                setItemModal(false);
                             }
                         }
                     }

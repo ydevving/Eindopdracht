@@ -24,7 +24,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/item")
 @CrossOrigin(origins = {"*"}, methods = {
-        RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
+        RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH
 })
 public class ItemController {
     @Autowired
