@@ -7,16 +7,17 @@ import type { Item, Transaction, Car } from '../../../utilities/types'
 import { useContext, type ReactElement } from 'react';
 import { GlobalContext } from '../../../App';
 import placeholderImage from '../../../assets/placeholderImage.webp';
+import { UserContext } from './User';
 
 
 export default function ItemButton({ item }: { item: Item | undefined }
 ) {
-    const [itemModal, setItemModal, itemDisplay] = useContext(GlobalContext)
+    const [itemModal, setItemModal, currentItem] = useContext(UserContext)
 
     if (item != undefined && item.car !== null) {
         return (
             <>
-                <Card className="secondary h-100" onClick={() => { itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current) }}>
+                <Card className="secondary h-100" onClick={() => { currentItem.current = item; setItemModal(true); console.log(currentItem.current) }}>
                     <Card.Img src={(item.imgUrl) ? item.imgUrl : placeholderImage} />
                     <Card.Body>
                         <Card.Title> {item.car.brand + " " + item.name}</Card.Title>
@@ -34,7 +35,7 @@ export default function ItemButton({ item }: { item: Item | undefined }
     if (item != undefined && item.car === null) {
         return (
             <>
-                <Card className="secondary h-100" onClick={() => { itemDisplay.current = item; setItemModal(true); console.log(itemDisplay.current) }}>
+                <Card className="secondary h-100" onClick={() => { currentItem.current = item; setItemModal(true); console.log(currentItem.current) }}>
                     <Card.Img src={(item.imgUrl) ? item.imgUrl : placeholderImage} />
                     <Card.Body>
                         <Card.Title>{item.type}: {item.name}</Card.Title>

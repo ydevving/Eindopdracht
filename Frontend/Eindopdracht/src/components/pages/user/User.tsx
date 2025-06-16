@@ -9,8 +9,9 @@ import type { Item, Transaction } from '../../../utilities/types.ts';
 import { Container, Row, Col } from 'react-bootstrap';
 import OrderOverviewModal from "../../common/OrderOverviewModal.tsx";
 import Session from "../../../utilities/Session.ts";
+import { GlobalContext } from "../../../App.tsx";
 
-export const AdminContext: React.Context<any> = createContext<any>(false);
+export const UserContext: React.Context<any> = createContext<any>(false);
 
 export default function User() {
 
@@ -90,7 +91,7 @@ export default function User() {
 
     return (
         <>
-            <AdminContext value={[itemModal, setItemModal, currentItem]}>
+            <UserContext value={[itemModal, setItemModal, currentItem]}>
                 <Container fluid style={{ backgroundColor: 'rgb(251, 247, 244)', paddingLeft: 0, paddingRight: 0 }}>
 
                     <Row>
@@ -108,7 +109,8 @@ export default function User() {
                         <ItemList filterList={filterList} />
                     </Row>
                 </Container>
-            </AdminContext>
+                {(currentItem.current) ? (<ItemInfoModal _item={currentItem.current} />) : null}
+            </UserContext>
         </>
     );
 }

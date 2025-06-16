@@ -45,6 +45,7 @@ function bringItem(
         const status: any = await Session.instance.GET(`/item/${item.id}`)
             .then((data: Response) => data.json())
             .then((json) => {
+                console.log('JSON STATUS');
                 return json['status'];
             })
             .catch((error) => { console.error("Something went wrong:", error); return error; });
@@ -53,22 +54,27 @@ function bringItem(
             return false;
         }
 
+        console.log("Unto the next", item.id);
+
         await Session.instance.PATCH(`/item/admin/fixed/${item.id}`)
             .then((data: Response) => {
                 if (data.ok) {
+                    console.log("Data is ok");
                     return data.json();
-                } else if (data.status === 400) { // Bad Request
-                    console.error("Bad Request");
-                    return;
                 }
-                else if (data.status === 404) { // Not Found
-                    console.error("Could not find item");
-                    return;
-                }
+                // } else if (data.status === 400) { // Bad Request
+                //     console.error("Bad Request");
+                //     return;
+                // }
+                // else if (data.status === 404) { // Not Found
+                //     console.error("Could not find item");
+                //     return;
+                // }
             })
             .then((json) => {
-                
+                console.log('JSON is returned!!');
                 if (json['status'] === 'AVAILABLE') {
+                    console.log('IN AVAILABLE');
 
                     let keys: string[] = Object.keys(categories);
                     let i: number = 0;
@@ -85,6 +91,7 @@ function bringItem(
 
                                 if (!isItem(selected)) {
                                     console.error("Entity must be a transaction to change the status");
+                                    found = true;
                                     return;
                                 }
 

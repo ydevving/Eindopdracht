@@ -6,6 +6,7 @@ import { isItem, isTransaction, isCar, enumToString } from '../../utilities/type
 import OrderOverviewModal from './OrderOverviewModal';
 import Form from 'react-bootstrap/Form';
 import { GlobalContext } from '../../App';
+import { UserContext } from '../pages/user/User';
 
 export default function ItemInfoModal({ _item, onHide }: { _item: any, onHide?: () => void }) {
 
@@ -13,10 +14,10 @@ export default function ItemInfoModal({ _item, onHide }: { _item: any, onHide?: 
   const endDate = [new Date(2025, 6, 1), new Date(2025, 6, 3), new Date(2025, 6, 5), new Date(2025, 6, 8)];
   const [selected, setSelected] = useState(Number);
 
-  const [itemModal, setItemModal, itemDisplay] = useContext(GlobalContext);
+  const [itemModal, setItemModal, currentItem] = useContext(UserContext);
 
   const itemHasCar = isCar(_item?.car);
-  let item = isItem(itemDisplay.current) ? itemDisplay.current : itemDisplay.current?.item;
+  let item = isItem(currentItem.current) ? currentItem.current : currentItem.current?.item;
 
   function assignSelected(index: number) {
     setSelected(index)
