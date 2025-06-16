@@ -4,35 +4,25 @@ import { useEffect, useRef, useState } from 'react'
 import Session from '../../utilities/Session';
 
 
+function order(item: Item, endDate: Date) {
+    const doRequest = async () => {
+        await Session.instance.POST(`/transaction/rent/${item.id}`, { dateuntil: endDate })
+        .then((data) => {
+            if (data.ok)
+                return data.json();
+        })
+        .then((json) => {
+            console.log(`Ordered ${item.id} until ${endDate}`);
+        });
+    }
+
+    doRequest();
+}
+
 export default function OrderOverviewModal({ availability, endDate, selected, item, seeOrder, setSeeOrder }: { availability: Date, endDate: Date, selected: number, item: Item, seeOrder: boolean, setSeeOrder: React.Dispatch<React.SetStateAction<boolean>> }) {
     let [userInfo, setUserInfo] = useState({ name: '', email: '', city: '', address: '' });
 
     const rentPrice = item.price * (selected + 1);
-
-
-    useEffect(() => {
-
-        const doRequest = async () => {
-            Session.instance.GET(`/user/info/royce_schut`)
-                .then((data: Response) => data.json())
-                .then((json: { username: string, email: string, city: string, address: string }) => {
-                    setUserInfo({
-                        name: json['username'],
-                        email: json['email'],
-                        city: json['city'],
-                        address: json['address']
-                    });
-
-                    console.log(userInfo.name, userInfo.email, userInfo.city, userInfo.address);
-                });
-        };
-
-        if (Session.instance.isTokenPresent())
-            doRequest();
-
-        Session.instance.onTokenAvailable(doRequest);
-    }, []);
-
 
     if (!item.car)
         return (<><h4 style={{color: 'red'}}>Couldn't find a car object in item object</h4></>);
@@ -90,7 +80,7 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                             <Button className="px-5 errorCancel" onClick={() => setSeeOrder(false)}>Cancel Order</Button>
                         </Col>
                         <Col className='d-flex justify-content-end'>
-                            <Button className="px-5 succesConfirm" onClick={() => setSeeOrder(false)}>Confirm Order</Button>
+                            <Button className="px-5 succesConfirm" onClick={() => {setSeeOrder(false); order(item, endDate); }}>Confirm Order</Button>
                         </Col>
                     </Row>
                 </Container>
