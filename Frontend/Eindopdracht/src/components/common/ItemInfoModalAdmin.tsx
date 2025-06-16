@@ -87,6 +87,9 @@ function bringItem(
                         for (let j = 0; j < value[0].length; j++) {
                             let selected = value[0][j];
 
+                            if (isTransaction(selected))
+                                selected = selected.item;
+
                             if (selected.id === item.id) {
 
                                 if (!isItem(selected)) {
@@ -98,15 +101,18 @@ function bringItem(
                                 const setTransactionArray = value[1] as React.Dispatch<Transaction[]>;
                                 const transactionArray = value[0] as Transaction[];
 
-                                let newArray: Transaction[] = transactionArray.filter((value) => value.id !== item.id);
+                                let newArray: Transaction[] = transactionArray.filter((value) => value.item.id !== item.id);
                                 setTransactionArray(newArray);
 
                                 currentItem.current = null;
                                 setItemModal(false);
                             }
                         }
+
+                        i++;
                     }
                 }
+
             })
             .catch((error) => { console.error("Something went wrong:", error) });
     };
@@ -219,7 +225,7 @@ export default function ItemInfoModalAdmin({ _item, _category, onHide }: { _item
         case 'laat':
             buttonLayout = (
                 <>
-                    <Button variant={'primary'} onClick={() => { bringItem(item, categories); }}>Markeer Als Ingeleverd</Button>
+                    <Button variant={'primary'} onClick={() => { bringItem(item, categories, currentItem, setItemModal); }}>Markeer Als Ingeleverd</Button>
                 </>
             );
             break;
@@ -233,7 +239,7 @@ export default function ItemInfoModalAdmin({ _item, _category, onHide }: { _item
         case 'verhuurd':
             buttonLayout = (
                 <>
-                    <Button variant={'primary'} onClick={() => { bringItem(item, categories) }}>Markeer Als Ingeleverd</Button>
+                    <Button variant={'primary'} onClick={() => { bringItem(item, categories, currentItem, setItemModal) }}>Markeer Als Ingeleverd</Button>
                 </>
             );
             break;
