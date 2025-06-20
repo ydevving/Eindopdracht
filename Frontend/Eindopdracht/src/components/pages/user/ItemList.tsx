@@ -1,75 +1,185 @@
 import { useState } from "react"
 import ItemButton from "./ItemButton"
-import { Button } from "react-bootstrap"
+import Button from "react-bootstrap/Button"
+import Container from 'react-bootstrap/Container'
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Pagination from 'react-bootstrap/Pagination';
+import type {Item} from '../../../utilities/types';
 
-export default function ItemList(){
+
+export default function ItemList({filterList}: {filterList:Array<{filter:string, value:string|boolean|number}>}){
     const [page, setPage] = useState(0)
     
     function scrollPage(scroll:number){
         setPage(page+scroll)
     }
-
-    const itemList = [
+    const itemList:Array<Item> = [
         {
-            image:"placeholderCar.jpg",
+            id: 1,
+            name:"Auris", 
+            price: 140,
+            car: {licenseplate: "abc-123-a", brand: "Toyota", isAutomatic: true, seats: 5, towWeight: 1250, kilometerCounter: 98045, modelYear: 2021, fuelType: 'PETROL'},
+            storageSpace: 300, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
+        },
+        {
+            id: 1,
             name:"Toyota 1000-THR Earthmover", 
-            price:50, 
-            seats:10000, 
-            storage:25000, 
-            type:"Supreme Machine", 
-            transmissionBool:true
+            price: 140,
+            car: {licenseplate: "", brand: "", isAutomatic: true, seats: 0, towWeight: 0, kilometerCounter: 0, modelYear: 0, fuelType: 'DIESEL'}, 
+            storageSpace: 300, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toy Yoda",
-            price:2.99,
-            seats:0,
-            storage:0.01,
-            type:"Toy",
-            transmissionBool:false
+           id: 1,
+            name:"Toyota 1000-THR Earthmover", 
+            price: 140,
+            car: null, 
+            storageSpace:25000000, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
         },
         {
-            image:"placeholderCar.jpg",
-            name:"Toyota 8",
-            price:8,
-            seats:8,
-            storage:8,
-            type:"8",
-            transmissionBool:true
+         id: 1,
+            name:"Toyota 1000-THR Earthmover", 
+            price: 140,
+            car: null, 
+            storageSpace:25000000, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
         },
         {
-            image:"placeholderCar.jpg",
-            name:"page 2",
-            price:2,
-            seats:2,
-            storage:2,
-            type:"page 2",
-            transmissionBool:false
+           id: 1,
+            name:"Toyota 1000-THR Earthmover", 
+            price: 140,
+            car: null, 
+            storageSpace:25000000, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
+        }, 
+        {
+            id: 1,
+            name:"Toyota 1000-THR Earthmover", 
+            price: 140,
+            car: null, 
+            storageSpace:25000000, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
+        },
+        {
+            id: 1,
+            name:"Toyota 1000-THR Earthmover", 
+            price: 140,
+            car: null, 
+            storageSpace:25000000, 
+            type: "SUV",
+            description:"...like antennas to heaven, a supreme machine built for war without reason",
+            status: "AVAILABLE",
+            imgUrl:"/src/assets/placeholderCar.jpg",
         }
     ]
+    let newItemList = filterTheList(itemList, filterList)
     
-    return(
-        <div style={{display:"flex"}}>
-            {/* .btn style also applies to ItemButton */}
-            <style>{`
-                .btn-primary {
-                    height: 60vh;
-                    max-width: 5vw;
-                    min-width: 5vw;
-                    min-height: 30vw;
-                }
-            `}</style>
-            { page === 0 ? 
-            <Button disabled>{"<"}</Button> : 
-            <Button onClick={() => scrollPage(-1)}>{"<"}</Button> }
+    function filterTheList(list:Array<Item>, 
+        filterList:Array<{filter:string, value:string|boolean|number}>
+    ){
+        let evaluate = false; 
+        return list.filter((listItem) => {
+    
+            if(filterList.length > 1){
+                return (
+                    filterList.findIndex((filterPair) => {
 
-            <ItemButton item={itemList[(3*page)]}/>
-            {itemList[(3*page)+1] ? <ItemButton item={itemList[(3*page)+1]}/> : <></>}
-            {itemList[(3*page)+2] ? <ItemButton item={itemList[(3*page)+2]}/> : <></>}
+                        evaluate = false
+
+                        let valueNumber = filterPair.value as number
+                        filterPair.filter === "price" ? evaluate = (
+                            (listItem.price >= (50 * valueNumber) && 
+                            listItem.price <= (50 * valueNumber + 50))
+                            || (valueNumber >= 4 && listItem.price >= 200) 
+                        ) : {}
+
+                        filterPair.filter === "storage" ? evaluate = (
+                            (listItem.price >= (250 * valueNumber) && 
+                            listItem.price <= (250 * valueNumber + 250))
+                            || (valueNumber >= 4 && listItem.price >= 1000)
+                        ) : {}
+
+                        filterPair.filter === "type" 
+                        || filterPair.filter === "fuel"
+                        || filterPair.filter === "seats" 
+                        || filterPair.filter === "transmission" ? 
+                        evaluate = (filterPair.value === listItem.type) : {}
+
+                        return evaluate
+                    }) > -1 
+                )
+            } else {
+                return true
+            }
+        })
+    }
             
-            { ( (page+1) >= (itemList.length/3) ) ? 
-            <Button disabled style={{position:"absolute", right:"0px"}}>{">"}</Button> :
-            <Button onClick={() => scrollPage(1)}>{">"}</Button>}
-        </div>
-    )
+    let pagiList = [<></>];
+    for (let pageEval = 1; (pageEval*3-2 <= newItemList.length); pageEval++) {
+        pagiList.push(
+            <Pagination.Item key={pageEval} active={pageEval === page+1} onClick={()=>(setPage(pageEval-1))}>
+                {pageEval}
+            </Pagination.Item>
+        )
+    }
+        
+    return(<>    
+        <Container fluid>
+            <Row >
+                { page === 0 ? 
+                    <Col xs={1}> </Col>
+                    : 
+                    <Col xs={1} style={{padding:0}}className="d-flex align-items-center">
+                        <Button className="primary fs-2" style={{height:"25%", width:"100%"}} onClick={() => scrollPage(-1)}>{"<"}</Button>
+                    </Col> 
+                }
+
+                <Col style={{padding:0}}>
+                    <ItemButton item={newItemList[(3*page)]}/>
+                </Col>
+                <Col style={{padding:0}}>
+                    {itemList[(3*page)+1] ? <ItemButton item={newItemList[(3*page)+1]}/> : <></>}
+                </Col>
+                <Col style={{padding:0}}>
+                    {itemList[(3*page)+2] ? <ItemButton item={newItemList[(3*page)+2]}/> : <></>}
+                </Col>
+                
+                { ((page+1)*3) >= (newItemList.length) ? 
+                    <Col xs={1}></Col> 
+                    :
+                    <Col xs={1} style={{padding:0}} className="d-flex align-items-center">
+                        <Button className="primary fs-2" style={{height:"25%", width:"100%"}} onClick={() => scrollPage(1)}>{">"}</Button>
+                    </Col>
+                }
+            </Row>
+             <Row>
+                <Col md={{span: 2, offset: 5}}>
+                <Pagination className="m-2 justify-content-center" >
+                {pagiList}
+                </Pagination>
+                </Col>
+            </Row>
+        </Container>
+    </>)
 }

@@ -3,6 +3,7 @@ import {Form, Col, Row, Button} from "react-bootstrap"
 export default function Login() {
     return (
         <div style={{
+            backgroundColor: "rgb(251, 247, 244)",
             height:"80vh", 
             width:"100vw", 
             display:"flex", 
@@ -22,7 +23,7 @@ export default function Login() {
                 fontSize:"1em",
                 fontWeight: 500,
                 fontFamily: "inherit",
-                backgroundColor:"#1a1a1a",
+                backgroundColor:"rgb(61, 78, 109)",
                 transition:"border-color 0.25s",
                 width:"350px"
             }}>
@@ -44,7 +45,7 @@ export default function Login() {
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row}>
-                        <Button variant="info" style={{margin:"auto", width:"30%"}}>Login</Button>
+                        <Button className="buttons" variant="info" style={{margin:"auto", width:"30%"}}>Login</Button>
                     </Form.Group>
                 </Form>
             </div>

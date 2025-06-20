@@ -48,10 +48,10 @@ public class Item implements Entities {
     private Status status;
 
     @OneToMany(mappedBy = "item")
+    @OrderColumn
     @JsonBackReference
     private Set<Transaction> transactions;
 
     @Column(nullable = true)
     private String imgUrl;
-
 }

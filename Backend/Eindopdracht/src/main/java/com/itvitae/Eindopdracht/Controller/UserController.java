@@ -14,19 +14,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.itvitae.Eindopdracht.DTO.LoginResponseDTO;
 import com.itvitae.Eindopdracht.DTO.LoginForm;
+import com.itvitae.Eindopdracht.DTO.UserDTO;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = {"http://localhost:5173"}, methods = {
+@CrossOrigin(origins = {"*"}, methods = {
         RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
 })
 @Tag(name = "User Management", description = "APIs for managing users")
@@ -99,9 +98,33 @@ public class UserController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
+    @GetMapping("/search/{username}")
+    @Auth
+    public ResponseEntity userExists(@RequestParam String username) {
+        Optional<User> _user = this.userService.exists(username);
+
+        if (_user.isEmpty())
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/info")
-    @Auth(admin = true)
-    public ResponseEntity<UserInfoDTO> getInformation(@RequestParam String username) {
+    @Auth
+    public ResponseEntity<UserDTO> getOwnInformation(@RequestHeader("Authorization") String token) {
+        Optional<User> _user = this.authService.retrieveUserFromToken(token);
+
+        if (_user.isEmpty())
+            return ResponseEntity.badRequest().build();
+
+        User user = _user.get();
+
+        return ResponseEntity.ok().body(new UserDTO(user.getUsername(), user.getEmail(), user.getCity(), user.getAddress()));
+    }
+
+    @GetMapping("/admin/info/{username}")
+    @Auth(requiresAdmin = true)
+    public ResponseEntity<UserDTO> getInformation(@PathVariable String username) {
         Optional<User> _user = this.userService.exists(username);
 
         if (_user.isEmpty())
@@ -109,6 +132,6 @@ public class UserController {
 
         User user = _user.get();
 
-        return ResponseEntity.ok().body(new UserInfoDTO(user.getEmail(), user.getCity(), user.getAddress()));
+        return ResponseEntity.ok().body(new UserDTO(user.getUsername(), user.getEmail(), user.getCity(), user.getAddress()));
     }
 }

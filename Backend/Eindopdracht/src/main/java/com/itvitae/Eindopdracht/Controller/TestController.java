@@ -39,7 +39,7 @@ public class TestController {
 
     // ADMIN role can access this role
     @GetMapping("/admin")
-    @Auth(admin = true)
+    @Auth(requiresAdmin = true)
     public ResponseEntity<String> handleWelcomeAdmin() {
         System.out.println("/admin");
         return new ResponseEntity<>("Welcome, admin!", HttpStatus.OK);
