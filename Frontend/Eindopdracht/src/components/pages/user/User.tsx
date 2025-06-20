@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-import ItemButton from "./ItemButton";
-import ItemList from './ItemList'
-=======
 import ItemList from "./ItemList"
->>>>>>> Test
 import ProductFilter from "./ProductFilter";
 import Button from 'react-bootstrap/Button';
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
