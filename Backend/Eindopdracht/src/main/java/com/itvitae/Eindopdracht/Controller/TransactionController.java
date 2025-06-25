@@ -99,7 +99,7 @@ public class TransactionController {
 
     // Users get less information about other users (UserMinimalDTO) when searching for transactions
     // searching based on itemId
-    @Auth
+//    @Auth
     @GetMapping("/user/{username}")
     ResponseEntity<List<TransactionMinimalDTO>> getAllByUsernameMinimal(@PathVariable String username) {
         List<Transaction> transactions = transactionRepository.findAllByRentingUserUsername(username);

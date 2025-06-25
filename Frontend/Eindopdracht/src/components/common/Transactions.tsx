@@ -31,7 +31,7 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                     }
                     transactionData.sort((a, b) => b.rentedAt.valueOf() - a.rentedAt.valueOf());
                     setTransactions(transactionData);
-                    
+
                 })
                 .catch((error) => console.error('Error loading JSON', error));
         })
@@ -83,9 +83,11 @@ export default function Transactions({ show, onHide }: { show: boolean, onHide: 
                                         <td className='align-middle'>{transaction.rentedAt.toLocaleDateString()}</td>
                                         <td className='align-middle'>{transaction.rentedUntil.toLocaleDateString()}</td>
                                         <td className='align-middle'>{`${itemType.toUpperCase().charAt(0)}${itemType.slice(1).toLowerCase()}`}</td>
-                                        <td className='align-middle'>{!transaction.item.car ? `${transaction.item.name}` : `${transaction.item.car.brand} ${transaction.item.name}`}</td>
+                                        <td className='align-middle'>{!transaction.item.car ? 
+                                        `${transaction.item.name}` : `${transaction.item.car.brand} ${transaction.item.name}`}</td>
                                         <td className='align-middle'>{`€${calculateTotalPrice(transaction.rentedAt, transaction.rentedUntil, transaction.item.price)}`}</td>
-                                        <td style={{border: '0'}} className='align-middle'>{checkTransactionDate(transaction.rentedAt, transaction.rentedUntil) ? <Button variant='danger' className='ms-3'>schade melden</Button> : <></>}</td>
+                                        <td style={{ border: '0' }} className='align-middle'>{checkTransactionDate(transaction.rentedAt, transaction.rentedUntil) ? 
+                                            <Button variant='danger' className='ms-3'>schade melden</Button> : <></>}</td>
                                     </tr>
                                 )
                             })}

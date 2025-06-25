@@ -24,7 +24,8 @@ export default function ItemButton({ item }: { item: Item | undefined }
                         <Card.Subtitle className="mb-3"> €{item.price},-/dag</Card.Subtitle>
                         <CardText className="d-flex align-items-center"><FaCarSide className="me-2" />{item.type}</CardText>
                         <CardText className="d-flex align-items-center"><FaUsers className="me-2" />{item.car.seats}</CardText>
-                        <CardText className="d-flex align-items-center"><FaCogs className="me-2" />{item.car.isAutomatic ? "Automaat" : "Handgeschakeld"}</CardText>
+                        <CardText className="d-flex align-items-center"><FaCogs className="me-2" />{item.car.isAutomatic ? "Automaat" : 
+                        "Handgeschakeld"}</CardText>
                         <CardText className="d-flex align-items-center"><FaSuitcase className="me-2" />{item.storageSpace} {"L"}</CardText>
                     </Card.Body>
                 </Card>
