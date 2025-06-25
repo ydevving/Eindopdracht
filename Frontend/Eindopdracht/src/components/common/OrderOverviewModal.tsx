@@ -37,8 +37,7 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                     minHeight: '70vh',
                     maxWidth: '40vw',
                     overflowY: 'auto'
-                }}
-            >
+                }}>
                 <Container>
                     <Row>
                         <Col md={5}>
@@ -55,7 +54,6 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                             <p className="my-0">{item.status}</p>
                         </Col>
                     </Row>
-
                     <Row>
                         <Col md={5}>
                             <h4 className="mt-5 mb-1 text-weight-bold">Huur Gegevens</h4>
@@ -63,14 +61,12 @@ export default function OrderOverviewModal({ availability, endDate, selected, it
                             <p className="my-0">Eind van Huur: {endDate.toLocaleDateString()}</p>
                             <p className="my-0">Totale Prijs van Huur: €{rentPrice}</p>
                         </Col>
-
                         <Col md={{ span: 4, offset: 3 }}>
                             <h4 className="mt-5 mb-1 text-weight-bold">Voorwaardes:</h4>
                             <p className="my-0">Huur Auto/Voorwerp zelf ophalen en Terugbrengen</p>
                             <p className="my-0 text-danger">Boete is van spraken wanneer Verhuurde Voorwerp niet optijd is Teruggebracht</p>
                         </Col>
                     </Row>
-
                 </Container>
             </Modal.Body>
             <Modal.Footer>
