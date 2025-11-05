@@ -84,7 +84,7 @@ public class Seeder implements CommandLineRunner, Entities {
     @SneakyThrows
     private <T extends Entities> List<T> readAndSaveModelCSV(String filePath, ModelType modelType) throws IOException, BadCSVFormatException {
 
-        String path = String.format("%s/src/main/java/com/itvitae/Eindopdracht/Seeder/%s", System.getProperty("user.dir"), filePath);
+        String path = String.format("%s/Backend/Eindopdracht/src/main/java/com/itvitae/Eindopdracht/Seeder/%s", System.getProperty("user.dir"), filePath);
         BadCSVFormatException.filePath = path;
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {

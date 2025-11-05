@@ -13,9 +13,9 @@ export default function SearchBar() {
 
     return (
         <Container>
-            <Row className="justify-content-center" >
+            <Row className="" style={{display: 'flex', flexDirection: 'row', gap: '10px', justifyContent: 'center'}}>
                 <Col md={6}>
-                    <div className="position-relative" style={{ marginLeft: '15%' }}>
+                    <div className="position-relative" style={{}}>
                         <Form.Control
                             type="text"
                             placeholder="Zoek klant informatie op..."

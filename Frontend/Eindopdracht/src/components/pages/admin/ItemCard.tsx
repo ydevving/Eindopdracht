@@ -29,7 +29,7 @@ export default function ItemCard({ item, description, _category, style }:
                 onClick={() => { itemDisplay.current = item; category.current = _category; setItemModal(true); }}
                 style={{ width: '18rem', padding: '13px 20px', cursor: 'pointer', ...style }}
             >
-                <Card.Img style={{ borderRadius: "var(--bs-card-inner-border-radius)" }} src={(_item.imgUrl) ? _item.imgUrl : placeholderImage} />
+                <Card.Img style={{ borderRadius: "var(--bs-card-inner-border-radius)", width: 'auto', maxInlineSize: '100%', maxHeight: '210px', marginInline: 'auto' }} src={(_item.imgUrl) ? _item.imgUrl : placeholderImage} />
                 <Card.Body>
                     <Card.Title>{_item.name}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">{subTitle}</Card.Subtitle>
